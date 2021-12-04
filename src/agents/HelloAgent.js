@@ -20,9 +20,9 @@ HelloAgent.prototype.sayHello = function(to) {
 
 HelloAgent.prototype.receive = function(from, message) {
   console.log(from + ' said: ' + JSON.stringify(message));
-   document.write(from + ' said: ' + JSON.stringify(message) + '<br>');
+  // document.write(from + ' said: ' + JSON.stringify(message) + '<br>');
 
-  if (message.indexOf('Hello') === 0) {
+  if (typeof message == "string" && message.indexOf('Hello') === 0) {
     // reply to the greeting
     this.send(from, 'Hi ' + from + ', nice to meet you!');
   }else{

@@ -1,9 +1,10 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-
-    LOOK at js console to see the agents in action
-
+    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
+<Login /><br>
+    LOOK at js console to see the agents in action<br>
+    <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
+    <b-button @click="onChange" variant="primary">Update</b-button>
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
 </template>
@@ -14,11 +15,20 @@
 import  'evejs/dist/eve.custom.js';
 import { AppAgent } from '@/agents/AppAgent.js';
 import { HelloAgent } from '@/agents/HelloAgent.js';
+import { SnifferAgent } from '@/agents/SnifferAgent.js';
+
+
 
 export default {
   name: 'Home',
   components: {
+      'Login': () => import('@/components/Login'),
     // HelloWorld
+  },
+  data(){
+    return {
+      url : "https://spoggy-test5.solidcommunity.net/"
+    }
   },
   created(){
     this.agentApp = new AppAgent('agentApp', this);
@@ -26,12 +36,23 @@ export default {
     this.agentApp.send('agentApp', {type: 'dispo', name: 'agentGraph' });
 
     // create two agents
-    var agent1 = new HelloAgent('agent1');
-    var agent2 = new HelloAgent('agent2');
-    console.log(agent1)
+    this.agent1 = new HelloAgent('agent1');
+    this.agent2 = new HelloAgent('agent2');
+    this.sniffer1 = new SnifferAgent('sniffer1');
+
+    console.log(this.agent1)
 
     // send a message to agent1
-    agent2.send('agent1', 'Hello agent1!');
+    this.agent2.send('agent1', 'Hello agent1!');
+
+    this.agent2.send('https://scenaristeur.github.io/agents/agent1', 'Hello REMOTE AGENT1')
+  },
+  methods:{
+    onChange(){
+      console.log(this.url)
+
+      this.agentApp.send('sniffer1', {url : this.url});
+    }
   }
 }
 </script>

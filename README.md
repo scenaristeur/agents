@@ -1,4 +1,9 @@
 # agents
+# evejs
+- https://github.com/scenaristeur/evejs
+- https://eve.almende.com/implementations/javascript/introduction.html
+- https://github.com/scenaristeur/spoggy-graph/blob/master/package.json
+
 
 ## Project setup
 ```

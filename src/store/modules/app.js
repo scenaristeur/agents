@@ -1,5 +1,6 @@
 // import Vue from 'vue'
 const state = () => ({
+  files: []
   // bureau: null,
   // resource: null,
   // content: null
@@ -14,9 +15,10 @@ const actions = {
 }
 
 const mutations = {
-  // setBureau(state,b){
-  //   state.bureau = b
-  // },
+
+  addFile(state,f){
+    state.files.push(f)
+  },
   // setResource(state,r){
   //   state.resource = r
   // },

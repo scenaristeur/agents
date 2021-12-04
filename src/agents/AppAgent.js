@@ -4,7 +4,7 @@
 * @constructor
 * @extend eve.Agent
 */
-
+// import Vue from 'vue'
 import * as eve from  'evejs/dist/eve.custom.js';
 
 export function AppAgent(id, app) {
@@ -49,6 +49,7 @@ AppAgent.prototype.receive = function(from, message) {
          this.send(from, r)
        }else{
          console.log("File", r)
+         this.app.$store.commit('app/addFile',r)
        }
       }
     }

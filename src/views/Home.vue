@@ -5,6 +5,8 @@
     LOOK at js console to see the agents in action<br>
     <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
     <b-button @click="onChange" variant="primary">Update</b-button>
+
+    {{ files}}
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
 </template>
@@ -52,6 +54,12 @@ export default {
       console.log(this.url)
 
       this.agentApp.send('sniffer1', {url : this.url});
+    }
+  },
+  computed:{
+    files:{
+      get () { return this.$store.state.app.files },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
     }
   }
 }

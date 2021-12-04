@@ -41,15 +41,17 @@ AppAgent.prototype.receive = function(from, message) {
     this.app.prop1 = message;
   }else{
     console.log(from, "said", message, message.resources != undefined, message.resources.length)
-    // let resources = JSON.parse(message.resources)
-    // if (resources != undefined && resources.length > 0){
-    //   for (const r of message.resource){
-    //     if (r.type == "folder"){
-    //       console.log("to sniff", r)
-    //     //  this.send(from, r)
-    //     }
-    //   }
-    // }
+
+    if (message.resources != undefined && message.resources.length > 0){
+      for (const r of message.resources){
+        if (r.type == "folder"){
+          console.log("to sniff", r)
+         this.send(from, r)
+       }else{
+         console.log("File", r)
+       }
+      }
+    }
   }
 
 

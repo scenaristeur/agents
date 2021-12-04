@@ -60,17 +60,19 @@ const plugin = {
       console.log("remotes",remotesUrl)
 
       resources = remotesUrl.map(function (u) {
-        let r = {url: u}
+        let r = {url: u, parent: path}
 
         let parts = u.split('/')
         if(u.endsWith('/')){
-                r.name = "📁 "+parts[parts.length - 2];
+                r.name = parts[parts.length - 2]
                 r.type = "folder"
+                r.icon = "📁"
                 //child.value = {type:'folder', url:c, text: text}
               //  child.html= "📁"+text
               }else{
-                r.name = "📄 "+parts[parts.length - 1];
+                r.name = parts[parts.length - 1]
                 r.type = "file"
+                r.icon = "📄"
                 //child.value = {type: "file", url:c, text: child.text}
               }
 

@@ -27,13 +27,13 @@ export default {
   },
   data(){
     return {
-      url : "https://spoggy-test5.solidcommunity.net/"
+      url : "https://spoggy-test13.solidcommunity.net/"
     }
   },
   created(){
     this.agentApp = new AppAgent('agentApp', this);
     console.log(this.agentApp);
-    this.agentApp.send('agentApp', {type: 'dispo', name: 'agentGraph' });
+    //this.agentApp.send('agentApp', {type: 'dispo', name: 'agentGraph' });
 
     // create two agents
     this.agent1 = new HelloAgent('agent1');

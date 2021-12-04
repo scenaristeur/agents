@@ -5,6 +5,7 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+    {{session}}
   </div>
 </template>
 <script>

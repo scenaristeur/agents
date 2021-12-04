@@ -19,13 +19,20 @@ SnifferAgent.prototype.sayHello = function(to) {
   this.send(to, 'Hello ' + to + '!');
 };
 
-SnifferAgent.prototype.receive = function(from, message) {
+SnifferAgent.prototype.receive = async function(from, message) {
   console.log(from + ' said: ' + JSON.stringify(message));
   // document.write(from + ' said: ' + JSON.stringify(message) + '<br>');
-Vue.prototype.$getResources(message.url)
+// let resources = await Vue.prototype.$getResources(message.url)
+// for (const r of resources){
+//   console.log(r)
+//   if (r.type == "folder"){
+//     r.resources = await Vue.prototype.$getResources(r.url)
+//   }
+// }
+let resources = await getResources(message)
   //if (message.indexOf('Hello') === 0) {
     // reply to the greeting
-    this.send(from, 'Hi ' + from + ', you send me '+JSON.stringify(message));
+    this.send(from, {resources: resources});
   // }else{
   //   if(this.count <10)
   //   {
@@ -34,3 +41,15 @@ Vue.prototype.$getResources(message.url)
   //   }
   // }
 };
+
+async function getResources(r){
+  r.resources = await Vue.prototype.$getResources(r.url)
+  for (const res of r.resources){
+
+    if (res.type == "folder"){
+      res.resources = await getResources(res)
+    }
+  }
+  return r
+
+}

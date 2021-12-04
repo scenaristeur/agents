@@ -39,6 +39,8 @@ console.log("Message",message)
     // reply to the greeting
     this.send(from, 'Hi ' + from + ', nice to meet you!');
     this.app.prop1 = message;
+  }else{
+    console.log(from, "said", message)
   }
 
 

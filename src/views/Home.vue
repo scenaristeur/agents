@@ -45,7 +45,7 @@ export default {
     // send a message to agent1
     this.agent2.send('agent1', 'Hello agent1!');
 
-    this.agent2.send('https://scenaristeur.github.io/agents/agent1', 'Hello REMOTE AGENT1')
+    //this.agent2.send('https://scenaristeur.github.io/agents/agent1', 'Hello REMOTE AGENT1')
   },
   methods:{
     onChange(){

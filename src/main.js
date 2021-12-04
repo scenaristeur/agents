@@ -17,6 +17,11 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
+import * as VueThreejs from 'vue-threejs'
+// import VueThreejs from '@'
+Vue.use(VueThreejs)
+
+
 Vue.config.productionTip = false
 
 new Vue({

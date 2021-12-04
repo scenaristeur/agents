@@ -1,11 +1,13 @@
 <template>
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-<Login /><br>
+    <Login /><br>
     LOOK at js console to see the agents in action<br>
     <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
     <b-button @click="onChange" variant="primary">Update</b-button>
 
+
+<ThreeScene />
     {{ files}}
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
@@ -24,7 +26,8 @@ import { SnifferAgent } from '@/agents/SnifferAgent.js';
 export default {
   name: 'Home',
   components: {
-      'Login': () => import('@/components/Login'),
+    'Login': () => import('@/components/Login'),
+    'ThreeScene': () => import('@/components/three/ThreeScene'),
     // HelloWorld
   },
   data(){

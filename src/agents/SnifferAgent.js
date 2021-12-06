@@ -20,7 +20,7 @@ SnifferAgent.prototype.sayHello = function(to) {
 };
 
 SnifferAgent.prototype.receive = async function(from, message) {
-  console.log(from + ' said: ' + JSON.stringify(message));
+//  console.log(from + ' said: ' + JSON.stringify(message));
   // document.write(from + ' said: ' + JSON.stringify(message) + '<br>');
 let resources = await Vue.prototype.$getResources(message.url)
 // for (const r of resources){

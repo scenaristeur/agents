@@ -34,21 +34,22 @@ AppAgent.prototype.sayHello = function(to) {
 * @param {*} message       Received message, a JSON object (often a string)
 */
 AppAgent.prototype.receive = function(from, message) {
-  console.log("Message",message)
+//  console.log("Message",message)
   if (typeof message == String && message.indexOf('Hello') === 0) {
     // reply to the greeting
     this.send(from, 'Hi ' + from + ', nice to meet you!');
     this.app.prop1 = message;
   }else{
-    console.log(from, "said", message, message.resources != undefined, message.resources.length)
+  //  console.log(from, "said", message, message.resources != undefined, message.resources.length)
 
     if (message.resources != undefined && message.resources.length > 0){
       for (const r of message.resources){
         if (r.type == "folder"){
-          console.log("to sniff", r)
+        //  console.log("to sniff", r)
+          this.app.$store.commit('app/addFolder',r)
          this.send(from, r)
        }else{
-         console.log("File", r)
+        // console.log("File", r)
          this.app.$store.commit('app/addFile',r)
        }
       }

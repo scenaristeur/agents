@@ -7,8 +7,8 @@ import {
   //getPublicAccess,
   //getAgentAccess,
   getFile,
-  isRawData,
-  getContentType,
+  // isRawData,
+  // getContentType,
   //saveFileInContainer,
   getContainedResourceUrlAll,
   // getStringNoLocaleAll,
@@ -53,11 +53,11 @@ const plugin = {
     console.log(store)
 
     Vue.prototype.$getResources = async function(path){
-      console.log("path", path)
+    //  console.log("path", path)
       let resources = []
       const dataset = await getSolidDataset( path, { fetch: sc.fetch });
       let remotesUrl  = await getContainedResourceUrlAll(dataset,{fetch: sc.fetch} )
-      console.log("remotes",remotesUrl)
+    //  console.log("remotes",remotesUrl)
 
       resources = remotesUrl.map(function (u) {
         let r = {url: u, parent: path}
@@ -88,8 +88,8 @@ const plugin = {
         { fetch: sc.fetch }       // fetch from authenticated session
       );
 
-      console.log( `Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`);
-      console.log("The file is rawdata "+ `${isRawData(file)}`);
+    //  console.log( `Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`);
+    //  console.log("The file is rawdata "+ `${isRawData(file)}`);
       r.file = file
 
     //  return r

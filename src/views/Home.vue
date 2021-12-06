@@ -6,8 +6,8 @@
     <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
     <b-button @click="onChange" variant="primary">Update</b-button>
 
-
-<ThreeScene :files="files"/>
+    <Graph :folders="folders" :files="files" />
+    <!-- <ThreeScene :files="files"/> -->
     {{ files}}
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
@@ -27,7 +27,8 @@ export default {
   name: 'Home',
   components: {
     'Login': () => import('@/components/Login'),
-    'ThreeScene': () => import('@/components/three/ThreeScene'),
+    // 'ThreeScene': () => import('@/components/three/ThreeScene'),
+    'Graph': () => import('@/components/directed/Graph'),
     // HelloWorld
   },
   data(){
@@ -55,13 +56,16 @@ export default {
   methods:{
     onChange(){
       console.log(this.url)
-
       this.agentApp.send('sniffer1', {url : this.url});
     }
   },
   computed:{
     files:{
       get () { return this.$store.state.app.files },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    folders:{
+      get () { return this.$store.state.app.folders },
       set (/*value*/) { /*this.updateTodo(value)*/ }
     }
   }

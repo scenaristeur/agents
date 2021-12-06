@@ -1,4 +1,4 @@
-<template>
+m<template>
   <div>
     <b-button @click="addCube">Add</b-button>
   <div ref="canvas"></div>

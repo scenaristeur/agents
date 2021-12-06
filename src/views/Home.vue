@@ -7,7 +7,7 @@
     <b-button @click="onChange" variant="primary">Update</b-button>
 
 
-<ThreeScene />
+<ThreeScene :files="files"/>
     {{ files}}
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>

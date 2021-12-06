@@ -2,6 +2,7 @@
   <div>
     <b-button @click="addCube">Add</b-button>
   <div ref="canvas"></div>
+  {{ files.length}}
 </div>
 </template>
 
@@ -24,6 +25,7 @@ import * as THREE from 'three';
 
 export default {
   name: "ThreeScene",
+  props:['files'],
   data() {
     return {
       scene: new THREE.Scene(),
@@ -43,7 +45,7 @@ export default {
 
       //add cube to scene
       this.scene.add(cube)
-      cube.position.set(this.randomNumber(-3,3),this.randomNumber(-3,3),this.randomNumber(-3,3))
+      cube.position.set(this.randomNumber(-20,20),this.randomNumber(-20,20),this.randomNumber(-20,20))
       this.items.push(cube)
       this.renderScene()
     },
@@ -52,7 +54,7 @@ export default {
       /*
       ADD LINE BELOW to make renderer take up the full screen
       */
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      this.renderer.setSize(window.innerWidth, window.innerHeight*0.75)
 
       //REMEMBER to append renderer.domElement, not just renderer
       const canvas = this.$refs.canvas //document.getElementById("canvas")
@@ -66,14 +68,14 @@ export default {
       //OBJECTS SECTION
       //meshes are made up of a geometry and a material
       const geometry = new THREE.BoxGeometry(1,1,1)
-      const material = new THREE.MeshLambertMaterial({color: 0x0000ff})
+      const material = new THREE.MeshLambertMaterial({color: 0xffffff})
       let cube = new THREE.Mesh(geometry, material)
 
       //add cube to scene
       this.scene.add(cube)
 this.items.push(cube)
       // change camera position so that we can see the cube
-      this.camera.position.set(1,1,1)
+      this.camera.position.set(30,1,1)
       // direct camera at the cube position
       this.camera.lookAt(cube.position)
 
@@ -83,15 +85,33 @@ this.items.push(cube)
       // change light position
       directionalLight.position.set(3,2,1)
 
-      const directionalLight2 = new THREE.DirectionalLight(0xfff00)
+      const directionalLight2 = new THREE.DirectionalLight(0xffff00)
       this.scene.add(directionalLight2)
       // change light position
-      directionalLight2.position.set(1,3,1)
+      directionalLight2.position.set(-3,-2,-1)
+
+      const directionalLight3 = new THREE.DirectionalLight(0xffffff, 2);
+directionalLight3.position.set(0, 1, 0);
+directionalLight3.castShadow = true;
+this.scene.add(directionalLight3);
+const light = new THREE.PointLight(0xffffcc, 1);
+light.position.set(0, 600, 1000);
+this.scene.add(light);
+const light2 = new THREE.PointLight(0xe6f7ff, 1);
+light2.position.set(1000, 200, 0);
+this.scene.add(light2);
+const light3 = new THREE.PointLight(0xfff2e6, 1);
+light3.position.set(0, 200, -1000);
+this.scene.add(light3);
+const light4 = new THREE.PointLight(0xc4c400, 1);
+light4.position.set(-1000, 600, 1000);
+this.scene.add(light4);
+
 
 
         const controls = new OrbitControls(this.camera, this.renderer.domElement);
         controls.minDistance = 2;
-        controls.maxDistance = 5;
+        controls.maxDistance = 30;
         // controls.enablePan = false;
         controls.target.set(0, 0, 0);
         controls.addEventListener("change", this.renderScene);
@@ -101,10 +121,10 @@ this.items.push(cube)
     },
     animate(){
       this.renderer.render(this.scene, this.camera)
-      for (const cube of this.items){
-        cube.rotation.x += 0.01
-        cube.rotation.y += 0.01;
-      }
+      // for (const cube of this.items){
+      //   cube.rotation.x += 0.01
+      //   cube.rotation.y += 0.01;
+      // }
 
 
       requestAnimationFrame(this.animate)
@@ -171,6 +191,13 @@ this.items.push(cube)
     //
     //
     // }
+  },
+  watch:{
+    files(){
+      for (const f of this.files){
+        this.addCube(f)
+      }
+    }
   }
 }
 </script>

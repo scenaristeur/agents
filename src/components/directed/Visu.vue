@@ -27,22 +27,52 @@ export default {
   methods: {
     async explore(path){
       this.paths.push(path)
-    //  console.log("explore", path)
+      //  console.log("explore", path)
       let resources = await this.$getResources(path)
-      //  console.log(resources)
+      console.log(resources)
       let app = this
       resources.forEach(function(r){
-        if(r.url.endsWith('.jsonld')){
+        if (r.type == "folder"){
+          app.explore(r.url)
+        }else if(r.url.endsWith('.jsonld') || r.file.type == "application/ld+json"){
           r.color = "#ffff00"
-        }
-        if(r.url.endsWith('.ttl')){
+          const reader = new FileReader();
+          reader.onload = async () => {
+            //  console.log(reader.result)
+            r.jsonld = JSON.parse(reader.result)
+            r.name = r.jsonld["ve:name"]
+            console.log("jsonld",r.jsonld['ve:properties'])
+            for (const p of r.jsonld['ve:properties']){
+              console.log(p)
+              for (const v of p.values){
+                console.log(v)
+              }
+
+            }
+            // if (getContentType(file) == 'application+json'){
+            //   content = JSON.parse(reader.result);
+            // }
+            // console.log("content",content)
+            // store.commit('bureau/setContent',content)
+          };
+          reader.onerror = (error) => {
+            console.log(error);
+          };
+          reader.readAsText(r.file);
+
+
+
+
+
+        }else if(r.url.endsWith('.ttl')){
           r.color = "#00ff00"
+        }
+        if(r.name == "inbox"){
+          r.color = "#ffffff"
         }
         app.nodes.push(r)
         app.links.push({source: path, target: r.url})
-        if (r.type == "folder"){
-          app.explore(r.url)
-        }
+
       })
       this.paths = this.paths.filter(e => e !== path);
     }

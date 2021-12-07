@@ -2,11 +2,11 @@
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <Login /><br>
-    LOOK at js console to see the agents in action<br>
+    <!-- LOOK at js console to see the agents in action<br> -->
     <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
     <b-button @click="onChange" variant="primary">Update</b-button>
 
-    <Graph :folders="folders" :files="files" />
+    <Visu />
     <!-- <ThreeScene :files="files"/> -->
     {{ files}}
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
@@ -16,10 +16,10 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import  'evejs/dist/eve.custom.js';
-import { AppAgent } from '@/agents/AppAgent.js';
-import { HelloAgent } from '@/agents/HelloAgent.js';
-import { SnifferAgent } from '@/agents/SnifferAgent.js';
+// import  'evejs/dist/eve.custom.js';
+// import { AppAgent } from '@/agents/AppAgent.js';
+// import { HelloAgent } from '@/agents/HelloAgent.js';
+// import { SnifferAgent } from '@/agents/SnifferAgent.js';
 
 
 
@@ -28,7 +28,7 @@ export default {
   components: {
     'Login': () => import('@/components/Login'),
     // 'ThreeScene': () => import('@/components/three/ThreeScene'),
-    'Graph': () => import('@/components/directed/Graph'),
+    'Visu': () => import('@/components/directed/Visu'),
     // HelloWorld
   },
   data(){
@@ -37,26 +37,37 @@ export default {
     }
   },
   created(){
-    this.agentApp = new AppAgent('agentApp', this);
-    console.log(this.agentApp);
-    //this.agentApp.send('agentApp', {type: 'dispo', name: 'agentGraph' });
-
-    // create two agents
-    this.agent1 = new HelloAgent('agent1');
-    this.agent2 = new HelloAgent('agent2');
-    this.sniffer1 = new SnifferAgent('sniffer1');
-
-    console.log(this.agent1)
-
-    // send a message to agent1
-    this.agent2.send('agent1', 'Hello agent1!');
+    // this.agentApp = new AppAgent('agentApp', this);
+    // console.log(this.agentApp);
+    // //this.agentApp.send('agentApp', {type: 'dispo', name: 'agentGraph' });
+    //
+    // // create two agents
+    // this.agent1 = new HelloAgent('agent1');
+    // this.agent2 = new HelloAgent('agent2');
+    // this.sniffer1 = new SnifferAgent('sniffer1');
+    //
+    // console.log(this.agent1)
+    //
+    // // send a message to agent1
+    // this.agent2.send('agent1', 'Hello agent1!');
 
     //this.agent2.send('https://scenaristeur.github.io/agents/agent1', 'Hello REMOTE AGENT1')
   },
   methods:{
-    onChange(){
+    async onChange(){
       console.log(this.url)
-      this.agentApp.send('sniffer1', {url : this.url});
+
+      // let resources = await this.$getResources(this.url)
+      // resources.unshift({url: this.url, name: "ROOT", parent: null })
+
+      // for (const r of resources){
+      //   console.log(r.url)
+      //   if (r.type == "folder"){
+      //     r.resources = await this.$getResources(r.url)
+      //   }
+      // }
+      //  console.log(resources)
+      //  this.agentApp.send('sniffer1', {url : this.url});
     }
   },
   computed:{

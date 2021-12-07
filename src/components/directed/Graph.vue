@@ -1,22 +1,25 @@
 <template>
   <div>
+
     <div ref="graph"></div>
-    folders : {{folders.length}}, files : {{files.length}}
+
   </div>
 </template>
 
 <script>
 //https://github.com/vasturiano/3d-force-graph
 import ForceGraph3D from '3d-force-graph';
+import SpriteText from 'three-spritetext';
+import * as THREE from "three";
 export default {
   name: "Graph",
-  props:['folders', 'files'],
+  props:['nodes', 'links'],
   data(){
     return{
-      initData: {
-        nodes: [ {id: "https://spoggy-test13.solidcommunity.net/", url: "https://spoggy-test13.solidcommunity.net/", name: "ROOT", color: "#ff0000" } ],
-        links: []
-      }
+      // initData: {
+      //   nodes: [],// {id: "https://spoggy-test13.solidcommunity.net/", url: "https://spoggy-test13.solidcommunity.net/", name: "ROOT", color: "#ff0000" } ],
+      //   links: []
+      // }
     }
   },
   mounted() {
@@ -34,10 +37,48 @@ export default {
     this.Graph = ForceGraph3D()(elem)
     // .enableNodeDrag(false)
     // .onNodeClick(this.removeNode)
-    .graphData(this.initData)
+    .graphData({nodes: this.nodes, links: this.links})
+    .dagMode('td')
+    .dagLevelDistance(100)
     .nodeLabel('name')
     .nodeId('url')
     .nodeAutoColorBy('type')
+    .nodeThreeObject(({ url }) => {
+      //  console.log("url",url)
+      if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')){
+        const imgTexture = new THREE.TextureLoader().load(`${url}`);
+        const material = new THREE.SpriteMaterial({ map: imgTexture });
+        const sprite = new THREE.Sprite(material);
+        sprite.scale.set(12, 12);
+        return sprite;
+      }
+    })
+
+    .linkThreeObjectExtend(true)
+    .linkThreeObject(link => {
+      // extend link with text sprite
+      if(link.label != undefined){
+        const sprite = new SpriteText(`${link.label}`);
+        sprite.color = 'lightgrey';
+        sprite.textHeight = 1.5;
+        return sprite;
+      }
+    })
+    .linkDirectionalArrowLength(3.5)
+    .linkDirectionalArrowRelPos(1)
+  //  .linkCurvature(0.25)
+    .linkPositionUpdate((sprite, { start, end }) => {
+      if(sprite != undefined){
+        const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
+          [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
+        })))
+
+
+
+        // Position sprite
+        Object.assign(sprite.position, middlePos);
+      }
+    })
     .onNodeClick(node => {
       // Aim at node from outside it
       console.log(node)
@@ -62,58 +103,76 @@ export default {
     //   });
     // }, 1000);
   },
-  watch:{
-    files(){
-      const { nodes, links } = this.Graph.graphData();
-      for (const f of this.files){
-        //  console.log(f)
-        //let n = {id: f.url}
-        //f.id = f.url
-        try{
-          this.Graph.graphData({
-            nodes: [...nodes, f],
-            links: [...links/*, { source: f.parent, target: f.url }*/]
-          });
-        }
-        catch(e){
-          console.log(e,f)
-        }
-      }
-    },
-    folders(){
-      const { nodes, links } = this.Graph.graphData();
-      for (const f of this.folders){
-        console.log(f)
-        // f.id = f.url
-        //  let parent = nodes.find(x=> x.id == f.parent)
-        //  console.log("parent", parent)
-
-        // if (parent == undefined){
-        //   let parent = {id: f.parent, url : f.parent, name: f.parent}
-        //   console.log(parent)
-        //   this.Graph.graphData({
-        //     nodes: [...nodes, parent],
-        //  //   links: [...links, { /*source: parent.url, target: f.id*/ }]
-        //   });
-        // }
-        //let n = {id: f.url}
-        //  if(f.parent != undefined){
-
-        try{
-          this.Graph.graphData({
-            nodes: [...nodes, f],
-            //links: links
-            links: [...links/*, { source: "https://spoggy-test13.solidcommunity.net/", target: f.url }*/]
-          });
-          //}
-          console.log(nodes,links)
-        }
-        catch(e){
-          console.log(e,f)
-        }
-      }
+  methods:{
+    update(){
+      this.Graph.graphData({
+        nodes: this.nodes,
+        //links: links
+        links: this.links //[...links/*, { source: "https://spoggy-test13.solidcommunity.net/", target: f.url }*/]
+      })
     }
-  }
+  },
+  watch:{
+    nodes(){
+      //console.log(this.nodes)
+      this.update()
+    },
+    links(){
+      //console.log(this.links)
+      this.update()
+    }
+    // files(){
+    //   const { nodes, links } = this.Graph.graphData();
+    //   for (const f of this.files){
+    //     //  console.log(f)
+    //     //let n = {id: f.url}
+    //     //f.id = f.url
+    //     try{
+    //       this.Graph.graphData({
+    //         nodes: [...nodes, f],
+    //         links: [...links/*, { source: f.parent, target: f.url }*/]
+    //       });
+    //     }
+    //     catch(e){
+    //       console.log(e,f)
+    //     }
+    //   }
+    // },
+    // folders(){
+    //   const { nodes, links } = this.Graph.graphData();
+    //   for (const f of this.folders){
+    //     console.log(f)
+    //     // f.id = f.url
+    //     //  let parent = nodes.find(x=> x.id == f.parent)
+    //     //  console.log("parent", parent)
+    //
+    //     // if (parent == undefined){
+    //     //   let parent = {id: f.parent, url : f.parent, name: f.parent}
+    //     //   console.log(parent)
+    //     //   this.Graph.graphData({
+    //     //     nodes: [...nodes, parent],
+    //     //  //   links: [...links, { /*source: parent.url, target: f.id*/ }]
+    //     //   });
+    //     // }
+    //     //let n = {id: f.url}
+    //     //  if(f.parent != undefined){
+    //
+    //     try{
+    //       this.Graph.graphData({
+    //         nodes: [...nodes, f],
+    //         //links: links
+    //         links: [...links/*, { source: "https://spoggy-test13.solidcommunity.net/", target: f.url }*/]
+    //       });
+    //       //}
+    //       console.log(nodes,links)
+    //     }
+    //     catch(e){
+    //       console.log(e,f)
+    //     }
+    //   }
+    // }
+  },
+
 }
 </script>
 

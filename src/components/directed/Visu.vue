@@ -2,7 +2,7 @@
   <div>
 
     <div v-if="paths.length>0">Exploring {{ paths.length }} paths.
-      <div v-if="paths.length <3"> {{ paths}}</div>
+      <!-- <div v-if="paths.length <3"> {{ paths}}</div> -->
     </div>
     <Graph :nodes="nodes" :links="links" />
     {{ pod }}
@@ -27,7 +27,7 @@ export default {
   methods: {
     async explore(path){
       this.paths.push(path)
-      console.log("explore", path)
+    //  console.log("explore", path)
       let resources = await this.$getResources(path)
       //  console.log(resources)
       let app = this

@@ -1,11 +1,19 @@
 <template>
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <Login /><br>
-    <!-- LOOK at js console to see the agents in action<br> -->
-    <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
-    <b-button @click="onChange" variant="primary">Update</b-button>
 
+    <!-- LOOK at js console to see the agents in action<br> -->
+    <b-row>
+      <b-col>
+        <Login />
+      </b-col>
+      <b-col class="col-12 col-md-8 ">
+        <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
+      </b-col>
+      <b-col>
+        <b-button @click="onChange" variant="primary">Explore</b-button>
+      </b-col>
+    </b-row>
     <Visu />
     <!-- <ThreeScene :files="files"/> -->
     {{ files}}
@@ -33,7 +41,7 @@ export default {
   },
   data(){
     return {
-      url : "https://spoggy-test13.solidcommunity.net/"
+      url : "https://spoggy-test6.solidcommunity.net/public/"
     }
   },
   created(){
@@ -56,7 +64,7 @@ export default {
   methods:{
     async onChange(){
       console.log(this.url)
-
+      this.$store.commit('app/mustExplore', this.url)
       // let resources = await this.$getResources(this.url)
       // resources.unshift({url: this.url, name: "ROOT", parent: null })
 

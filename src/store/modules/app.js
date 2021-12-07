@@ -1,7 +1,8 @@
 // import Vue from 'vue'
 const state = () => ({
   files: [],
-  folders: []
+  folders: [],
+  mustExplore: null
   // bureau: null,
   // resource: null,
   // content: null
@@ -23,6 +24,9 @@ const mutations = {
   addFolder(state,f){
     state.folders.push(f)
   },
+  mustExplore(state, u){
+    state.mustExplore = u
+  }
   // setResource(state,r){
   //   state.resource = r
   // },

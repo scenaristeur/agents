@@ -53,6 +53,31 @@ const plugin = {
     console.log(store)
 
     Vue.prototype.$getResources = async function(path){
+      console.log("path", path)
+      //let resources = []
+      const dataset = await getSolidDataset( path, { fetch: sc.fetch });
+      let resources  = await getContainedResourceUrlAll(dataset,{fetch: sc.fetch} )
+      .map(u => {
+
+        let r = {url: u, parent: path}
+        let parts = u.split('/')
+        if(u.endsWith('/')){
+          r.name = parts[parts.length - 2]
+          r.type = "folder"
+          r.icon = "📁"
+        }else{
+          r.name = parts[parts.length - 1]
+          r.type = "file"
+          r.icon = "📄"
+        }
+
+        return r
+      })
+      //  console.log("remotes",remotesUrl)
+      return resources
+    }
+    
+    Vue.prototype.$getResources1 = async function(path){
       //  console.log("path", path)
       let resources = []
       const dataset = await getSolidDataset( path, { fetch: sc.fetch });
@@ -72,7 +97,7 @@ const plugin = {
           r.name = parts[parts.length - 2]
           r.type = "folder"
           r.icon = "📁"
-          r.resources = this.$getResources(r.url)
+          //  r.resources = this.$getResources(r.url)
           //store.commit('app/addFolder',r)
           //child.value = {type:'folder', url:c, text: text}
           //  child.html= "📁"+text

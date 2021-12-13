@@ -33,6 +33,7 @@ export default {
     //     target: Math.round(Math.random() * (id-1))
     //   }))
     // };
+    let app = this
     let elem = this.$refs.graph
     this.Graph = ForceGraph3D()(elem)
     // .enableNodeDrag(false)
@@ -44,7 +45,7 @@ export default {
     .nodeId('url')
     .nodeAutoColorBy('type')
     .nodeThreeObject(({ url }) => {
-      //  console.log("url",url)
+      console.log(url)
       if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')){
         const imgTexture = new THREE.TextureLoader().load(`${url}`);
         const material = new THREE.SpriteMaterial({ map: imgTexture });
@@ -66,7 +67,7 @@ export default {
     })
     .linkDirectionalArrowLength(3.5)
     .linkDirectionalArrowRelPos(1)
-  //  .linkCurvature(0.25)
+    //  .linkCurvature(0.25)
     .linkPositionUpdate((sprite, { start, end }) => {
       if(sprite != undefined){
         const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
@@ -82,6 +83,7 @@ export default {
     .onNodeClick(node => {
       // Aim at node from outside it
       console.log(node)
+      app.$store.commit ('app/mustExplore', node.url)
       const distance = 40;
       const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
 

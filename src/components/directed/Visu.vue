@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <Comunica />
     <div v-if="paths.length>0">Exploring {{ paths.length }} paths.
       <!-- <div v-if="paths.length <3"> {{ paths}}</div> -->
     </div>
@@ -21,6 +21,7 @@ export default {
   components: {
     // 'ThreeScene': () => import('@/components/three/ThreeScene'),
     'Graph': () => import('@/components/directed/Graph'),
+    'Comunica': () => import('@/components/dev/Comunica'),
     // Hello
     // HelloWorld
   },

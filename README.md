@@ -4,6 +4,8 @@
 - https://eve.almende.com/implementations/javascript/introduction.html
 - https://github.com/scenaristeur/spoggy-graph/blob/master/package.json
 
+# test communica
+- http://127.0.0.1:8080/communica.html
 
 ## Project setup
 ```

@@ -45,14 +45,18 @@ export default {
     .nodeId('url')
     .nodeAutoColorBy('type')
     .nodeThreeObject(({ url }) => {
-      console.log(url)
-      if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')){
-        const imgTexture = new THREE.TextureLoader().load(`${url}`);
-        const material = new THREE.SpriteMaterial({ map: imgTexture });
-        const sprite = new THREE.Sprite(material);
-        sprite.scale.set(12, 12);
-        return sprite;
+
+      if(url == undefined){
+        url = "root"
       }
+        if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')){
+          const imgTexture = new THREE.TextureLoader().load(`${url}`);
+          const material = new THREE.SpriteMaterial({ map: imgTexture });
+          const sprite = new THREE.Sprite(material);
+          sprite.scale.set(12, 12);
+          return sprite;
+        }
+
     })
 
     .linkThreeObjectExtend(true)

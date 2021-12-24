@@ -41,7 +41,9 @@ export default {
   },
   data(){
     return {
-      url : "https://spoggy-test6.solidcommunity.net/public/"
+      url : "https://spoggy-test6.solidcommunity.net/public/",
+      //  url:'https://data.virtual-assembly.org/',
+      //url:'https://data.gl.flod.io/'
     }
   },
   created(){

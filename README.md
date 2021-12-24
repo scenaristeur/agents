@@ -4,6 +4,10 @@
 - https://eve.almende.com/implementations/javascript/introduction.html
 - https://github.com/scenaristeur/spoggy-graph/blob/master/package.json
 
+# sources
+- https://data.gl.flod.io/users
+- https://data.virtual-assembly.org/
+
 # test communica
 - http://127.0.0.1:8080/communica.html
 

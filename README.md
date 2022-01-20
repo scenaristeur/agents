@@ -14,6 +14,10 @@
 # build an es6 module
 - https://whitep4nth3r.com/blog/how-to-build-test-and-release-node-module-es6
 
+# threejs demos
+- http://stemkoski.github.io/Three.js/
+
+
 
 ## Project setup
 ```

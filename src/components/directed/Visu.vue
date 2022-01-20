@@ -191,7 +191,7 @@ export default {
         console.log("mustExplore", this.mustExplore)
         let exist = this.nodes.find(x => x.url = this.mustExplore)
         let url = this.mustExplore
-
+        console.log("exist ? ", exist)
         exist ==  undefined ? this.nodes.push({url:url, name: url, color: "#ff00ff", type: "storage"}) : ""
         this.explore(this.mustExplore)
       }

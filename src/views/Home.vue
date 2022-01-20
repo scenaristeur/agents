@@ -7,7 +7,7 @@
       <b-col>
         <Login />
       </b-col>
-      <b-col class="col-12 col-md-8 ">
+      <b-col class="col-10 col-md-6 ">
         <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
       </b-col>
       <b-col>
@@ -29,7 +29,7 @@
 // import { HelloAgent } from '@/agents/HelloAgent.js';
 // import { SnifferAgent } from '@/agents/SnifferAgent.js';
 
-
+import { Factory } from 'neurone-factory'
 
 export default {
   name: 'Home',
@@ -47,6 +47,11 @@ export default {
     }
   },
   created(){
+
+    let factory = new Factory()
+console.log("Test import neurone-factory ", factory)
+let neurone = factory.create(/*{model: "neurone1"}*/)
+console.log("neurone ", neurone)
     // this.agentApp = new AppAgent('agentApp', this);
     // console.log(this.agentApp);
     // //this.agentApp.send('agentApp', {type: 'dispo', name: 'agentGraph' });

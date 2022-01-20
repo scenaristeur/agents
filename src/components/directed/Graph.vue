@@ -1,12 +1,13 @@
 <template>
   <div>
-
+    <div ref="guiDiv" style="position:absolute;top:100;left:100;z-index:2"></div>
     <div ref="graph"></div>
 
   </div>
 </template>
 
 <script>
+import { GUI } from 'dat.gui'
 //https://github.com/vasturiano/3d-force-graph
 import ForceGraph3D from '3d-force-graph';
 import SpriteText from 'three-spritetext';
@@ -49,13 +50,13 @@ export default {
       if(url == undefined){
         url = "root"
       }
-        if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')){
-          const imgTexture = new THREE.TextureLoader().load(`${url}`);
-          const material = new THREE.SpriteMaterial({ map: imgTexture });
-          const sprite = new THREE.Sprite(material);
-          sprite.scale.set(12, 12);
-          return sprite;
-        }
+      if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')){
+        const imgTexture = new THREE.TextureLoader().load(`${url}`);
+        const material = new THREE.SpriteMaterial({ map: imgTexture });
+        const sprite = new THREE.Sprite(material);
+        sprite.scale.set(12, 12);
+        return sprite;
+      }
 
     })
 
@@ -98,8 +99,45 @@ export default {
       );
     });
 
+    //  console.log(this.Graph)
+    //  console.log(this.Graph.graphData())
 
-    console.log(this.Graph.graphData())
+    //https://sbcode.net/threejs/dat-gui/
+    //http://learningthreejs.com/blog/2011/08/14/dat-gui-simple-ui-for-demos/
+    // dat.gui https://github.com/dataarts/dat.gui/blob/master/API.md
+    const geometry = new THREE.BoxGeometry()
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x00ff00,
+      wireframe: true,
+    })
+    const cube = new THREE.Mesh(geometry, material)
+    this.Graph.scene().add(cube)
+    let guiDiv = app.$refs.guiDiv
+    console.log(guiDiv)
+    const gui = new GUI(
+      {autoPlace: false}
+    )
+    console.log(gui)
+
+    var text = {
+      message: 'dat.gui',
+      speed: 0.8,
+      displayOutline: false,
+    };
+
+    guiDiv.appendChild(gui.domElement);
+    const cubeFolder = gui.addFolder('Cube')
+    cubeFolder.add(cube.rotation, 'x', 0, Math.PI * 2)
+    cubeFolder.add(cube.rotation, 'y', 0, Math.PI * 2)
+    cubeFolder.add(cube.rotation, 'z', 0, Math.PI * 2)
+    cubeFolder.add(text, 'message');
+    cubeFolder.add(text, 'speed', -5, 5);
+    cubeFolder.add(text, 'displayOutline');
+    //cubeFolder.open()
+    
+    // const cameraFolder = gui.addFolder('Camera')
+    // cameraFolder.add(camera.position, 'z', 0, 10)
+    // cameraFolder.open()
     // setInterval(() => {
     //   const { nodes, links } = this.Graph.graphData();
     //   const id = nodes.length;

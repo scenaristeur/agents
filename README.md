@@ -11,6 +11,10 @@
 # test communica
 - http://127.0.0.1:8080/communica.html
 
+# build an es6 module
+- https://whitep4nth3r.com/blog/how-to-build-test-and-release-node-module-es6
+
+
 ## Project setup
 ```
 npm install

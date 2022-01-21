@@ -2,7 +2,16 @@
   <div>
     <div ref="guiDiv" style="position:absolute; top:500; left:200;z-index:2"></div>
     <div ref="guiProps" style="position:absolute;top:200;left:100;z-index:2"></div>
-  </div>
+
+    <b-modal id="modal-field"
+    title="New Field"
+    @ok="addField"
+    >
+    <!--  -->
+    <b-form-input v-if="field != null" v-model="field.name" placeholder="new property / link"></b-form-input>
+  </b-modal>
+
+</div>
 </template>
 
 <script>
@@ -12,7 +21,18 @@ import { Factory } from 'neurone-factory'
 export default {
   name: "Ui",
   props:['Graph', 'nodes'],
-
+  data(){
+    return{
+      field: null,
+      clearing: false,
+      fieldType: "text",
+      show: false,
+      currentProp: {},
+      newValue: null,
+      link: {},
+      permissions: null
+    }
+  },
   mounted(){
 
     //https://sbcode.net/threejs/dat-gui/
@@ -160,9 +180,24 @@ export default {
     },
     newProperty(){
       console.log("newProperty")
+      this.field = {name: "", category: "ve:properties"}
+      this.$bvModal.show("modal-field")
+    },
+    addField(){
+        console.log(this.field)
+      if(this.clearing == false){
+        let p = {name: this.field.name, values: []}
+        this.currentNode[this.field.category] == undefined ? this.currentNode[this.field.category] = [] : ""
+        var index = this.currentNode[this.field.category].findIndex(x => x.name==p.name);
+        index === -1 ? this.currentNode[this.field.category].push(p) : alert(p.name+" already exist")
+      }
+      console.log(this.currentNode)
+      this.updateNodeFolder()
     },
     newLink(){
       console.log("newLink")
+      this.field = {name: "", category: "ve:links"}
+      this.$bvModal.show("modal-field")
     },
     newNeurone(){
       console.log("newNeurone")

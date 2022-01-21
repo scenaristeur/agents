@@ -1,6 +1,8 @@
 <template>
-  <div ref="guiDiv" style="position:absolute;top:100;left:100;z-index:2"></div>
-
+  <div>
+    <div ref="guiDiv" style="position:absolute; top:500; left:200;z-index:2"></div>
+    <div ref="guiProps" style="position:absolute;top:200;left:100;z-index:2"></div>
+  </div>
 </template>
 
 <script>
@@ -24,10 +26,10 @@ export default {
     this.Graph.scene().add(cube)
     let guiDiv = this.$refs.guiDiv
     console.log(guiDiv)
-    const gui = new GUI(
+    this.gui = new GUI(
       {autoPlace: false}
     )
-    console.log(gui)
+    // console.log(gui)
 
     var text = {
       message: 'dat.gui',
@@ -37,8 +39,8 @@ export default {
       newNeurone: this.newNeurone
     };
 
-    guiDiv.appendChild(gui.domElement);
-    const cubeFolder = gui.addFolder('Tools')
+    guiDiv.appendChild(this.gui.domElement);
+    const cubeFolder = this.gui.addFolder('Tools')
     cubeFolder.add(cube.rotation, 'x', 0, Math.PI * 2)
     cubeFolder.add(cube.rotation, 'y', 0, Math.PI * 2)
     cubeFolder.add(cube.rotation, 'z', 0, Math.PI * 2)
@@ -55,8 +57,29 @@ export default {
     // const cameraFolder = gui.addFolder('Camera')
     // cameraFolder.add(camera.position, 'z', 0, 10)
     // cameraFolder.open()
+    this.buildGuiProps()
   },
   methods:{
+    buildGuiProps(){
+      // let guiDiv = this.$refs.guiDiv
+    //  let guiProps = this.$refs.guiProps
+      //const guiP = new GUI({autoPlace: false})
+
+      var lignes = {
+        message: 'props menu',
+        messageLink: 'Link menu',
+          speed: 0.8,
+      }
+
+
+    //  guiDiv.appendChild(guiP.domElement)
+      const propsFolder = this.gui.addFolder('Props')
+      const linksFolder = this.gui.addFolder('Links')
+      propsFolder.add(lignes, 'message')
+      linksFolder.add(lignes, 'messageLink')
+      const testsub = propsFolder.addFolder("sub")
+      testsub.add(lignes, "speed", -5, 5)
+    },
     newNeurone(){
       console.log("newNeurone")
       let node = { name: "test", type: undefined, color: this.randomColor() /*"#ffffff"*/}

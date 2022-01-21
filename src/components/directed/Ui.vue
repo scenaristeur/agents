@@ -17,7 +17,7 @@
 <script>
 import { GUI } from 'dat.gui'
 import * as THREE from "three";
-import { Brain } from 'neurone-factory'
+import { Neurone , /* Brain, Graph*/ } from 'neurone-factory'
 export default {
   name: "Ui",
   props:['Graph', 'nodes'],
@@ -74,7 +74,7 @@ export default {
       // this.nodeFolder.remove('name')
       // this.nodeFolder.remove('color')
       // let nameController = new Controller()
-
+      this.nodeFolder.add(this.currentNode, 'name')
       this.nodeFolder.add(this.currentNode, 've:name')
       this.nodeFolder.add(this.currentNode, 've:age')
       this.nodeFolder.add(this.currentNode, 've:type')
@@ -163,12 +163,13 @@ export default {
         // speed: 0.8,
         // displayOutline: false,
         //color: "#ff0000", // color (change "#" to "0x")
+        newBrain: this.newBrain,
         newNeurone: this.newNeurone,
         resetCamera: this.resetCamera
       };
 
       const toolFolder = this.gui.addFolder('Tools')
-
+      toolFolder.add( lignes, 'newBrain' ).name("New brain");
       toolFolder.add( lignes, 'newNeurone' ).name("New neurone");
       toolFolder.add( lignes, 'resetCamera' ).name("Reset camera");
       toolFolder.open()
@@ -227,17 +228,17 @@ export default {
       this.field = {name: "", category: "ve:links"}
       this.$bvModal.show("modal-field")
     },
+    newBrain(){
+      alert("newBrain")
+    },
     newNeurone(){
       console.log("newNeurone")
-
-
-      let brain = new Brain()
-      console.log("Test import neurone-factory ", brain)
-      let node = brain.createNeurone(
+      let node = new Neurone(
         {
           blip: "blop",
           color: this.randomColor(),
-          've:name': "test is cool"
+          've:name': "test is cool",
+          name: "name for graph_"+this.nodes.length
         }
       )
       console.log("neurone ", node)

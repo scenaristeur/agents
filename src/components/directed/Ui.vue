@@ -17,68 +17,86 @@ export default {
     //http://learningthreejs.com/blog/2011/08/14/dat-gui-simple-ui-for-demos/
     // dat.gui https://github.com/dataarts/dat.gui/blob/master/API.md
     // http://stemkoski.github.io/Three.js/#gui
-    const geometry = new THREE.BoxGeometry()
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x00ff00,
-      wireframe: true,
-    })
-    const cube = new THREE.Mesh(geometry, material)
-    this.Graph.scene().add(cube)
+
     let guiDiv = this.$refs.guiDiv
     console.log(guiDiv)
     this.gui = new GUI(
       {autoPlace: false}
     )
-    // console.log(gui)
-
-    var text = {
-      message: 'dat.gui',
-      speed: 0.8,
-      displayOutline: false,
-      color: "#ff0000", // color (change "#" to "0x")
-      newNeurone: this.newNeurone
-    };
-
     guiDiv.appendChild(this.gui.domElement);
-    const cubeFolder = this.gui.addFolder('Tools')
-    cubeFolder.add(cube.rotation, 'x', 0, Math.PI * 2)
-    cubeFolder.add(cube.rotation, 'y', 0, Math.PI * 2)
-    cubeFolder.add(cube.rotation, 'z', 0, Math.PI * 2)
-    cubeFolder.add(text, 'message');
-    cubeFolder.add(text, 'speed', -5, 5);
-    cubeFolder.add(text, 'displayOutline');
-    cubeFolder.add( text, 'newNeurone' ).name("New neurone");
-    //cubeFolder.open()
 
-    var cubeColor = cubeFolder.addColor( text, 'color' ).name('Color').listen();
-    cubeColor.onChange(function(value) // onFinishChange
-    {   cube.material.color.setHex( value.replace("#", "0x") );   });
+
 
     // const cameraFolder = gui.addFolder('Camera')
     // cameraFolder.add(camera.position, 'z', 0, 10)
     // cameraFolder.open()
-    this.buildGuiProps()
+    this.buildGuiTools()
+    this.buildGuiNode()
+    this.buildGuiTest()
   },
   methods:{
-    buildGuiProps(){
-      // let guiDiv = this.$refs.guiDiv
-    //  let guiProps = this.$refs.guiProps
-      //const guiP = new GUI({autoPlace: false})
-
+    buildGuiNode(){
       var lignes = {
         message: 'props menu',
         messageLink: 'Link menu',
-          speed: 0.8,
+        speed: 0.8,
       }
-
-
-    //  guiDiv.appendChild(guiP.domElement)
-      const propsFolder = this.gui.addFolder('Props')
-      const linksFolder = this.gui.addFolder('Links')
+      const nodeFolder = this.gui.addFolder('Node')
+      const propsFolder = nodeFolder.addFolder('Props')
+      const linksFolder = nodeFolder.addFolder('Links')
       propsFolder.add(lignes, 'message')
       linksFolder.add(lignes, 'messageLink')
       const testsub = propsFolder.addFolder("sub")
       testsub.add(lignes, "speed", -5, 5)
+    },
+    buildGuiTools(){
+      var lignes = {
+        // message: 'dat.gui',
+        // speed: 0.8,
+        // displayOutline: false,
+        //color: "#ff0000", // color (change "#" to "0x")
+        newNeurone: this.newNeurone
+      };
+
+      const toolFolder = this.gui.addFolder('Tools')
+
+      toolFolder.add( lignes, 'newNeurone' ).name("New neurone");
+      toolFolder.open()
+    },
+    buildGuiTest(){
+      const geometry = new THREE.BoxGeometry()
+      const material = new THREE.MeshBasicMaterial({
+        color: 0x00ff00,
+        wireframe: true,
+      })
+      const cube = new THREE.Mesh(geometry, material)
+      this.Graph.scene().add(cube)
+
+      var text = {
+        message: 'dat.gui',
+        speed: 0.8,
+        displayOutline: false,
+        color: "#ff0000", // color (change "#" to "0x")
+        //  newNeurone: this.newNeurone
+      };
+
+
+      const cubeFolder = this.gui.addFolder('Test')
+      cubeFolder.add(cube.rotation, 'x', 0, Math.PI * 2)
+      cubeFolder.add(cube.rotation, 'y', 0, Math.PI * 2)
+      cubeFolder.add(cube.rotation, 'z', 0, Math.PI * 2)
+      cubeFolder.add(text, 'message');
+      cubeFolder.add(text, 'speed', -5, 5);
+      cubeFolder.add(text, 'displayOutline');
+      // cubeFolder.add( text, 'newNeurone' ).name("New neurone");
+      //cubeFolder.open()
+
+      var cubeColor = cubeFolder.addColor( text, 'color' ).name('Color').listen();
+      cubeColor.onChange(function(value) // onFinishChange
+      {   cube.material.color.setHex( value.replace("#", "0x") );   });
+
+
+
     },
     newNeurone(){
       console.log("newNeurone")

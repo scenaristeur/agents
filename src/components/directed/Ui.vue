@@ -17,7 +17,7 @@
 <script>
 import { GUI } from 'dat.gui'
 import * as THREE from "three";
-import { Factory } from 'neurone-factory'
+import { Brain } from 'neurone-factory'
 export default {
   name: "Ui",
   props:['Graph', 'nodes'],
@@ -205,8 +205,6 @@ export default {
       cubeColor.onChange(function(value) // onFinishChange
       {   cube.material.color.setHex( value.replace("#", "0x") );   });
 
-
-
     },
     newProperty(){
       console.log("newProperty")
@@ -233,13 +231,19 @@ export default {
       console.log("newNeurone")
 
 
-      let factory = new Factory()
-      console.log("Test import neurone-factory ", factory)
-      let neurone = factory.create(/*{model: "neurone1"}*/)
-      console.log("neurone ", neurone)
-      let node = neurone._data
-      node['ve:name'] == undefined ? node['ve:name'] = "test" : ""
-      node['color'] == undefined ? node['color'] = this.randomColor() : ""
+      let brain = new Brain()
+      console.log("Test import neurone-factory ", brain)
+      let node = brain.createNeurone(
+        {
+          blip: "blop",
+          color: this.randomColor(),
+          've:name': "test is cool"
+        }
+      )
+      console.log("neurone ", node)
+      //  let node = neurone._data
+      // node['ve:name'] == undefined ? node['ve:name'] = "test" : ""
+      // node['color'] == undefined ? node['color'] = this.randomColor() : ""
       //  let node = { name: "test", type: undefined, color: this.randomColor() /*"#ffffff"*/}
       this.nodes.push(node)
 

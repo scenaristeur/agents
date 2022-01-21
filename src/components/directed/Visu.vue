@@ -1,11 +1,12 @@
 <template>
   <div>
-    <Comunica />
+
     <div v-if="paths.length>0">Exploring {{ paths.length }} paths.
       <!-- <div v-if="paths.length <3"> {{ paths}}</div> -->
     </div>
     <Graph :nodes="nodes" :links="links" />
     {{ pod }}
+      <Comunica />
     <!-- <Hello /> -->
   </div>
 </template>

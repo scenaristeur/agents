@@ -101,6 +101,33 @@ export default {
       const testsub = propsFolder.addFolder("sub")
       testsub.add(lignes, "speed", -5, 5)
 
+      this.currentNode["ve:properties"].forEach((item) => {
+        console.log(item)
+        // templigne = {
+        //
+        // }
+
+        var lignes_value = {
+          addValue: this.addValue,
+        }
+
+        let folder = propsFolder.addFolder(item.name)
+        folder.add( lignes_value, 'addValue' ).name("New value");
+
+        console.log(folder)
+        item.values.forEach((v) => {
+          console.log(v)
+          //folder.add(item, 'name')//.name(item.name)
+
+        });
+
+
+
+      });
+
+
+
+
       // this.nodeFolder.add(this.currentNode, 'url')
       //  this.nodeFolder.add(this.currentNode, 've:created')
       //  this.nodeFolder.add(this.currentNode, 've:color')
@@ -112,6 +139,9 @@ export default {
         app.currentNode.color = value //.replace("#", "0x") //);
       });
       this.nodeFolder.open()
+    },
+    addValue(){
+      console.log("new value")
     },
     buildGuiNode(){
       var lignes = {
@@ -184,7 +214,7 @@ export default {
       this.$bvModal.show("modal-field")
     },
     addField(){
-        console.log(this.field)
+      console.log(this.field)
       if(this.clearing == false){
         let p = {name: this.field.name, values: []}
         this.currentNode[this.field.category] == undefined ? this.currentNode[this.field.category] = [] : ""

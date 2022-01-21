@@ -104,6 +104,7 @@ export default {
         node, // lookAt ({ x, y, z })
         3000  // ms transition duration
       );
+      app.$store.commit ('app/currentNode', node)
     });
 
     //  console.log(this.Graph)

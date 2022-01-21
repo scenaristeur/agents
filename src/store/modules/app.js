@@ -2,7 +2,8 @@
 const state = () => ({
   files: [],
   folders: [],
-  mustExplore: null
+  mustExplore: null,
+  currentNode: null
   // bureau: null,
   // resource: null,
   // content: null
@@ -26,6 +27,9 @@ const mutations = {
   },
   mustExplore(state, u){
     state.mustExplore = u
+  },
+  currentNode(state, n){
+    state.currentNode = n
   }
   // setResource(state,r){
   //   state.resource = r

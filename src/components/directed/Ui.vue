@@ -17,7 +17,7 @@
 <script>
 import { GUI } from 'dat.gui'
 import * as THREE from "three";
-import { Neurone , /* Brain, Graph*/ } from 'neurone-factory'
+import { Neurone ,  Brain/*, Graph*/ } from 'neurone-factory'
 export default {
   name: "Ui",
   props:['Graph', 'nodes'],
@@ -75,12 +75,12 @@ export default {
       // this.nodeFolder.remove('color')
       // let nameController = new Controller()
       this.nodeFolder.add(this.currentNode, 'name')
-      this.nodeFolder.add(this.currentNode, 've:name')
-      this.nodeFolder.add(this.currentNode, 've:age')
-      this.nodeFolder.add(this.currentNode, 've:type')
-      this.nodeFolder.add(this.currentNode, 've:url')
-      this.nodeFolder.add(this.currentNode, 've:privacy')
-      this.nodeFolder.add(this.currentNode, 've:created')
+      this.nodeFolder.add(this.currentNode, 'name')
+      this.nodeFolder.add(this.currentNode, 'age')
+      this.nodeFolder.add(this.currentNode, 'type')
+      this.nodeFolder.add(this.currentNode, 'url')
+      this.nodeFolder.add(this.currentNode, 'privacy')
+      this.nodeFolder.add(this.currentNode, 'created')
       const propsFolder = this.nodeFolder.addFolder('Properties')
       const linksFolder = this.nodeFolder.addFolder('Links')
 
@@ -101,7 +101,7 @@ export default {
       const testsub = propsFolder.addFolder("sub")
       testsub.add(lignes, "speed", -5, 5)
 
-      this.currentNode["ve:properties"].forEach((item) => {
+      this.currentNode["properties"].forEach((item) => {
         console.log(item)
         // templigne = {
         //
@@ -129,8 +129,8 @@ export default {
 
 
       // this.nodeFolder.add(this.currentNode, 'url')
-      //  this.nodeFolder.add(this.currentNode, 've:created')
-      //  this.nodeFolder.add(this.currentNode, 've:color')
+      //  this.nodeFolder.add(this.currentNode, 'created')
+      //  this.nodeFolder.add(this.currentNode, 'color')
       let app = this
       var nodeColor = this.nodeFolder.addColor( this.currentNode, 'color' ).name('Color').listen();
       nodeColor.onChange(function(value) // onFinishChange
@@ -225,11 +225,13 @@ export default {
     },
     newLink(){
       console.log("newLink")
-      this.field = {name: "", category: "ve:links"}
+      this.field = {name: "", category: "links"}
       this.$bvModal.show("modal-field")
     },
     newBrain(){
-      alert("newBrain")
+      //alert("newBrain")
+      this.brain = new Brain()
+      console.log(this.brain)
     },
     newNeurone(){
       console.log("newNeurone")
@@ -237,13 +239,12 @@ export default {
         {
           blip: "blop",
           color: this.randomColor(),
-          've:name': "test is cool",
           name: "name for graph_"+this.nodes.length
         }
       )
       console.log("neurone ", node)
       //  let node = neurone._data
-      // node['ve:name'] == undefined ? node['ve:name'] = "test" : ""
+      // node['name'] == undefined ? node['name'] = "test" : ""
       // node['color'] == undefined ? node['color'] = this.randomColor() : ""
       //  let node = { name: "test", type: undefined, color: this.randomColor() /*"#ffffff"*/}
       this.nodes.push(node)

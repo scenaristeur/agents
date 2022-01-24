@@ -215,9 +215,9 @@ export default {
             reader.onload = async () => {
               //  console.log(reader.result)
               r.jsonld = JSON.parse(reader.result)
-              r.name = r.jsonld["ve:name"]
-              console.log("jsonld",r.jsonld['ve:properties'])
-              for (const p of r.jsonld['ve:properties']){
+              r.name = r.jsonld["name"]
+              console.log("jsonld",r.jsonld['properties'])
+              for (const p of r.jsonld['properties']){
                 console.log(p)
                 for (const v of p.values){
                   console.log(v)

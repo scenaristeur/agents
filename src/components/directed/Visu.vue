@@ -32,7 +32,6 @@ export default {
   data(){
     return{
       nodes: [],
-      edges: [],
       links: [],
       paths: [],
       jump: 0
@@ -71,10 +70,11 @@ export default {
     },
     saveEdge(e){
       console.log(e)
-      console.log(this.edges)
-      var index = this.edges.findIndex(x => x.id==e.id);
-      index === -1 ? this.edges.push(e) : Object.assign(this.edges[index], e)
-      console.log(this.nodes, this.edges)
+      console.log(this.links)
+      this.links.push(e)
+    //  var index = this.links.findIndex(x => x.id==e.id);
+      //index === -1 ? this.links.push(e) : Object.assign(this.links[index], e)
+      console.log(this.nodes, this.links)
       this.sendUpdate(e)
     },
     nodeFromLabelVis(label) {

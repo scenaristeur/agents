@@ -61,6 +61,9 @@ export default {
       this.nodeFolder = this.gui.addFolder('Node')
       // console.log(this.nodeFolder)
       console.log(this.currentNode)
+      this.currentNode.age == undefined ? this.currentNode.age = 0 : ""
+        this.currentNode.privacy == undefined ? this.currentNode.privacy = "" : ""
+      //this.currentNode.age == undefined ?
       // console.log(this.nodeFolder.__controllers)
       // this.nodeFolder.__controllers.forEach((item) => {
       //   console.log('remove', item)
@@ -74,13 +77,13 @@ export default {
       // this.nodeFolder.remove('name')
       // this.nodeFolder.remove('color')
       // let nameController = new Controller()
-      this.nodeFolder.add(this.currentNode, 'name')
+      // this.nodeFolder.add(this.currentNode, 'name')
       this.nodeFolder.add(this.currentNode, 'name')
       this.nodeFolder.add(this.currentNode, 'age')
       this.nodeFolder.add(this.currentNode, 'type')
       this.nodeFolder.add(this.currentNode, 'url')
       this.nodeFolder.add(this.currentNode, 'privacy')
-      this.nodeFolder.add(this.currentNode, 'created')
+this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'created') : ""
       const propsFolder = this.nodeFolder.addFolder('Properties')
       const linksFolder = this.nodeFolder.addFolder('Links')
 
@@ -239,7 +242,8 @@ export default {
         {
           blip: "blop",
           color: this.randomColor(),
-          name: "name for graph_"+this.nodes.length
+          name: "name for graph_"+this.nodes.length,
+          age: 0
         }
       )
       console.log("neurone ", node)

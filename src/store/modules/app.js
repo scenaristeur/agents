@@ -3,7 +3,8 @@ const state = () => ({
   files: [],
   folders: [],
   mustExplore: null,
-  currentNode: null
+  currentNode: null,
+    inputObject: null,
   // bureau: null,
   // resource: null,
   // content: null
@@ -30,7 +31,27 @@ const mutations = {
   },
   currentNode(state, n){
     state.currentNode = n
+  },
+  setInputObject(state, io){
+  console.log(io)
+  if (io.type == 'commande'){
+    // switch (io.value) {
+    //   case '/i':
+    //     state.command = {action: 'import'}
+    //     break;
+    //   default:
+    //
+    // }
+    state.action = {action: state.commands[io.value]}
+    console.log(state.action)
+    if(state.action.action == undefined){
+      alert("Warning : Unknown action "+ io.value + " , type /h for help" )
+    }
+  }else{
+    state.inputObject = io
   }
+
+},
   // setResource(state,r){
   //   state.resource = r
   // },

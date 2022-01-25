@@ -20,7 +20,7 @@ const actions = {
     let exclude = node.exclude
     delete node.exclude
     console.log(exclude)
-    let del =  confirm("Are you sur you want to delete "+node['ve:name']);
+    let del =  confirm("Are you sur you want to delete "+node.name);
     if (del == true){
       if (exclude != "remote"){
         if(context.rootState.solid.pod != null){
@@ -36,7 +36,7 @@ const actions = {
         }
       }
       if (exclude != "local"){
-        console.log('store is being asked to delete '+node.id, node['ve:name']);
+        console.log('store is being asked to delete '+node.id, node.name);
         await idb.deleteNode(node);
       }
     }
@@ -53,8 +53,8 @@ const actions = {
     delete node.exclude
     console.log(exclude)
     node.id == undefined ? node.id = uuidv4() : ""
-    node['ve:created'] == undefined ? node['ve:created'] = Date.now() : ""
-    node['ve:updated'] = Date.now()
+    node.created == undefined ? node.created = Date.now() : ""
+    node.updated = Date.now()
     if( exclude != "remote"){
       if(context.rootState.solid.pod != null){
         try{

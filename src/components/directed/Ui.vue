@@ -171,12 +171,14 @@ export default {
       //  this.nodeFolder.add(this.currentNode, 'created')
       //  this.nodeFolder.add(this.currentNode, 'color')
       let app = this
-      var nodeColor = this.nodeFolder.addColor( this.currentNode, 'color' ).name('Color').listen();
-      nodeColor.onChange(function(value) // onFinishChange
-      {
-        console.log("must update color value", value)
-        app.currentNode.color = value.replace("#", "0x") //);
-      });
+      if(this.currentNode.color != undefined){
+        var nodeColor = this.nodeFolder.addColor( this.currentNode, 'color' ).name('Color').listen();
+        nodeColor.onChange(function(value) // onFinishChange
+        {
+          console.log("must update color value", value)
+          app.currentNode.color = value.replace("#", "0x") //);
+        });
+      }
 
       this.nodeFolder.add(this.currentNode, 'privacy')
       this.nodeFolder.open()
@@ -296,10 +298,11 @@ export default {
       console.log("newNeurone")
       let node = new Neurone(
         {
-          blip: "blop",
-          color: this.randomColor(),
+        //  blip: "blop",
+          //  color: this.randomColor(),
           name: "name for graph_"+this.nodes.length,
-          age: 0
+          age: 0,
+          type: "neurone"
         }
       )
       console.log("neurone ", node)

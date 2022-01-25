@@ -17,7 +17,7 @@
 //
 // const Hello = () => externalComponent('https://components.solidcommunity.net/public/hello/Hello.bdd71b8bbb487af4de05.umd.min.js');
 
-
+// import { v4 as uuidv4 } from 'uuid';
 export default {
   name: "Visu",
   components: {
@@ -31,10 +31,11 @@ export default {
   },
   data(){
     return{
-      nodes: [],
+    //  nodes: [],
       links: [],
       paths: [],
       jump: 0
+
     }
   },
   methods: {
@@ -51,8 +52,8 @@ export default {
         this.saveNode(nodeSubject)
         nodeObject = this.nodeFromLabel(data.value.object)
         this.saveNode(nodeObject)
-        console.log(nodeSubject.url, nodeObject.url)
-        edge = this.edgeFromLabel({source: nodeSubject.url, target: nodeObject.url, label: data.value.predicate})
+        console.log(nodeSubject.id, nodeObject.id)
+        edge = this.edgeFromLabel({source: nodeSubject.id, target: nodeObject.id, label: data.value.predicate})
         console.log(edge)
         this.saveEdge(edge)
         break;
@@ -64,7 +65,7 @@ export default {
       }
     },
     saveNode(n){
-      var index = this.nodes.findIndex(x => x.url==n.url);
+      var index = this.nodes.findIndex(x => x.id==n.id);
       index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
       this.sendUpdate(n)
     },
@@ -77,26 +78,27 @@ export default {
       console.log(this.nodes, this.links)
       this.sendUpdate(e)
     },
-    nodeFromLabelVis(label) {
-      return {id: "#"+label.trim().split(' ').join('_'),
-      label: label,
-      color: {  background: '#D2E5FF', border: '#2B7CE9'},
-      shape: 'ellipse'}
-    },
+    // nodeFromLabelVis(label) {
+    //   return {id: "#"+label.trim().split(' ').join('_'),
+    //   label: label,
+    //   color: {  background: '#D2E5FF', border: '#2B7CE9'},
+    //   shape: 'ellipse'}
+    // },
     nodeFromLabel(label) {
-      let url = /*"#"+*/label.trim().split(' ').join('_')
-      return {url: url , name: label/*, color: "#D2E5FF"*//*, type: "storage"*/}
+     let id = "#"+label.trim().split(' ').join('_')
+      return {id: id , name: label,   age: 0,
+        type: "neurone"/*, color: "#D2E5FF"*//*, type: "storage"*/}
     },
     edgeFromLabel(data){
       console.log(data)
       return { source: data.source, target: data.target, label: data.label}
     },
-    edgeFromLabelVis(data){
-      return { from: data.from, to: data.to, label: data.label}
-    },
+    // edgeFromLabelVis(data){
+    //   return { from: data.from, to: data.to, label: data.label}
+    // },
     async sendUpdate(p){
       console.log(p)
-      console.log(this.url)
+    //  console.log(this.url)
       //  console.log(this.network)
       console.log("le json", this.json)
 
@@ -284,6 +286,9 @@ export default {
     inputObject(){
       this.onInputObjectChange(this.inputObject)
     },
+    nodes(){
+      console.log("local nodes", this.nodes)
+    }
   },
   computed:{
     pod:{
@@ -298,6 +303,10 @@ export default {
       get () { return this.$store.state.app.inputObject},
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
+    nodes:{
+      get () { return this.$store.state.nodes.nodes },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    }
   }
 }
 </script>

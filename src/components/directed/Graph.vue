@@ -23,7 +23,11 @@ export default {
   },
   data(){
     return{
-      Graph: null
+      Graph: null,
+      selectedNodes: new Set(),
+      highlightNodes: new Set(),
+      highlightLinks: new Set(),
+      hoverNode: null
       // initData: {
       //   nodes: [],// {id: "https://spoggy-test13.solidcommunity.net/", url: "https://spoggy-test13.solidcommunity.net/", name: "ROOT", color: "#ff0000" } ],
       //   links: []
@@ -43,6 +47,43 @@ export default {
     // };
     let app = this
     let elem = this.$refs.graph
+
+
+this.Graph1 =  ForceGraph3D()(elem)
+.graphData({nodes: this.nodes, links: this.links})
+        .nodeColor(node => this.highlightNodes.has(node) ? node === this.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : 'rgba(0,255,255,0.6)')
+        .linkWidth(link => this.highlightLinks.has(link) ? 4 : 1)
+        .linkDirectionalParticles(link => this.highlightLinks.has(link) ? 4 : 0)
+        .linkDirectionalParticleWidth(4)
+        .onNodeHover(node => {
+          // no state change
+          if ((!node && !this.highlightNodes.size) || (node && this.hoverNode === node)) return;
+
+          this.highlightNodes.clear();
+          this.highlightLinks.clear();
+          if (node && node.neighbors) {
+            this.highlightNodes.add(node);
+            node.neighbors.forEach(neighbor => this.highlightNodes.add(neighbor));
+            node.links.forEach(link => this.highlightLinks.add(link));
+          }
+
+          this.hoverNode = node || null;
+
+          this.updateHighlight();
+        })
+        .onLinkHover(link => {
+          this.highlightNodes.clear();
+          this.highlightLinks.clear();
+
+          if (link) {
+            this.highlightLinks.add(link);
+            this.highlightNodes.add(link.source);
+            this.highlightNodes.add(link.target);
+          }
+
+          this.updateHighlight();
+        });
+
     this.Graph = ForceGraph3D()(elem)
     // .enableNodeDrag(false)
     // .onNodeClick(this.removeNode)
@@ -50,14 +91,50 @@ export default {
     // .dagMode('td')
     // .dagLevelDistance(100)
     .nodeLabel('name')
-    .nodeId('url')
-    .nodeAutoColorBy('type')
+  //  .nodeId('url')
+    .nodeColor(node => app.highlightNodes.has(node) ? node === app.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : 'rgba(0,255,255,0.6)')
+       .linkWidth(link => app.highlightLinks.has(link) ? 4 : 1)
+       .linkDirectionalParticles(link => app.highlightLinks.has(link) ? 4 : 0)
+       .linkDirectionalParticleWidth(4)
+       .onNodeHover(node => {
+         // no state change
+         console.log(node)
+         if ((!node && !app.highlightNodes.size) || (node && app.hoverNode === node)) return;
+
+         app.highlightNodes.clear();
+         app.highlightLinks.clear();
+         if (node) {
+           if (node.neighbors != undefined){
+           app.highlightNodes.add(node);
+           node.neighbors.forEach(neighbor => app.highlightNodes.add(neighbor));
+           node.links.forEach(link => app.highlightLinks.add(link));
+         }
+       }
+
+         app.hoverNode = node || null;
+
+         app.updateHighlight()
+       })
+       .onLinkHover(link => {
+          app.highlightNodes.clear();
+          app.highlightLinks.clear();
+
+          if (link) {
+            app.highlightLinks.add(link);
+            app.highlightNodes.add(link.source);
+            app.highlightNodes.add(link.target);
+          }
+
+          app.updateHighlight();
+        })
+    //  .nodeAutoColorBy('type')
+    // .nodeColor(node => this.selectedNodes.has(node) ? 'rgb(255,0,0,1)' : node.color)
     .nodeThreeObject(({ url }) => {
 
-      if(url == undefined){
-        url = "root"
-      }
-      if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')){
+      // if(url == undefined){
+      //   url = "root"
+      // }
+      if (url != undefined && (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg'))){
         const imgTexture = new THREE.TextureLoader().load(`${url}`);
         const material = new THREE.SpriteMaterial({ map: imgTexture });
         const sprite = new THREE.Sprite(material);
@@ -94,8 +171,11 @@ export default {
     })
     .onNodeClick(node => {
       // Aim at node from outside it
-      console.log(node)
-      if(node.url.length > 0){
+      //  console.log(node)
+      this.selectedNodes.clear()
+      this.selectedNodes.has(node) ? this.selectedNodes.delete(node) : this.selectedNodes.add(node);
+      console.log(this.selectedNodes)
+      if(node.url != undefined && node.url.startsWith('http')){
         app.$store.commit ('app/mustExplore', node.url)
       }
 
@@ -123,6 +203,13 @@ export default {
     // }, 1000);
   },
   methods:{
+    updateHighlight() {
+      // trigger update of highlighted objects in scene
+      this.Graph
+        .nodeColor(this.Graph.nodeColor())
+        .linkWidth(this.Graph.linkWidth())
+        .linkDirectionalParticles(this.Graph.linkDirectionalParticles());
+    },
     async switchBrain(b){
       console.log("switch", b)
       await this.$store.dispatch('nodes/saveNode', b)

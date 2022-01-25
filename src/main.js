@@ -21,6 +21,14 @@ import * as VueThreejs from 'vue-threejs'
 // import VueThreejs from '@'
 Vue.use(VueThreejs)
 
+import VueFab from 'vue-float-action-button'
+
+Vue.use(VueFab,  {
+  // opitons Optional Alibaba iconfont icon or MaterialIcons
+  iconType: 'MaterialDesign'
+  // iconType: 'iconfont'
+} )
+
 
 Vue.config.productionTip = false
 

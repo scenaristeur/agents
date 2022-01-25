@@ -95,7 +95,10 @@ export default {
     .onNodeClick(node => {
       // Aim at node from outside it
       console.log(node)
-      app.$store.commit ('app/mustExplore', node.url)
+      if(node.url.length > 0){
+        app.$store.commit ('app/mustExplore', node.url)
+      }
+
       const distance = 40;
       const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
 
@@ -120,9 +123,22 @@ export default {
     // }, 1000);
   },
   methods:{
-    switchBrain(b){
+    async switchBrain(b){
       console.log("switch", b)
+      await this.$store.dispatch('nodes/saveNode', b)
       console.log("must save ", this.Graph.graphData())
+      let {nodes, links} = this.Graph.graphData()
+      for await (const n of nodes){
+        console.log(n)
+        delete n.__threeObj
+        console.log(n)
+        await this.$store.dispatch('nodes/saveNode', n)
+      }
+      console.log(links)
+      // for await (const l of links){
+      //   console.log(l)
+      //   await this.$store.dispatch('nodes/saveNode', n)
+      // }
 
     },
     update(){

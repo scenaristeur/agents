@@ -214,6 +214,7 @@ export default {
       toolFolder.add( lignes, 'newNeurone' ).name("New neurone");
       toolFolder.add( lignes, 'resetCamera' ).name("Reset camera");
       toolFolder.open()
+      this.gui.open()
     },
     buildGuiTest(){
       const geometry = new THREE.BoxGeometry()

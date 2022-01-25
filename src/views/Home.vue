@@ -3,22 +3,39 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
 
     <!-- LOOK at js console to see the agents in action<br> -->
-    <b-row>
-      <b-col>
-        <Login />
-      </b-col>
-      <b-col class="col-10 col-md-6 ">
-        <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
-      </b-col>
-      <b-col>
-        <b-button @click="onChange" variant="primary">Explore</b-button>
-      </b-col>
-    </b-row>
+
     <Visu />
-    <!-- <ThreeScene :files="files"/> -->
-    {{ files}}
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  </div>
+    <vue-fab
+    :mainBtnColor="mainBtnColor">
+    <fab-item
+    v-for="(item, idx) in menu"
+    :key="idx"
+    :idx="idx"
+    :title="item.title"
+    :color="item.color"
+    :icon="item.icon"
+    @clickItem="clickItem" />
+  </vue-fab>
+  <b-row>
+    <b-col>
+      <Login />
+    </b-col>
+    <b-col class="col-10 col-md-6 ">
+      <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
+    </b-col>
+    <b-col>
+      <b-button @click="onChange" variant="primary">Explore</b-button>
+    </b-col>
+  </b-row>
+  <!-- <vue-fab mainBtnColor="#3599DB">
+  <fab-item @clickItem="clickItem" :idx="0" title="add" icon="add" />
+  <fab-item @clickItem="clickItem" :idx="1" title="https" icon="https" />
+  <fab-item @clickItem="clickItem" :idx="2" title="edit" icon="edit" />
+</vue-fab> -->
+<!-- <ThreeScene :files="files"/> -->
+{{ files}}
+<!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+</div>
 </template>
 
 <script>
@@ -29,7 +46,7 @@
 // import { HelloAgent } from '@/agents/HelloAgent.js';
 // import { SnifferAgent } from '@/agents/SnifferAgent.js';
 
-import { Brain } from 'neurone-factory'
+// import { Brain } from 'neurone-factory'
 
 export default {
   name: 'Home',
@@ -41,15 +58,29 @@ export default {
   },
   data(){
     return {
-      url : "https://spoggy-test6.solidcommunity.net/public/",
+      // url : "https://spoggy-test6.solidcommunity.net/public/",
+      url: "https://spoggy-test5.solidcommunity.net/public/neurones",
       //  url:'https://data.virtual-assembly.org/',
-      //url:'https://data.gl.flod.io/'
+      //url:'https://data.gl.flod.io/',
+      menu: [
+        {
+          icon: 'done',
+          title: 'good job!',
+          color: '#ff9900'
+        },
+        {
+          icon: 'toc',
+          title: '',
+          color: '#999'
+        }
+      ],
+      mainBtnColor: '#3eaf7c'
     }
   },
   created(){
-
-    let brain = new Brain()
-    console.log("Test import neurone-factory ", brain)
+    this.$store.dispatch('nodes/getNodes');
+    // let brain = new Brain()
+    // console.log("Test import neurone-factory ", brain)
 
     // this.agentApp = new AppAgent('agentApp', this);
     // console.log(this.agentApp);
@@ -68,6 +99,9 @@ export default {
     //this.agent2.send('https://scenaristeur.github.io/agents/agent1', 'Hello REMOTE AGENT1')
   },
   methods:{
+    clickItem: function (item) {
+      window.alert(item.idx)
+    },
     async onChange(){
       console.log(this.url)
       this.$store.commit('app/mustExplore', this.url)
@@ -84,6 +118,11 @@ export default {
       //  this.agentApp.send('sniffer1', {url : this.url});
     }
   },
+  watch:{
+    nodes(){
+      console.log("local nodes", this.nodes)
+    }
+  },
   computed:{
     files:{
       get () { return this.$store.state.app.files },
@@ -91,6 +130,10 @@ export default {
     },
     folders:{
       get () { return this.$store.state.app.folders },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    nodes:{
+      get () { return this.$store.state.nodes.nodes },
       set (/*value*/) { /*this.updateTodo(value)*/ }
     }
   }

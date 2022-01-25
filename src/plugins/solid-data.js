@@ -76,7 +76,7 @@ const plugin = {
       //  console.log("remotes",remotesUrl)
       return resources
     }
-    
+
     Vue.prototype.$getResources1 = async function(path){
       //  console.log("path", path)
       let resources = []
@@ -122,11 +122,23 @@ const plugin = {
         r.url,               // File in Pod to Read
         { fetch: sc.fetch }       // fetch from authenticated session
       );
-
+      if(file.type == "application/ld+json"){
+        const file = await getFile(r.url, { fetch: sc.fetch });
+        const reader = new FileReader();
+        reader.onload = async () => {
+          r.reader = JSON.parse(reader.result)
+// Object.assign(r, reader.result)
+                //plugin.$compare(JSON.parse(reader.result));
+        };
+        reader.onerror = (error) => {
+          console.log(error);
+        };
+        reader.readAsText(file);
+      }
       //  console.log( `Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`);
       //  console.log("The file is rawdata "+ `${isRawData(file)}`);
       r.file = file
-
+      console.log("Reader",r)
       //  return r
       //  this.$store.commit('bureau/setResource',r)
       //this.$getContent(r.url)

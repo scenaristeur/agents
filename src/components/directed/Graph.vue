@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Ui :Graph="Graph" :nodes="nodes"/>
+    <Ui :Graph="Graph" :nodes="nodes" v-on:switch-brain="switchBrain"/>
     <div ref="graph"></div>
 
   </div>
@@ -120,6 +120,11 @@ export default {
     // }, 1000);
   },
   methods:{
+    switchBrain(b){
+      console.log("switch", b)
+      console.log("must save ", this.Graph.graphData())
+
+    },
     update(){
       this.Graph.graphData({
         nodes: this.nodes,

@@ -11,6 +11,21 @@
     <b-form-input v-if="field != null" v-model="field.name" placeholder="new property / link"></b-form-input>
   </b-modal>
 
+  <b-modal id="modal-brain" title="Brain">
+    <b-form-input v-model="brainName" placeholder="Enter the brain name"></b-form-input>
+    <b-button variant="primary" @click="newBrain">New Brain</b-button>
+    <b-list-group style="height:200px;overflow-y: scroll;">
+      <b-list-group-item
+      v-for="brain of brains"
+      :key="brain.id"
+      button
+      @click="switchBrain(brain)">
+      {{brain.name}}
+    </b-list-group-item>
+  </b-list-group>
+
+</b-modal>
+
 </div>
 </template>
 
@@ -23,6 +38,9 @@ export default {
   props:['Graph', 'nodes'],
   data(){
     return{
+      brain: null,
+      brains: [],
+      brainName: "",
       field: null,
       clearing: false,
       fieldType: "text",
@@ -58,11 +76,26 @@ export default {
       if (this.nodeFolder != null){
         this.gui.removeFolder(this.nodeFolder)
       }
+
+      var lignes = {
+        // message: 'dat.gui',
+        // speed: 0.8,
+        // displayOutline: false,
+        //color: "#ff0000", // color (change "#" to "0x")
+        openProperties: this.openProperties,
+        openLinks: this.openLinks,
+        // resetCamera: this.resetCamera
+      };
+
+
+
+
+
       this.nodeFolder = this.gui.addFolder('Node')
       // console.log(this.nodeFolder)
       console.log(this.currentNode)
       this.currentNode.age == undefined ? this.currentNode.age = 0 : ""
-        this.currentNode.privacy == undefined ? this.currentNode.privacy = "" : ""
+      this.currentNode.privacy == undefined ? this.currentNode.privacy = "" : ""
       //this.currentNode.age == undefined ?
       // console.log(this.nodeFolder.__controllers)
       // this.nodeFolder.__controllers.forEach((item) => {
@@ -80,53 +113,56 @@ export default {
       // this.nodeFolder.add(this.currentNode, 'name')
       this.nodeFolder.add(this.currentNode, 'name')
       this.nodeFolder.add(this.currentNode, 'age')
-      this.nodeFolder.add(this.currentNode, 'type')
-      this.nodeFolder.add(this.currentNode, 'url')
+      // this.nodeFolder.add(this.currentNode, 'type')
+      // this.nodeFolder.add(this.currentNode, 'url')
       this.nodeFolder.add(this.currentNode, 'privacy')
-this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'created') : ""
-      const propsFolder = this.nodeFolder.addFolder('Properties')
-      const linksFolder = this.nodeFolder.addFolder('Links')
-
-      var lignes = {
-        newProperty: this.newProperty,
-        newLink: this.newLink,
-        message: 'props menu',
-        messageLink: 'Link menu',
-        speed: 0.8,
-      }
-
-      propsFolder.add( lignes, 'newProperty' ).name("New property");
-      linksFolder.add( lignes, 'newLink' ).name("New link");
-
-
-      propsFolder.add(lignes, 'message')
-      linksFolder.add(lignes, 'messageLink')
-      const testsub = propsFolder.addFolder("sub")
-      testsub.add(lignes, "speed", -5, 5)
-
-      this.currentNode["properties"].forEach((item) => {
-        console.log(item)
-        // templigne = {
-        //
-        // }
-
-        var lignes_value = {
-          addValue: this.addValue,
-        }
-
-        let folder = propsFolder.addFolder(item.name)
-        folder.add( lignes_value, 'addValue' ).name("New value");
-
-        console.log(folder)
-        item.values.forEach((v) => {
-          console.log(v)
-          //folder.add(item, 'name')//.name(item.name)
-
-        });
-
-
-
-      });
+      this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'created') : ""
+      this.nodeFolder.add( lignes, 'openProperties' ).name("Properties");
+      this.nodeFolder.add( lignes, 'openLinks' ).name("Links");
+      // const propsFolder = this.nodeFolder.addFolder('Properties')
+      // const linksFolder = this.nodeFolder.addFolder('Links')
+      //
+      //
+      // var lignes = {
+      //   newProperty: this.newProperty,
+      //   newLink: this.newLink,
+      //   message: 'props menu',
+      //   messageLink: 'Link menu',
+      //   speed: 0.8,
+      // }
+      //
+      // propsFolder.add( lignes, 'newProperty' ).name("New property");
+      // linksFolder.add( lignes, 'newLink' ).name("New link");
+      //
+      //
+      // propsFolder.add(lignes, 'message')
+      // linksFolder.add(lignes, 'messageLink')
+      // const testsub = propsFolder.addFolder("sub")
+      // testsub.add(lignes, "speed", -5, 5)
+      //
+      // this.currentNode["properties"].forEach((item) => {
+      //   console.log(item)
+      //   // templigne = {
+      //   //
+      //   // }
+      //
+      //   var lignes_value = {
+      //     addValue: this.addValue,
+      //   }
+      //
+      //   let folder = propsFolder.addFolder(item.name)
+      //   folder.add( lignes_value, 'addValue' ).name("New value");
+      //
+      //   console.log(folder)
+      //   item.values.forEach((v) => {
+      //     console.log(v)
+      //     //folder.add(item, 'name')//.name(item.name)
+      //
+      //   });
+      //
+      //
+      //
+      // });
 
 
 
@@ -139,8 +175,10 @@ this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'c
       nodeColor.onChange(function(value) // onFinishChange
       {
         console.log("must update color value", value)
-        app.currentNode.color = value //.replace("#", "0x") //);
+        app.currentNode.color = value.replace("#", "0x") //);
       });
+
+      this.nodeFolder.add(this.currentNode, 'privacy')
       this.nodeFolder.open()
     },
     addValue(){
@@ -166,13 +204,13 @@ this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'c
         // speed: 0.8,
         // displayOutline: false,
         //color: "#ff0000", // color (change "#" to "0x")
-        newBrain: this.newBrain,
+        openBrains: this.openBrains,
         newNeurone: this.newNeurone,
         resetCamera: this.resetCamera
       };
 
       const toolFolder = this.gui.addFolder('Tools')
-      toolFolder.add( lignes, 'newBrain' ).name("New brain");
+      toolFolder.add( lignes, 'openBrains' ).name("Brains");
       toolFolder.add( lignes, 'newNeurone' ).name("New neurone");
       toolFolder.add( lignes, 'resetCamera' ).name("Reset camera");
       toolFolder.open()
@@ -210,6 +248,12 @@ this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'c
       {   cube.material.color.setHex( value.replace("#", "0x") );   });
 
     },
+    openProperties(){
+      alert ("Properties")
+    },
+    openLinks(){
+      console.log("open links")
+    },
     newProperty(){
       console.log("newProperty")
       this.field = {name: "", category: "ve:properties"}
@@ -231,10 +275,21 @@ this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'c
       this.field = {name: "", category: "links"}
       this.$bvModal.show("modal-field")
     },
-    newBrain(){
+    openBrains(){
       //alert("newBrain")
-      this.brain = new Brain()
+
+      this.$bvModal.show("modal-brain")
+    },
+    newBrain(){
+      this.brain = new Brain({name: this.brainName})
       console.log(this.brain)
+      this.brains.push(this.brain)
+      this.brainName = ""
+    },
+    switchBrain(b){
+      console.log(b)
+      //  console.error("must save current brain", this.Graph.graphData())
+      this.$emit('switch-brain', b)
     },
     newNeurone(){
       console.log("newNeurone")
@@ -253,11 +308,11 @@ this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'c
       //  let node = { name: "test", type: undefined, color: this.randomColor() /*"#ffffff"*/}
       this.nodes.push(node)
 
-      this.Graph.graphData({
-        nodes: this.nodes,
-        //links: links
-        links: this.links //[...links/*, { source: "https://spoggy-test13.solidcommunity.net/", target: f.url }*/]
-      })
+      // this.Graph.graphData({
+      //   nodes: this.nodes,
+      //   //links: links
+      //   links: this.links //[...links/*, { source: "https://spoggy-test13.solidcommunity.net/", target: f.url }*/]
+      // })
       console.log("should make a node autofocus")
       // const distance = 40;
       // const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);

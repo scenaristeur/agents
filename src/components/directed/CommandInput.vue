@@ -2,9 +2,11 @@
   <b-input-group>
         <b-form-input
         id="input"
+        ref="input"
         autofocus
         v-model="main_input"
         v-on:keyup.enter="onEnter"
+        @keyup="search"
         title="type three words followed by a comma"
         placeholder="/h + Enter for help"></b-form-input>
 
@@ -30,6 +32,10 @@ data() {
   }
 },
 methods: {
+  search(){
+    let s = this.$refs.input.value
+    this.$store.commit('app/setSearch', s)
+  },
   onEnter(){
     console.log(this.main_input)
     let inputValue = this.main_input.trim()

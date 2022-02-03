@@ -26,6 +26,21 @@
 
 </b-modal>
 
+
+<b-modal id="modal-properties"
+title="Properties"
+>
+<!--  -->
+<!-- <b-form-input v-if="field != null" v-model="field.name" placeholder="new property / link"></b-form-input> -->
+</b-modal>
+
+<b-modal id="modal-links"
+title="Links"
+>
+<!--  -->
+<!-- <b-form-input v-if="field != null" v-model="field.name" placeholder="new property / link"></b-form-input> -->
+</b-modal>
+
 </div>
 </template>
 
@@ -252,10 +267,11 @@ export default {
 
     },
     openProperties(){
-      alert ("Properties")
+      this.$bvModal.show("modal-properties")
     },
     openLinks(){
-      console.log("open links")
+      this.$bvModal.show("modal-links")
+
     },
     newProperty(){
       console.log("newProperty")
@@ -298,7 +314,7 @@ export default {
       console.log("newNeurone")
       let node = new Neurone(
         {
-        //  blip: "blop",
+          //  blip: "blop",
           //  color: this.randomColor(),
           name: "name for graph_"+this.nodes.length,
           age: 0,

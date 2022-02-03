@@ -49,40 +49,40 @@ export default {
     let elem = this.$refs.graph
 
 
-this.Graph1 =  ForceGraph3D()(elem)
-.graphData({nodes: this.nodes, links: this.links})
-        .nodeColor(node => this.highlightNodes.has(node) ? node === this.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : 'rgba(0,255,255,0.6)')
-        .linkWidth(link => this.highlightLinks.has(link) ? 4 : 1)
-        .linkDirectionalParticles(link => this.highlightLinks.has(link) ? 4 : 0)
-        .linkDirectionalParticleWidth(4)
-        .onNodeHover(node => {
-          // no state change
-          if ((!node && !this.highlightNodes.size) || (node && this.hoverNode === node)) return;
+    this.Graph1 =  ForceGraph3D()(elem)
+    .graphData({nodes: this.nodes, links: this.links})
+    .nodeColor(node => this.highlightNodes.has(node) ? node === this.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : 'rgba(0,255,255,0.6)')
+    .linkWidth(link => this.highlightLinks.has(link) ? 4 : 1)
+    .linkDirectionalParticles(link => this.highlightLinks.has(link) ? 4 : 0)
+    .linkDirectionalParticleWidth(4)
+    .onNodeHover(node => {
+      // no state change
+      if ((!node && !this.highlightNodes.size) || (node && this.hoverNode === node)) return;
 
-          this.highlightNodes.clear();
-          this.highlightLinks.clear();
-          if (node && node.neighbors) {
-            this.highlightNodes.add(node);
-            node.neighbors.forEach(neighbor => this.highlightNodes.add(neighbor));
-            node.links.forEach(link => this.highlightLinks.add(link));
-          }
+      this.highlightNodes.clear();
+      this.highlightLinks.clear();
+      if (node && node.neighbors) {
+        this.highlightNodes.add(node);
+        node.neighbors.forEach(neighbor => this.highlightNodes.add(neighbor));
+        node.links.forEach(link => this.highlightLinks.add(link));
+      }
 
-          this.hoverNode = node || null;
+      this.hoverNode = node || null;
 
-          this.updateHighlight();
-        })
-        .onLinkHover(link => {
-          this.highlightNodes.clear();
-          this.highlightLinks.clear();
+      this.updateHighlight();
+    })
+    .onLinkHover(link => {
+      this.highlightNodes.clear();
+      this.highlightLinks.clear();
 
-          if (link) {
-            this.highlightLinks.add(link);
-            this.highlightNodes.add(link.source);
-            this.highlightNodes.add(link.target);
-          }
+      if (link) {
+        this.highlightLinks.add(link);
+        this.highlightNodes.add(link.source);
+        this.highlightNodes.add(link.target);
+      }
 
-          this.updateHighlight();
-        });
+      this.updateHighlight();
+    });
 
     this.Graph = ForceGraph3D()(elem)
     // .enableNodeDrag(false)
@@ -91,43 +91,44 @@ this.Graph1 =  ForceGraph3D()(elem)
     // .dagMode('td')
     // .dagLevelDistance(100)
     .nodeLabel('name')
-  //  .nodeId('url')
+    //  .nodeId('url')
     .nodeColor(node => app.highlightNodes.has(node) ? node === app.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : 'rgba(0,255,255,0.6)')
-       .linkWidth(link => app.highlightLinks.has(link) ? 4 : 1)
-       .linkDirectionalParticles(link => app.highlightLinks.has(link) ? 4 : 0)
-       .linkDirectionalParticleWidth(4)
-       .onNodeHover(node => {
-         // no state change
-         console.log(node)
-         if ((!node && !app.highlightNodes.size) || (node && app.hoverNode === node)) return;
+    .linkWidth(link => app.highlightLinks.has(link) ? 4 : 1)
+    .linkDirectionalParticles(link => app.highlightLinks.has(link) ? 4 : 0)
+    .linkDirectionalParticleWidth(4)
+    .onNodeHover(node => {
+      // no state change
 
-         app.highlightNodes.clear();
-         app.highlightLinks.clear();
-         if (node) {
-           if (node.neighbors != undefined){
-           app.highlightNodes.add(node);
-           node.neighbors.forEach(neighbor => app.highlightNodes.add(neighbor));
-           node.links.forEach(link => app.highlightLinks.add(link));
-         }
-       }
+      if ((!node && !app.highlightNodes.size) || (node && app.hoverNode === node)) return;
 
-         app.hoverNode = node || null;
+      app.highlightNodes.clear();
+      app.highlightLinks.clear();
+      if (node) {
+        //   if (node.neighbors != undefined){
+        console.log(node)
+        app.highlightNodes.add(node);
+        //   node.neighbors.forEach(neighbor => app.highlightNodes.add(neighbor));
+        // node.links.forEach(link => app.highlightLinks.add(link));
+        //}
+      }
 
-         app.updateHighlight()
-       })
-       .onLinkHover(link => {
-          app.highlightNodes.clear();
-          app.highlightLinks.clear();
+      app.hoverNode = node || null;
 
-          if (link) {
-            app.highlightLinks.add(link);
-            app.highlightNodes.add(link.source);
-            app.highlightNodes.add(link.target);
-          }
+      app.updateHighlight()
+    })
+    .onLinkHover(link => {
+      app.highlightNodes.clear();
+      app.highlightLinks.clear();
 
-          app.updateHighlight();
-        })
-    //  .nodeAutoColorBy('type')
+      if (link) {
+        app.highlightLinks.add(link);
+        app.highlightNodes.add(link.source);
+        app.highlightNodes.add(link.target);
+      }
+
+      app.updateHighlight();
+    })
+     .nodeAutoColorBy('type')
     // .nodeColor(node => this.selectedNodes.has(node) ? 'rgb(255,0,0,1)' : node.color)
     .nodeThreeObject(({ url }) => {
 
@@ -206,9 +207,9 @@ this.Graph1 =  ForceGraph3D()(elem)
     updateHighlight() {
       // trigger update of highlighted objects in scene
       this.Graph
-        .nodeColor(this.Graph.nodeColor())
-        .linkWidth(this.Graph.linkWidth())
-        .linkDirectionalParticles(this.Graph.linkDirectionalParticles());
+      .nodeColor(this.Graph.nodeColor())
+      .linkWidth(this.Graph.linkWidth())
+      .linkDirectionalParticles(this.Graph.linkDirectionalParticles());
     },
     async switchBrain(b){
       console.log("switch", b)
@@ -245,6 +246,23 @@ this.Graph1 =  ForceGraph3D()(elem)
     links(){
       //console.log(this.links)
       this.update()
+    },
+    search(){
+      this.highlightNodes.clear()
+      if (this.search.length > 0){
+        // console.log(this.search)
+        this.nodes.forEach(n => {
+          if(n.name.includes(this.search)){
+            this.highlightNodes.add(n);
+            // console.log(this.highlightNodes)
+          }
+        });
+
+
+        // app.highlightNodes.add(link.source);
+
+      }
+      this.updateHighlight()
     }
     // files(){
     //   const { nodes, links } = this.Graph.graphData();
@@ -297,6 +315,12 @@ this.Graph1 =  ForceGraph3D()(elem)
     //   }
     // }
   },
+  computed:{
+    search:{
+      get () { return this.$store.state.app.search },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+  }
 
 }
 </script>

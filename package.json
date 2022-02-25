@@ -29,6 +29,7 @@
     "three-spritetext": "^1.6.3",
     "vue": "^2.6.11",
     "vue-float-action-button": "^0.7.9",
+    "vue-gun": "^0.0.3",
     "vue-router": "^3.2.0",
     "vue-threejs": "^0.2.0-alpha.1",
     "vue-vis-network": "^1.0.2",

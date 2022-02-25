@@ -27,6 +27,8 @@
       <b-button @click="onChange" variant="primary">Explore</b-button>
     </b-col>
   </b-row>
+
+  <GunTest />
   <!-- <vue-fab mainBtnColor="#3599DB">
   <fab-item @clickItem="clickItem" :idx="0" title="add" icon="add" />
   <fab-item @clickItem="clickItem" :idx="1" title="https" icon="https" />
@@ -54,6 +56,8 @@ export default {
     'Login': () => import('@/components/Login'),
     // 'ThreeScene': () => import('@/components/three/ThreeScene'),
     'Visu': () => import('@/components/directed/Visu'),
+    'GunTest': () => import('@/components/GunTest'),
+
     // HelloWorld
   },
   data(){

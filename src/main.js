@@ -33,7 +33,7 @@ import VueGun from 'vue-gun';
 import SEA from 'gun/sea'; // Required for SEA functions and user authentication
 Vue.use(VueGun, {
   //  gun: gun // must be passed in at `gun` key
-   peers: [/*'http://localhost:9090/gun',*/ 'https://gun-manhattan.herokuapp.com/gun'] // run gun-starter-app on port 9090
+   peers: [/*'http://localhost:9090/gun',*/ 'https://gun-manhattan.herokuapp.com/gun'/*, 'http://gunjs.herokuapp.com/gun/'*/] // run gun-starter-app on port 9090
 });
 
 Vue.use(SEA)

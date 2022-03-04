@@ -7,7 +7,7 @@
     <CommandInput />
     <Graph :nodes="nodes" :links="links" />
     {{ pod }}
-    <Comunica />
+    <!-- <Comunica /> -->
     <!-- <Hello /> -->
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   components: {
     // 'ThreeScene': () => import('@/components/three/ThreeScene'),
     'Graph': () => import('@/components/directed/Graph'),
-    'Comunica': () => import('@/components/dev/Comunica'),
+    // 'Comunica': () => import('@/components/dev/Comunica'),
     'CommandInput': () => import('@/components/directed/CommandInput'),
 
     // Hello
@@ -37,6 +37,9 @@ export default {
       jump: 0
 
     }
+  },
+  created(){
+    console.log("MUST TAKE A LOOK AT COMMUNICA !")
   },
   methods: {
     async explore2(path){

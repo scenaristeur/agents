@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import * as Comunica from '@comunica/actor-init-sparql'
+// import * as Comunica from '@comunica/actor-init-sparql'
+import * as Comunica from '@comunica/query-sparql'
 
 console.log(Comunica)
 

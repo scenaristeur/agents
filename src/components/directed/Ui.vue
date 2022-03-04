@@ -47,7 +47,7 @@ title="Links"
 <script>
 import { GUI } from 'dat.gui'
 import * as THREE from "three";
-import { Neurone ,  Brain/*, Graph*/ } from 'neurone-factory'
+import { Neurone ,  Brain/*, Graph*/ } from '@/neurone-factory'
 export default {
   name: "Ui",
   props:['Graph', 'nodes'],
@@ -326,6 +326,8 @@ export default {
       // node['name'] == undefined ? node['name'] = "test" : ""
       // node['color'] == undefined ? node['color'] = this.randomColor() : ""
       //  let node = { name: "test", type: undefined, color: this.randomColor() /*"#ffffff"*/}
+
+      // eslint-disable-next-line
       this.nodes.push(node)
 
       // this.Graph.graphData({

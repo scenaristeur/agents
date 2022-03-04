@@ -180,7 +180,7 @@ export default {
         app.$store.commit ('app/mustExplore', node.url)
       }
 
-      const distance = 40;
+      const distance = 160;
       const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
 
       this.Graph.cameraPosition(

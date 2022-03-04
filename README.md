@@ -1,4 +1,16 @@
 # agents
+
+- dev
+```
+git clone https://github.com/scenaristeur/neurone-factory.git
+cd neurone-factory
+npm link
+cd ..
+git clone https://github.com/scenaristeur/agents.git
+cd agents
+npm link neurone-factory
+```
+
 # evejs
 - https://github.com/scenaristeur/evejs
 - https://eve.almende.com/implementations/javascript/introduction.html

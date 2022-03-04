@@ -9,8 +9,6 @@
         @keyup="search"
         title="type three words followed by a comma"
         placeholder="/h + Enter for help"></b-form-input>
-
-
       <template #append>
           <!-- <NetworkToolBar /> -->
       </template>
@@ -18,7 +16,7 @@
 </template>
 
 <script>
-import { Command , /* Brain, Graph*/ } from 'neurone-factory'
+import { Command , /* Brain, Graph*/ } from '@/neurone-factory'
 
 export default {
 name: "CommandInput",
@@ -37,6 +35,7 @@ methods: {
     this.$store.commit('app/setSearch', s)
   },
   onEnter(){
+    console.log(Command)
     console.log(this.main_input)
     let inputValue = this.main_input.trim()
     if (inputValue.length > 0){

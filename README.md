@@ -1,6 +1,34 @@
 # agents
+## change a text property of a node
+`dav.name = David
 
-- dev
+home.kitchen.light.color = red
+
+`
+
+## add link between to nodes
+`dav knows Rambo,
+Rambo lives "In the Jungle",
+`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- gundb share distributed db
+- https://dev.to/codesphere/set-up-a-decentralized-database-with-react-and-gundb-2e5m
+
+- dev not working anymore - deprecated for now until module can be imported , included in /src/neurone-factory
 ```
 git clone https://github.com/scenaristeur/neurone-factory.git
 cd neurone-factory
@@ -10,6 +38,8 @@ git clone https://github.com/scenaristeur/agents.git
 cd agents
 npm link neurone-factory
 ```
+
+
 
 # evejs
 - https://github.com/scenaristeur/evejs

@@ -18,6 +18,15 @@
     <ul>
       <li v-for="(node, key) of todos" :key="key"> {{ key }} : {{node.title || node.GrosTitre}}</li>
     </ul>
+
+    <b-form-textarea
+    id="textarea"
+    v-model="text"
+    placeholder="Enter something..."
+    rows="3"
+    max-rows="6"
+    @input="updateText"
+    ></b-form-textarea>
   </div>
 </template>
 
@@ -29,22 +38,46 @@ export default {
       todos : {},
       newDo: "",
       command_input: "",
-      last: {key: "", value: ""}
+      last: {key: "", value: ""},
+      text: ""
     }
   },
   mounted: function() {
+    // let app = this
+      var newline = String.fromCharCode(13, 10);
     // this.todos = this.$gun.get('todos')
     this.$gun.get('todos').map().on((node, key) => {
 
       // add results straight to the Vue component state
       // and get updates when nodes are updated by GUN
       this.todos[key] = node;
-      console.log(this.todos)
+    //  console.log(this.todos)
     });
+
+    this.$gun.get('text').once((node) => { // Retrieve the text value on startup
+      //console.log(node)
+    this.text = node.text.replaceAll('\\n', newline);
+      // if(node == undefined) {
+      //   this.$gun.get('text').put({text: "Write the text here"})
+      // } else {
+      //   console.log("Found Node")
+      //   app.text = node.text
+      // }
+    })
+
+    this.$gun.get('text').on((node) => { // Is called whenever text is updated
+      console.log("Receiving Update")
+      console.log(node)
+
+      this.text = node.text.replaceAll('\\n', newline);
+    })
+
+
+
   },
   methods:{
     add(){
-      console.log(this.newDo)
+    //  console.log(this.newDo)
       this.$gun.get('todos').set({GrosTitre: this.newDo})
       this.newDo = ""
     },
@@ -114,7 +147,14 @@ export default {
 
 
 
+    },
+    updateText(){
+      console.log("Updating Text", this.text)
+      this.$gun.get('text').put({text: this.text}) // Edit the value in our db
     }
+  },
+  watch:{
+
   }
 }
 </script>

@@ -11,8 +11,11 @@ home.kitchen.light.color = red
 Rambo lives "In the Jungle",
 `
 
+dav / davaaaqaqszaqszaaq
+dav123 / dav123123
 
-
+- todo change password https://gun.eco/docs/FAQ#how-can-i-change-a-user-password
+user.auth(alias, passphrase, callback, { change: 'new-pass-value' })
 
 
 

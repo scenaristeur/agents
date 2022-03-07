@@ -7,6 +7,8 @@ import SolidPodPlugin from './plugins/solid-pod';
 Vue.use(SolidPodPlugin, {store: store});
 import SolidDataPlugin from './plugins/solid-data';
 Vue.use(SolidDataPlugin, {store: store});
+import GunPlugin from './plugins/gun-plugin';
+Vue.use(GunPlugin, {store: store});
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // Import Bootstrap an BootstrapVue CSS files (order is important)

@@ -59,6 +59,8 @@ export default {
         edge = this.edgeFromLabel({source: nodeSubject.id, target: nodeObject.id, label: data.value.predicate})
         console.log(edge)
         this.saveEdge(edge)
+        data.triple = {subject: nodeSubject, edge: edge, object: nodeObject}
+        this.$saveToGun(data)
         break;
         case 'url':
         console.log(data)

@@ -304,9 +304,11 @@ export default {
       console.log(this.brain)
       this.brains.push(this.brain)
       this.brainName = ""
+      this.$gunGet(this.brain)
     },
     switchBrain(b){
       console.log(b)
+      this.$gunGet(b)
       //  console.error("must save current brain", this.Graph.graphData())
       this.$emit('switch-brain', b)
     },

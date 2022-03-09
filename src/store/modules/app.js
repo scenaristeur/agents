@@ -1,6 +1,7 @@
 // import Vue from 'vue'
 const state = () => ({
-  mode: "Mode",
+  world: null,
+  // mode: null,
   files: [],
   folders: [],
   mustExplore: null,
@@ -21,8 +22,8 @@ const actions = {
 }
 
 const mutations = {
-  setMode(state,m){
-    state.mode = m
+  setWorld(state, w){
+    state.world = w
   },
   setSearch(state,s){
     state.search = s

@@ -1,4 +1,4 @@
-<template>
+world<template>
   <b-navbar toggleable="lg" type="dark" variant="dark">
 
     <b-nav-form>
@@ -13,19 +13,30 @@
       <b-navbar-nav>
         <b-navbar-brand href="#">Agents</b-navbar-brand>
 
-        <b-nav-item-dropdown :text="mode" right>
-          <b-dropdown-item href="#" @click="changeMode('solid')">Solid</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeMode('gun')">Gun</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeMode('ipfs')">Ipfs</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeMode('mld')">M-ld</b-dropdown-item>
+        <b-nav-item-dropdown :text="world || 'World'" right>
+          <b-dropdown-item href="#" @click="changeWorld('solid')">solid</b-dropdown-item>
+          <b-dropdown-item href="#" @click="changeWorld('gun')">gundb</b-dropdown-item>
+          <b-dropdown-item href="#" @click="changeWorld('ipfs')" disabled>ipfs</b-dropdown-item>
+          <b-dropdown-item href="#" @click="changeWorld('mld')" disabled>m-ld</b-dropdown-item>
         </b-nav-item-dropdown>
 
-        <b-nav-item-dropdown right>
+        <SolidLogin v-if="world == 'solid'" />
+        <b-nav-dropdown v-else-if="world == 'gun'" text="Gun User" >
+          <div v-if="gunUser!=undefined">
+            gunUser : {{ gunUser.alias }}
+          </div>
+          <GunSignin />
+          <GunLogin />
+
+        </b-nav-dropdown>
+
+        <b-nav-item-dropdown  v-else right>
           <template #button-content>
             <em>User</em>
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item href="#">Profile {{ world }}</b-dropdown-item>
+
+          <b-dropdown-item href="#">Sign In/Out {{ world }}</b-dropdown-item>
         </b-nav-item-dropdown>
         <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
       </b-navbar-nav>
@@ -35,16 +46,17 @@
 
 
         <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">This module is not implemented yet</b-dropdown-item>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">ES</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item>
+          <b-dropdown-item href="#" disabled>This module is not implemented yet</b-dropdown-item>
+          <b-dropdown-item href="#" disabled>EN</b-dropdown-item>
+          <b-dropdown-item href="#" disabled>FR</b-dropdown-item>
+          <b-dropdown-item href="#" disabled>ES</b-dropdown-item>
+          <b-dropdown-item href="#" disabled>RU</b-dropdown-item>
+          <b-dropdown-item href="#" disabled>FA</b-dropdown-item>
         </b-nav-item-dropdown>
 
 
 
-        <b-nav-item href="#">Help</b-nav-item>
+        <b-nav-item href="https://github.com/scenaristeur/agents/blob/main/README.md" target="_blank">Help</b-nav-item>
 
       </b-navbar-nav>
     </b-collapse>
@@ -54,18 +66,28 @@
 <script>
 export default {
   name : 'NavBar',
+  components: {
+    'SolidLogin': () => import('@/components/solid/SolidLogin'),
+    'GunSignin': () => import('@/components/gun/GunSignin'),
+    'GunLogin': () => import('@/components/gun/GunLogin'),
+  },
   methods:{
-    changeMode(m){
-      console.log(m)
-      this.$store.commit('app/setMode', m)
-    }
+    changeWorld(w){
+      console.log(w)
+      this.$store.commit('app/setWorld', w)
+    },
+
   },
   watch:{
 
   },
   computed:{
-    mode:{
-      get () { return this.$store.state.app.mode },
+    world:{
+      get () { return this.$store.state.app.world },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    gunUser:{
+      get () { return this.$store.state.gun.gunUser },
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
   }

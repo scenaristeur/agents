@@ -56,7 +56,7 @@ export default {
     },
     async login(){
       this.message = ""
-      console.log(this.username, this.passphrase)
+      //console.log(this.username, this.passphrase)
 
       await this.user.auth(this.username.trim(), this.passphrase.trim(), this.loginCallback);
 

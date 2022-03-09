@@ -8,7 +8,7 @@
     <FabButton />
     <b-row>
       <b-col>
-        <Login />
+
       </b-col>
       <b-col class="col-10 col-md-6 ">
         <b-form-input v-model="url" placeholder="pod url" @change="onChange"></b-form-input>
@@ -43,7 +43,7 @@
 export default {
   name: 'Home',
   components: {
-    'Login': () => import('@/components/Login'),
+    // 'Login': () => import('@/components/Login'),
     // 'ThreeScene': () => import('@/components/three/ThreeScene'),
     'Visu': () => import('@/components/directed/Visu'),
     'GunTest': () => import('@/components/GunTest'),

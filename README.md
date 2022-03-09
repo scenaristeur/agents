@@ -1,5 +1,10 @@
 # agents
 
+# choose Environment
+- solid / gundb / ipfs / m-ld
+
+# choose Command Interface
+
 ## commands (todo)
 Operating System
 
@@ -9,8 +14,19 @@ Operating System
 - cd name : move to the name brain or cb for change brain
 - ls list what is in current
 
+- commands like CRUD ? create / read / update / delete
+- commands like unix mkdir / cd / touch ?
+- commands like spoggy / triples / ipfs `Dav a man,`
+- graphic ui with buttons
 
 
+
+
+
+
+
+# gun private write public read
+- https://stackoverflow.com/questions/56044288/private-write-and-public-read-in-gundb
 
 ## change a text property of a node
 `dav.name = David
@@ -61,13 +77,6 @@ git clone https://github.com/scenaristeur/agents.git
 cd agents
 npm link neurone-factory
 ```
-
-
-
-# evejs
-- https://github.com/scenaristeur/evejs
-- https://eve.almende.com/implementations/javascript/introduction.html
-- https://github.com/scenaristeur/spoggy-graph/blob/master/package.json
 
 # sources
 - https://data.gl.flod.io/users

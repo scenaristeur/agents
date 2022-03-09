@@ -27,11 +27,8 @@
     max-rows="6"
     @input="updateText"
     ></b-form-textarea>
-    <GunSignin />
-    <GunLogin />
-    <div v-if="gunUser!=undefined">
-      gunUser {{ gunUser.alias }}
-    </div>
+
+
 
     <b-input v-model="speak_text" /><b-button @click="speak">Speak</b-button>
     causette : {{ causette }}
@@ -43,8 +40,7 @@ export default {
   name: "GunTest",
   components: {
     // 'ThreeScene': () => import('@/components/three/ThreeScene'),
-    'GunSignin': () => import('@/components/gun/GunSignin'),
-    'GunLogin': () => import('@/components/gun/GunLogin'),
+
     // Hello
     // HelloWorld
   },

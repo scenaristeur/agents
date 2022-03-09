@@ -26,7 +26,24 @@ export default {
         },
         {
           icon: 'toc',
-          title: 'toc',
+          title: 'gun refactoring',
+          color: '#999',
+          mode: 'gun'
+        },
+        {
+          icon: 'toc',
+          title: 'solid refactoring',
+          color: '#999',
+          mode: 'solid'
+        },
+        {
+          icon: 'toc',
+          title: 'ipfs todo',
+          color: '#999'
+        },
+        {
+          icon: 'toc',
+          title: 'm-ld todo',
           color: '#999'
         },
         {
@@ -40,6 +57,9 @@ export default {
   },
   methods:{
     clickItem(item) {
+      let choice = this.menu[item.idx]
+      console.log(choice.mode)
+      this.$store.commit('app/setMode', choice.mode)
       alert(item.idx)
     },
   }

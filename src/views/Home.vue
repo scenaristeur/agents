@@ -3,7 +3,7 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
 
     <!-- LOOK at js console to see the agents in action<br> -->
-
+    <NavBar />
     <Visu />
     <FabButton />
     <b-row>
@@ -47,7 +47,8 @@ export default {
     // 'ThreeScene': () => import('@/components/three/ThreeScene'),
     'Visu': () => import('@/components/directed/Visu'),
     'GunTest': () => import('@/components/GunTest'),
-    'FabButton': ()=>import('@/components/ui/FabButton')
+    'FabButton': ()=>import('@/components/ui/FabButton'),
+    'NavBar': ()=>import('@/components/ui/NavBar')
 
     // HelloWorld
   },

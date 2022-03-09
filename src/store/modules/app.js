@@ -1,5 +1,6 @@
 // import Vue from 'vue'
 const state = () => ({
+  mode: null,
   files: [],
   folders: [],
   mustExplore: null,
@@ -20,6 +21,9 @@ const actions = {
 }
 
 const mutations = {
+  setMode(state,m){
+    state.mode = m
+  },
   setSearch(state,s){
     state.search = s
   },

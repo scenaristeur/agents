@@ -6,7 +6,8 @@
     </div> -->
     <router-view/>
     {{session}}
-    <small>0.0.1 - gun brain</small>
+    <br>
+    <small>0.0.1 - gun brain - navbar & mode</small>
   </div>
 </template>
 <script>

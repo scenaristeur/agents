@@ -1,0 +1,47 @@
+{
+  "name": "agents",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "git": "npm run build && git add . && git commit -m",
+    "postgit": "git push && git subtree push --prefix dist origin gh-pages"
+  },
+  "dependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "@inrupt/solid-client": "^1.17.0",
+    "@inrupt/solid-client-authn-browser": "^1.11.2",
+    "@inrupt/vocab-common-rdf": "^1.0.3",
+    "@inrupt/vocab-solid-common": "^0.7.5",
+    "@types/dat.gui": "^0.7.7",
+    "@types/three": "^0.138.0",
+    "3d-force-graph": "^1.70.5",
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.21.2",
+    "core-js": "^3.6.5",
+    "dat.gui": "^0.7.7",
+    "oimo": "^1.0.9",
+    "register-service-worker": "^1.7.1",
+    "three-spritetext": "^1.6.3",
+    "vue": "^3.2.31",
+    "vue-float-action-button": "^0.7.9",
+    "vue-gun": "^0.0.3",
+    "vue-router": "^4.0.13",
+    "vue-threejs": "^0.2.0-alpha.1",
+    "vue-vis-network": "^1.0.2",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^5.0.1",
+    "@vue/cli-plugin-eslint": "^5.0.1",
+    "@vue/cli-plugin-pwa": "^5.0.1",
+    "@vue/cli-plugin-router": "^5.0.1",
+    "@vue/cli-plugin-vuex": "^5.0.1",
+    "@vue/cli-service": "^5.0.1",
+    "eslint": "^8.10.0",
+    "eslint-plugin-vue": "^8.5.0",
+    "vue-template-compiler": "^2.6.11"
+  }
+}

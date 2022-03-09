@@ -1,6 +1,6 @@
 // import Vue from 'vue'
 const state = () => ({
-  mode: null,
+  mode: "Mode",
   files: [],
   folders: [],
   mustExplore: null,

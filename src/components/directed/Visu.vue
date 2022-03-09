@@ -293,6 +293,10 @@ export default {
     },
     nodes(){
       console.log("local nodes", this.nodes)
+      this.nodes.forEach((node) => {
+        console.log(node.id, node.name, node.url)
+      });
+
     }
   },
   computed:{

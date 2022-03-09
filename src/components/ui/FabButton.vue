@@ -1,0 +1,51 @@
+<template>
+  <vue-fab
+  :mainBtnColor="mainBtnColor">
+  <fab-item
+  v-for="(item, idx) in menu"
+  :key="idx"
+  :idx="idx"
+  :title="item.title"
+  :color="item.color"
+  :icon="item.icon"
+  @clickItem="clickItem" />
+</vue-fab>
+</template>
+
+<script>
+export default {
+  name: 'FabButton',
+  data(){
+    return {
+      // icons https://fonts.google.com/icons?selected=Material+Icons
+      menu: [
+        {
+          icon: 'public',
+          title: 'Worlds',
+          color: '#ff9900'
+        },
+        {
+          icon: 'toc',
+          title: 'toc',
+          color: '#999'
+        },
+        {
+          icon: 'add_a_photo',
+          title: 'Add a Photo',
+          color: '#999'
+        }
+      ],
+      mainBtnColor: '#3eaf7c'
+    }
+  },
+  methods:{
+    clickItem(item) {
+      alert(item.idx)
+    },
+  }
+}
+</script>
+
+<style>
+
+</style>

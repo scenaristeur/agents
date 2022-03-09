@@ -1,4 +1,17 @@
 # agents
+
+## commands (todo)
+Operating System
+
+- [ ] clear : clear the world
+- mb, mk or mkbrain [gun | local | solid | ipfs  | mld] name : make a brain, create a new brain named name in gun/local/solid/ipfs/mld storage and dive into
+- shortcuts mg name for make gun brain, ml name for make local, ms for make solid...
+- cd name : move to the name brain or cb for change brain
+- ls list what is in current
+
+
+
+
 ## change a text property of a node
 `dav.name = David
 
@@ -16,16 +29,23 @@ dav123 / dav123123
 
 - todo change password https://gun.eco/docs/FAQ#how-can-i-change-a-user-password
 user.auth(alias, passphrase, callback, { change: 'new-pass-value' })
+- avatars
+- https://avatars.dicebear.com/
+https://avatars.dicebear.com/api/personas/dav.svg
+https://avatars.dicebear.com/api/personas/{{username}}.svg
+https://avatars.dicebear.com/api/personas/xxx.svg
+https://avatars.dicebear.com/api/initials/xx.svg
+
+
+- ethereum decentralmized
+- https://github.com/llSourcell/Your_First_Decentralized_Application
 
 
 
 
 
-
-
-
-
-
+- gundb chat example / users
+- https://www.youtube.com/watch?v=J5x3OMXjgMc
 
 
 - gundb share distributed db
@@ -86,3 +106,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+# joy
+- https://github.com/eraeco/joy

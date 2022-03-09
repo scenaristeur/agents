@@ -91,7 +91,7 @@ export default {
     // .dagMode('td')
     // .dagLevelDistance(100)
     .nodeLabel('name')
-    //  .nodeId('url')
+     .nodeId('url')
     .nodeColor(node => app.highlightNodes.has(node) ? node === app.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : 'rgba(0,255,255,0.6)')
     .linkWidth(link => app.highlightLinks.has(link) ? 4 : 1)
     .linkDirectionalParticles(link => app.highlightLinks.has(link) ? 4 : 0)

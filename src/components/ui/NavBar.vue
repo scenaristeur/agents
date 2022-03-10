@@ -18,6 +18,7 @@ world<template>
           <b-dropdown-item href="#" @click="changeWorld('gun')">gundb</b-dropdown-item>
           <b-dropdown-item href="#" @click="changeWorld('ipfs')" disabled>ipfs</b-dropdown-item>
           <b-dropdown-item href="#" @click="changeWorld('mld')" disabled>m-ld</b-dropdown-item>
+          <b-dropdown-item href="#" @click="changeWorld(null)" >none</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <SolidLogin v-if="world == 'solid'" />

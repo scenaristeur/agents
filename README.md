@@ -24,6 +24,10 @@ Operating System
 - graphic ui with buttons
 
 
+# Externos JS/NODE Operating system
+- https://www.linuxfordevices.com/tutorials/linux/extern-os
+- https://nwjs.io/
+
 
 
 

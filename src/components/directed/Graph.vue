@@ -210,8 +210,8 @@ export default {
     })
     .onBackgroundClick(event => {
       console.log("onBackgroundClick", event)
-      app.$store.commit('app/setCurrentNode', null)
-      app.$bvModal.show("modal-node")
+    //  app.$store.commit('app/setCurrentNode', null)
+    //  app.$bvModal.show("modal-node")
     })
     .onBackgroundRightClick(event => {
       alert("onBackgroundRightClick", event)

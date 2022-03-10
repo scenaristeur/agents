@@ -11,13 +11,13 @@
     <b-form-input v-if="field != null" v-model="field.name" placeholder="new property / link"></b-form-input>
   </b-modal>
 
-  <b-modal id="modal-brain" title="Brain">
+  <b-modal id="modal-brain" title="Brain" size="lg">
     Current World : {{ world}}
     <b-form-input v-model="brainName" placeholder="Enter the brain name"></b-form-input>
-    <b-form-group label="New Brain privacy" v-slot="{ ariaDescribedby }">
+    <b-form-radio-group label="New Brain privacy" v-slot="{ ariaDescribedby }">
       <b-form-radio v-model="privacy" :aria-describedby="ariaDescribedby" name="privacy" value="public">Public</b-form-radio>
       <b-form-radio v-model="privacy" :aria-describedby="ariaDescribedby" name="privacy" value="user">User</b-form-radio>
-    </b-form-group>
+    </b-form-radio-group>
     <b-button variant="primary" @click="newBrain">New Brain</b-button>
     <b-list-group style="height:200px;overflow-y: scroll;">
       <b-list-group-item
@@ -27,9 +27,69 @@
       @click="switchBrain(brain)">
       {{brain.name}}
     </b-list-group-item>
+
+
+    <div class="accordion" role="tablist">
+      <b-card no-body class="mb-1" v-for="[world, brain] of Object.entries(brains)" :key="world">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-1 variant="info">{{world}}</b-button>
+        </b-card-header>
+        <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+          <b-card-body>
+            User :
+            <ul>
+              <li v-for="b of brain.user" :key="b['_']['#']">
+                <b-button size="sm">  {{b.name}}</b-button>
+              </li>
+            </ul>
+            Public :
+            <div v-for="b of brain.public" :key="b['_']['#']">
+              <b-button variant="light" size="sm">  {{b.name}}</b-button> <small>creation: {{b.created}}, author: public, number of nodes</small>
+            </div>
+            <small>mtodo : make a sort table</small>
+
+
+            <!-- <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
+            <b-card-text> text </b-card-text> -->
+
+            <!-- {{brain}} -->
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+
+      <b-card no-body class="mb-1">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-2 variant="info">Accordion 2</b-button>
+        </b-card-header>
+        <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+          <b-card-body>
+            <b-card-text> text </b-card-text>
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+
+      <b-card no-body class="mb-1">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-3 variant="info">Accordion 3</b-button>
+        </b-card-header>
+        <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+          <b-card-body>
+            <b-card-text> text </b-card-text>
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+    </div>
+
+    brains {{ brains}}
+
+
+
+
+
+
   </b-list-group>
 
-  brains {{ brains}}
+
 
 </b-modal>
 

@@ -44,9 +44,9 @@
             </ul>
             Public :
             <div v-for="b of brain.public" :key="b['_']['#']">
-              <b-button variant="light" size="sm">  {{b.name}}</b-button> <small>creation: {{b.created}}, author: public, number of nodes</small>
+              <b-button variant="light" size="sm" @click="switchBrain(b)">  {{b.name}}</b-button> <small>creation: {{b.created}}, author: public, number of nodes</small>
             </div>
-            <small>mtodo : make a sort table</small>
+            <small>todo : make a sort table</small>
 
 
             <!-- <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>

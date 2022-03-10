@@ -77,6 +77,11 @@ const plugin = {
       return resources
     }
 
+    Vue.prototype.$getPermissions = async function(node){
+         let url = node.url
+         const file = await getFile(url, { fetch: sc.fetch });
+         return file.internal_resourceInfo.permissions
+       }
     Vue.prototype.$getResources1 = async function(path){
       //  console.log("path", path)
       let resources = []

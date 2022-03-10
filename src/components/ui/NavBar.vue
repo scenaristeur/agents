@@ -11,7 +11,7 @@ world<template>
     <b-collapse id="nav-collapse" is-nav>
 
       <b-navbar-nav>
-        <b-navbar-brand href="#">Agents</b-navbar-brand>
+        <b-navbar-brand href="/agents">Agents</b-navbar-brand>
 
         <b-nav-item-dropdown :text="world || 'World'" right>
           <b-dropdown-item href="#" @click="changeWorld('solid')">solid</b-dropdown-item>

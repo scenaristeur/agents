@@ -101,7 +101,7 @@ export default {
     // .dagMode('td')
     // .dagLevelDistance(100)
     .nodeLabel('name')
-     .nodeId('url')
+    .nodeId('url')
     .nodeColor(node => app.highlightNodes.has(node) ? node === app.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : 'rgba(0,255,255,0.6)')
     .linkWidth(link => app.highlightLinks.has(link) ? 4 : 1)
     .linkDirectionalParticles(link => app.highlightLinks.has(link) ? 4 : 0)
@@ -138,7 +138,7 @@ export default {
 
       app.updateHighlight();
     })
-     .nodeAutoColorBy('type')
+    .nodeAutoColorBy('type')
     // .nodeColor(node => this.selectedNodes.has(node) ? 'rgb(255,0,0,1)' : node.color)
     // .nodeThreeObject(({ url }) => {
     //
@@ -206,10 +206,18 @@ export default {
         node, // lookAt ({ x, y, z })
         3000  // ms transition duration
       );
-      app.$store.commit ('app/currentNode', node)
-    });
+      app.$store.commit ('app/setCurrentNode', node)
+    })
+    .onBackgroundClick(event => {
+      console.log("onBackgroundClick", event)
+      app.$store.commit('app/setCurrentNode', null)
+      app.$bvModal.show("modal-node")
+    })
+    .onBackgroundRightClick(event => {
+      alert("onBackgroundRightClick", event)
+    })
 
-    //  console.log(this.Graph)
+    console.log(this.Graph)
     //  console.log(this.Graph.graphData())
 
     // setInterval(() => {
@@ -344,11 +352,11 @@ export default {
 </script>
 
 <style>
-   .node-label {
-     font-size: 12px;
-     padding: 1px 4px;
-     border-radius: 4px;
-     background-color: rgba(0,0,0,0.5);
-     user-select: none;
-   }
- </style>
+.node-label {
+  font-size: 12px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background-color: rgba(0,0,0,0.5);
+  user-select: none;
+}
+</style>

@@ -1,7 +1,7 @@
 // import Vue from 'vue'
 const state = () => ({
   world: null,
-  navigation: "explore",
+  navigation: "create",
   brains: {},
   brain: null,
   // mode: null,
@@ -52,7 +52,7 @@ const mutations = {
   mustExplore(state, u){
     state.mustExplore = u
   },
-  currentNode(state, n){
+  setCurrentNode(state, n){
     state.currentNode = n
   },
   setInputObject(state, io){

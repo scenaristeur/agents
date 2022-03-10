@@ -7,7 +7,8 @@
     <router-view/>
     {{session}}
     <br>
-    <small>0.0.1 - navigation menu</small>
+      <small>0.0.1 - navigation menu</small>
+
   </div>
 </template>
 <script>

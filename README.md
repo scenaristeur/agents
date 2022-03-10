@@ -2,6 +2,7 @@
 
 # choose Environment
 - solid / gundb / ipfs / m-ld
+- gun  : In world menu select 'gun', and if you want login signin & login to use your private space
 
 # choose Command Interface
 
@@ -11,6 +12,7 @@ Operating System
 - new Brain / New Node / new Link / new Prop
 
 - [ ] clear : clear the world
+- explore from pod root (solid), from gun node
 - mb, mk or mkbrain [gun | local | solid | ipfs  | mld] name : make a brain, create a new brain named name in gun/local/solid/ipfs/mld storage and dive into
 - shortcuts mg name for make gun brain, ml name for make local, ms for make solid...
 - cd name : move to the name brain or cb for change brain

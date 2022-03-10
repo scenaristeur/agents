@@ -7,7 +7,7 @@
     <router-view/>
     {{session}}
     <br>
-    <small>0.0.1 - gun brain - navbar & mode</small>
+    <small>0.0.1 - gun create brain</small>
   </div>
 </template>
 <script>

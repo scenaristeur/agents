@@ -28,13 +28,13 @@ export default {
           icon: 'toc',
           title: 'gun refactoring',
           color: '#999',
-          mode: 'gun'
+          world: 'gun'
         },
         {
           icon: 'toc',
           title: 'solid refactoring',
           color: '#999',
-          mode: 'solid'
+          world: 'solid'
         },
         {
           icon: 'toc',
@@ -58,8 +58,8 @@ export default {
   methods:{
     clickItem(item) {
       let choice = this.menu[item.idx]
-      console.log(choice.mode)
-      this.$store.commit('app/setMode', choice.mode)
+      console.log(choice.world)
+      this.$store.commit('app/setWorld', choice.world)
       alert(item.idx)
     },
   }

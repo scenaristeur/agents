@@ -12,7 +12,12 @@
   </b-modal>
 
   <b-modal id="modal-brain" title="Brain">
+    Current World : {{ world}}
     <b-form-input v-model="brainName" placeholder="Enter the brain name"></b-form-input>
+    <b-form-group label="New Brain privacy" v-slot="{ ariaDescribedby }">
+      <b-form-radio v-model="privacy" :aria-describedby="ariaDescribedby" name="privacy" value="public">Public</b-form-radio>
+      <b-form-radio v-model="privacy" :aria-describedby="ariaDescribedby" name="privacy" value="user">User</b-form-radio>
+    </b-form-group>
     <b-button variant="primary" @click="newBrain">New Brain</b-button>
     <b-list-group style="height:200px;overflow-y: scroll;">
       <b-list-group-item
@@ -23,6 +28,8 @@
       {{brain.name}}
     </b-list-group-item>
   </b-list-group>
+
+  brains {{ brains}}
 
 </b-modal>
 
@@ -54,7 +61,7 @@ export default {
   data(){
     return{
       brain: null,
-      brains: [],
+      //  brains: [],
       brainName: "",
       field: null,
       clearing: false,
@@ -63,7 +70,8 @@ export default {
       currentProp: {},
       newValue: null,
       link: {},
-      permissions: null
+      permissions: null,
+      privacy: "public"
     }
   },
   mounted(){
@@ -101,10 +109,6 @@ export default {
         openLinks: this.openLinks,
         // resetCamera: this.resetCamera
       };
-
-
-
-
 
       this.nodeFolder = this.gui.addFolder('Node')
       // console.log(this.nodeFolder)
@@ -300,11 +304,12 @@ export default {
       this.$bvModal.show("modal-brain")
     },
     newBrain(){
-      this.brain = new Brain({name: this.brainName})
-      console.log(this.brain)
-      this.brains.push(this.brain)
+      this.brain = new Brain({name: this.brainName, world: this.world, privacy: this.privacy})
+
+      this.$createBrain( this.brain)
+      //this.brains.push(this.brain)
       this.brainName = ""
-      this.$gunGet(this.brain)
+
     },
     switchBrain(b){
       console.log(b)
@@ -367,6 +372,12 @@ export default {
     currentNode(){
       console.log (this.currentNode)
       this.updateNodeFolder(this.currentNode)
+    },
+    world(){
+      this.$bvModal.show("modal-brain")
+    },
+    brains(){
+      console.log("must update", this.brains)
     }
   },
   computed:{
@@ -374,6 +385,14 @@ export default {
       get () { return this.$store.state.app.currentNode },
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
+    brains: {
+      get () { return this.$store.state.app.brains },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    world: {
+      get () { return this.$store.state.app.world },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    }
   }
 
 }

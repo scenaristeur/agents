@@ -1,7 +1,8 @@
 // import Vue from 'vue'
 const state = () => ({
   gunUser : undefined,
-  brain: ""
+  // brain: "",
+  // brains: []
 })
 
 const actions = {
@@ -16,10 +17,7 @@ const mutations = {
     console.log(u)
     state.gunUser = u
   },
-  setBrain(state, b){
-    console.log("BRAIN", b)
-    state.brain = b
-  }
+
 }
 
 export default {

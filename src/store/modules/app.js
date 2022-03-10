@@ -1,6 +1,8 @@
 // import Vue from 'vue'
 const state = () => ({
   world: null,
+  brains: {},
+  brain: null,
   // mode: null,
   files: [],
   folders: [],
@@ -22,8 +24,17 @@ const actions = {
 }
 
 const mutations = {
+  setBrain(state, b){
+    console.log("BRAIN", b)
+    state.brain = b
+  },
   setWorld(state, w){
     state.world = w
+  },
+  setBrainGroup(state, data){
+    state.brains[data.world] == undefined ? state.brains[data.world] = {} : ""
+    state.brains[data.world][data.privacy] = data.brains
+    console.log(state.brains)
   },
   setSearch(state,s){
     state.search = s

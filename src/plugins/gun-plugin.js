@@ -5,6 +5,46 @@ const plugin = {
     let store = opts.store
     console.log(store)
 
+    Vue.prototype.$createBrain = async function(brain){
+
+      console.log("creation",brain)
+      let brains = []
+      let rootNode = null
+      switch (brain.world) {
+        case "gun":
+        if (brain.privacy == "user"){
+          rootNode = Vue.prototype.$gun.user().get('brains')
+        }else {
+          rootNode = Vue.prototype.$gun.get('brains')
+        }
+
+
+
+        rootNode.map().on((node, key) => {
+          console.log(key, node)
+          brains.push({key: key, node: node})
+          // add results straight to the Vue component state
+          // and get updates when nodes are updated by GUN
+          // this.todos[key] = node;
+          //  console.log(this.todos)
+        });
+
+        rootNode.set({name: brain.name, created: Date.now(), type: brain.type})
+
+
+        brain.brains = brains
+        console.log("brains",brain.brains)
+
+
+
+        break;
+        default:
+        console.log("todo")
+      }
+
+      store.commit('app/setBrain', brain)
+      return brain
+    }
 
     Vue.prototype.$gunGet = async function(brain){
       let gunNodes = []
@@ -19,8 +59,8 @@ const plugin = {
       console.log(gunNodes)
       brain.gunNodes = gunNodes
       console.log(brain)
-      store.commit('gun/setBrain', brain)
-    //  Vue.prototype.$listenNeurones(brain)
+      store.commit('app/setBrain', brain)
+      //  Vue.prototype.$listenNeurones(brain)
       return brain
     }
 

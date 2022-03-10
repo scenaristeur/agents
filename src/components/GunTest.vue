@@ -1,6 +1,14 @@
 <template>
   <div>
     Gun test
+    <hr>
+    gunPublicBrains : {{ gunPublicBrains}}
+    <hr>
+    gunUserBrains : {{ gunUserBrains}}
+
+
+
+
     <b-input @change="command()" v-model="command_input" placeholder="type a command and press enter" />
     <h3>Some possible commands</h3>
     <ul>
@@ -52,7 +60,9 @@ export default {
       last: {key: "", value: ""},
       text: "",
       speak_text: "",
-      causette : []
+      causette : [],
+      gunUserBrains: [],
+      gunPublicBrains: []
     }
   },
   mounted: function() {
@@ -196,23 +206,58 @@ export default {
           app.causette.push(say)
         }
       )
-    }
-  },
-  watch:{
-    gunUser(){
-      console.log("gunUser",this.gunUser)
-      if (this.gunUser != undefined){
-        this.updateSay()
-      }
-
-    }
-  },
-  computed:{
-    gunUser:{
-      get () { return this.$store.state.gun.gunUser },
-      set (/*value*/) { /*this.updateTodo(value)*/ }
     },
+    updateUserBrains(){
+      let app = this
+      this.gunUserBrains = []
+      this.$gun.user().get('brains').map().once(brain => {
+        console.log("brain", brain)
+        app.gunUserBrains.push(brain)
+      }
+    )
+    console.log("user brains", this.gunUserBrains)
+    this.$store.commit('app/setBrainGroup', {world: "gun", privacy: "user", brains: this.gunUserBrains})
+  },
+  updatePublicBrains(){
+    let app = this
+    this.gunPublicBrains = []
+    this.$gun.get('brains').map().once(brain => {
+      console.log("brain", brain)
+      app.gunPublicBrains.push(brain)
+    }
+  )
+  console.log("public brains", this.gunPublicBrains)
+  this.$store.commit('app/setBrainGroup', {world: "gun", privacy: "public", brains: this.gunPublicBrains})
+}
+
+},
+watch:{
+  gunUser(){
+    console.log("gunUser",this.gunUser)
+    if (this.gunUser != undefined){
+      this.updateSay()
+      this.updateUserBrains()
+      this.updatePublicBrains()
+    }
+  },
+  world(){
+    console.log(this.world)
+    this.gunPublicBrains = []
+    if (this.world == "gun"){
+      this.updatePublicBrains()
+    }
   }
+},
+computed:{
+  gunUser:{
+    get () { return this.$store.state.gun.gunUser },
+    set (/*value*/) { /*this.updateTodo(value)*/ }
+  },
+  world:{
+    get () { return this.$store.state.app.world },
+    set (/*value*/) { /*this.updateTodo(value)*/ }
+  },
+}
 }
 </script>
 

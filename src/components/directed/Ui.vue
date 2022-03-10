@@ -374,7 +374,10 @@ export default {
       this.updateNodeFolder(this.currentNode)
     },
     world(){
-      this.$bvModal.show("modal-brain")
+      if (this.world == "gun"){
+        this.$bvModal.show("modal-brain")
+      }
+
     },
     brains(){
       console.log("must update", this.brains)

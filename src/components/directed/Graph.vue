@@ -157,7 +157,7 @@ export default {
     .nodeThreeObject(node => {
       const nodeEl = document.createElement('div');
       nodeEl.textContent = node.name //node.id;
-      nodeEl.style.color = node.color;
+      nodeEl.style.color = node.color || "#ffffff";
       nodeEl.className = 'node-label';
       return new CSS2DObject(nodeEl);
     })

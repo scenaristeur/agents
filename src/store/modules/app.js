@@ -1,6 +1,7 @@
 // import Vue from 'vue'
 const state = () => ({
   world: null,
+  navigation: "explore",
   brains: {},
   brain: null,
   // mode: null,
@@ -30,6 +31,9 @@ const mutations = {
   },
   setWorld(state, w){
     state.world = w
+  },
+  setNavigation(state, n){
+    state.navigation = n
   },
   setBrainGroup(state, data){
     state.brains[data.world] == undefined ? state.brains[data.world] = {} : ""

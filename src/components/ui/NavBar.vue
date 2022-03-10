@@ -28,7 +28,7 @@ world<template>
           </div>
           <GunSignin />
           <GunLogin />
-
+          <b-dropdown-item-button>Leave</b-dropdown-item-button>
         </b-nav-dropdown>
 
         <b-nav-item-dropdown  v-else right>
@@ -39,6 +39,38 @@ world<template>
 
           <b-dropdown-item href="#">Sign In/Out {{ world }}</b-dropdown-item>
         </b-nav-item-dropdown>
+
+
+        <!-- <b-nav-item-dropdown
+        :text="navigation || 'Navigation'"
+        block
+        menu-class="w-100"> -->
+        <b-dropdown :text="navigation || 'Navigation'">
+          <b-dropdown-item href="#" @click="changeNavigation('create')"><u>C</u>reate</b-dropdown-item>
+          <b-dropdown-item href="#" @click="changeNavigation('edit')"><u>E</u>dit</b-dropdown-item>
+          <b-dropdown-item href="#" @click="changeNavigation('explore')">e<u>X</u>plore</b-dropdown-item>
+          <b-dropdown-item href="#" @click="changeNavigation('collapse')">c<u>O</u>llapse</b-dropdown-item>
+          <!-- <b-dropdown-item href="#" @click="changeNavigation('explore')">explore</b-dropdown-item> -->
+          <b-dropdown-item href="#" @click="changeNavigation('select')"><u>S</u>elect</b-dropdown-item>
+          <!-- <b-dropdown-item href="#" @click="changeWorld(null)" >none</b-dropdown-item> -->
+          <b-dropdown-divider></b-dropdown-divider>
+
+          <b-dropdown-header>Show nodes / names or both</b-dropdown-header>
+          <b-dropdown-form>
+            <b-form-radio-group v-model="showNodeName">
+
+              <b-form-radio value="node">nodes</b-form-radio>
+              <b-form-radio value="names">names</b-form-radio>
+              <b-form-radio value="both">both</b-form-radio>
+            </b-form-radio-group>
+            <!-- <b-form-checkbox v-model="showNodeName" class="mb-3">Show node name</b-form-checkbox> -->
+            <!-- <b-button variant="primary" diasbled>test</b-button> -->
+          </b-dropdown-form>
+        </b-dropdown>
+
+        <!-- </b-nav-item-dropdown> -->
+
+
         <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
       </b-navbar-nav>
 
@@ -72,19 +104,34 @@ export default {
     'GunSignin': () => import('@/components/gun/GunSignin'),
     'GunLogin': () => import('@/components/gun/GunLogin'),
   },
+  data(){
+    return{
+      showNodeName : 'both'
+    }
+  },
   methods:{
     changeWorld(w){
       console.log(w)
       this.$store.commit('app/setWorld', w)
     },
+    changeNavigation(n){
+      console.log(n)
+      this.$store.commit('app/setNavigation', n)
+    },
 
   },
   watch:{
-
+    showNodeName(){
+      console.log("showNodeName", this.showNodeName)
+    }
   },
   computed:{
     world:{
       get () { return this.$store.state.app.world },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    navigation:{
+      get () { return this.$store.state.app.navigation },
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
     gunUser:{

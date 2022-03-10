@@ -9,9 +9,17 @@
 <script>
 
 //https://github.com/vasturiano/3d-force-graph
+
+
 import ForceGraph3D from '3d-force-graph';
 import SpriteText from 'three-spritetext';
-import * as THREE from "three";
+
+// node text https://github.com/vasturiano/3d-force-graph/blob/master/example/html-nodes/index.html
+// import '//unpkg.com/three/examples/js/renderers/CSS2DRenderer.js'
+
+// import * as THREE from "three";
+import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer.js';
+// import {CSS2DRenderer, CSS2DObject} from 'three-css2drender'
 export default {
   name: "Graph",
   props:['nodes', 'links'],
@@ -84,7 +92,9 @@ export default {
       this.updateHighlight();
     });
 
-    this.Graph = ForceGraph3D()(elem)
+    this.Graph = ForceGraph3D({
+      extraRenderers: [new CSS2DRenderer()]
+    })(elem)
     // .enableNodeDrag(false)
     // .onNodeClick(this.removeNode)
     .graphData({nodes: this.nodes, links: this.links})
@@ -130,20 +140,28 @@ export default {
     })
      .nodeAutoColorBy('type')
     // .nodeColor(node => this.selectedNodes.has(node) ? 'rgb(255,0,0,1)' : node.color)
-    .nodeThreeObject(({ url }) => {
-
-      // if(url == undefined){
-      //   url = "root"
-      // }
-      if (url != undefined && (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg'))){
-        const imgTexture = new THREE.TextureLoader().load(`${url}`);
-        const material = new THREE.SpriteMaterial({ map: imgTexture });
-        const sprite = new THREE.Sprite(material);
-        sprite.scale.set(12, 12);
-        return sprite;
-      }
-
+    // .nodeThreeObject(({ url }) => {
+    //
+    //   // if(url == undefined){
+    //   //   url = "root"
+    //   // }
+    //   if (url != undefined && (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg'))){
+    //     const imgTexture = new THREE.TextureLoader().load(`${url}`);
+    //     const material = new THREE.SpriteMaterial({ map: imgTexture });
+    //     const sprite = new THREE.Sprite(material);
+    //     sprite.scale.set(12, 12);
+    //     return sprite;
+    //   }
+    //
+    // })
+    .nodeThreeObject(node => {
+      const nodeEl = document.createElement('div');
+      nodeEl.textContent = node.name //node.id;
+      nodeEl.style.color = node.color;
+      nodeEl.className = 'node-label';
+      return new CSS2DObject(nodeEl);
     })
+    .nodeThreeObjectExtend(true)
 
     .linkThreeObjectExtend(true)
     .linkThreeObject(link => {
@@ -326,5 +344,11 @@ export default {
 </script>
 
 <style>
-
-</style>
+   .node-label {
+     font-size: 12px;
+     padding: 1px 4px;
+     border-radius: 4px;
+     background-color: rgba(0,0,0,0.5);
+     user-select: none;
+   }
+ </style>

@@ -7,7 +7,7 @@
     <router-view/>
     {{session}}
     <br>
-    <small>0.0.1 - gun create brain</small>
+    <small>0.0.1 - node text</small>
   </div>
 </template>
 <script>

@@ -10,21 +10,46 @@ const plugin = {
       // inspiration https://github.com/Stefdv/gun-ui-graph/blob/master/gun-ui-graph.html
       console.log(rootNode)
       console.log('build gun._.graph')
-                // var self = this
-                // function each(node) {
-                //   console.log(node)
-                //   //self._processGunNode(node)
-                // }
-                // function ended(collection) {
-                //   console.log('Done mapping over:', collection);
-                //   //self._initCy()
-                //
-                //
-                //   self._mapNodes()
-                // }
-               let node = this.$gun.get(rootNode)//.valMapEnd(each,ended)
-               console.log("Gun Node", node)
+      // var self = this
+      // function each(node) {
+      //   console.log(node)
+      //   //self._processGunNode(node)
+      // }
+      // function ended(collection) {
+      //   console.log('Done mapping over:', collection);
+      //   //self._initCy()
+      //
+      //
+      //   self._mapNodes()
+      // }
 
+      let node = Vue.prototype.$gun.get(rootNode)//.valMapEnd(each,ended)
+      console.log("Gun Node", node)
+      let graph = await processNode(node)
+      console.log("graph", graph)
+      console.log(Vue.prototype.$gun)
+      Vue.prototype.$gun.get(rootNode).open((doc) => {
+      console.log("doc", doc)
+      });
+      return graph
+
+    }
+    async function processNode(n){
+      let gunNodes = []
+       var soul = n._['#'];
+       console.log("soul", soul)
+       n.map().once((node) => {
+         //console.log(key, node)
+         gunNodes.push(node)
+         // add results straight to the Vue component state
+         // and get updates when nodes are updated by GUN
+         // this.todos[key] = node;
+         //  console.log(this.todos)
+       });
+      //let isSet = await _isSet(soul)
+      //console.log(isSet)
+      // console.log(gunNodes)
+      return gunNodes
     }
 
 
@@ -126,6 +151,21 @@ const plugin = {
 
 
 
+    // async function _isSet(ref){
+    //   Vue.prototype.$gun.get(ref).once(function(node){
+    //     let set = true
+    //     let iterated = false
+    //     console.log(node)
+    //     // Vue.prototype.$gun.node.is(node, function(value, field){
+    //     //   console.log(field)
+    //     //   iterated = true
+    //     //   if(!Vue.prototype.$gun.val.rel.is(value)){
+    //     //     set = false
+    //     //   }
+    //     // })
+    //     return {set: set, iterated: iterated}
+    //   })
+    // }
 
   }
 }

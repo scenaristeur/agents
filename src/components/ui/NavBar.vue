@@ -101,7 +101,7 @@
   <b-nav-item-dropdown text="Help" right>
     <b-dropdown-item href="https://github.com/scenaristeur/agents/blob/main/README.md" target="_blank">Help</b-dropdown-item>
     <b-dropdown-item @click="openTutorial">Tutorial</b-dropdown-item>
-    <b-dropdown-item @click="degug">Debug</b-dropdown-item>
+    <b-dropdown-item @click="debug">Debug</b-dropdown-item>
   </b-nav-item-dropdown>
 
 

@@ -19,7 +19,7 @@
 //
 // const Hello = () => externalComponent('https://components.solidcommunity.net/public/hello/Hello.bdd71b8bbb487af4de05.umd.min.js');
 
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 export default {
   name: "Visu",
   components: {
@@ -38,7 +38,10 @@ export default {
       links: [],
       paths: [],
       jump: 0,
-      graphNeedUpdate : false
+      graphNeedUpdate : false,
+      gunCpt : 0,
+      gunNodes : {},
+      gunLinks: []
 
     }
   },
@@ -329,9 +332,156 @@ export default {
         });
 
 
+      },
+      gunNodeLoop1(o, parent_id){
+        console.log(o,parent_id)
+        let parent =  this.nodes.find(x => x.id==parent_id);
+        console.log("node parent", parent)
+        let id =  uuidv4()
+        let node = {id: id}
+
+        for (const [key, value] of Object.entries(o)){
+          console.log(key, typeof value, value)
+          switch (typeof value) {
+            case 'string':
+            case 'number':
+            case 'boolean':
+            parent[key] = value
+            var index = this.nodes.findIndex(x => x.id==parent.id);
+            index === -1 ? this.nodes.push(parent) : Object.assign(this.nodes[index], parent)
+            break;
+            case 'object':
+            this.nodes.push(node)
+            this.links.push({source: parent_id, target: node.id, label: key})
+            this.gunNodeLoop(value, node.id)
+            break;
+            default:
+            console.log("no handler for ", typeof value)
+
+          }
+
+
+        }
+
+        // console.log("parent", parent)
+        // for (const [key, value] of Object.entries(o)){
+        //   console.log(key, value)
+        //   let n = {id: key, name: key}
+        //   var index = this.nodes.findIndex(x => x.id==n.id);
+        //   index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
+        // //  this.links.push({source: parent, target: n.id, label: key})
+        //   if(typeof value == 'object'){
+        //     console.log("object", value)
+        //     this.gunNodeLoop(value, key)
+        //   }else{
+        //     console.log("string", key, value)
+        //   }
+        // }
+      },
+      readGunNode(soul, gunCpt){
+        gunCpt ++
+        let app = this
+        console.log(gunCpt, "soul",soul)
+        let n = {id: soul, name: soul}
+        this.gunNodes[soul] = n
+        var index = this.nodes.findIndex(x => x.id==n.id);
+        // console.log("index", index, n)
+        index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
+        //
+        // let app = this
+
+        // if (this.gunCtp < 20){
+        console.log(gunCpt  , Object.entries(app.gunNodes).length)
+        if (gunCpt < 3 && Object.entries(app.gunNodes).length <50){
+        this.$gun.get(soul).map((gunNode, key) => {
+
+          if(gunNode != null && gunNode._ != undefined){
+            //console.log(gunCpt, "-node",gunNode)
+            let newSoul = gunNode._['#']
+            //console.log("newSoul",newSoul)
+
+            this.readGunNode(newSoul, gunCpt)
+
+            // console.log("<-",app.links)
+
+            let link = {source: soul, target: newSoul, label: key }
+            //  console.log(link)
+            app.gunLinks.push(link)
+          }else{
+            //  console.log(gunCpt, "--pas de soul", gunNode)
+            gunNode != null ? this.gunNodes[soul][key] = gunNode : ""
+          }
+
+        })
+          }
+        //console.log(gunCpt,"-->",this.gunNodes, links)
+        for (const n of Object.values(this.gunNodes)){
+          var index2 = this.nodes.findIndex(x => x.id==n.id);
+          //  console.log("index", index2, n)
+          index2 === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index2], n)
+        }
+
+        // links.forEach((l) => {
+        //   this.links.push(l)
+        // });
+
+        // this.nodes.push(node)
+        // console.log(this.nodes)
+        console.log("done read gun")
+          this.graphNeedUpdate = true
+        // }
       }
+
     },
     watch:{
+      gunNode1(){
+        let gunCpt = 0
+        // let app = this
+        this.gunNodes = {}
+        this.readGunNode(this.gunNode.id, gunCpt)
+        console.log("DONEGUN ")
+
+        // setTimeout(function () {
+        //
+        //   for (const l of app.gunLinks) {
+        //     console.log(l)
+        //     try{
+        //       app.links.push(l)
+        //       console.log(app.links.length)
+        //     }catch(e){
+        //       console.log(e)
+        //     }
+        //
+        //   }
+        //
+        // }, 5000);
+        //     this.graphNeedUpdate = true
+
+
+      },
+      gunNode(){
+        console.log(this.gunNode)
+        // this.gunNodes = []
+        // this.nodes = []
+        // this.links = []
+        var index = this.nodes.findIndex(x => x.id==this.gunNode.id);
+        index === -1 ? this.nodes.push(this.gunNode) : Object.assign(this.nodes[index], this.gunNode)
+
+        // let app = this
+        if(this.gunNode.type == 'brain'){
+          // this.$gun.get(this.currentNode.id).open((doc) => {// listen / on
+          this.$gun.get(this.gunNode.id).load((doc) => { // once
+            console.log("doc", doc)
+             Object.assign(this.nodes[index], doc)
+          //  app.gunNodeLoop(doc.object, this.gunNode.id)
+            console.log("done")
+            //this.graphNeedUpdate = true
+          });
+
+        }
+
+      },
+
       async pod(){
         if (this.pod != null){
           console.log(this.pod)
@@ -405,6 +555,10 @@ export default {
       },
       currentNode:{
         get () { return this.$store.state.app.currentNode },
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      },
+      gunNode:{
+        get () { return this.$store.state.app.gunNode },
         set (/*value*/) { /*this.updateTodo(value)*/ }
       }
     }

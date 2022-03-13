@@ -12,6 +12,7 @@ const state = () => ({
   inputObject: null,
   search: "",
   header: "tutorial",
+  gunNode: null,
   worlds: [
     // {id: "graph",
     // name: "Graph", status: "enabled", description: "description",
@@ -98,6 +99,9 @@ const mutations = {
   setWorld(state, w){
     state.header = w.id
     state.world = w
+  },
+  setGunNode(state, n){
+    state.gunNode = n
   },
   setNavigation(state, n){
     state.navigation = n

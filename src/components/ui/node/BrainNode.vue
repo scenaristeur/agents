@@ -57,14 +57,18 @@ export default {
   },
   methods: {
     rootNodeChanged(){
-
+      let node = {id: this.rootNode, name: this.rootNode, type: 'brain'}
+      //this.currentNode.brains == undefined ? this.currentNode.brains = [] : ""
       console.log(this.rootNode)
       switch (this.currentNode.id) {
         case 'solid':
         this.$store.commit('app/mustExplore', this.rootNode)
         break;
         case 'gun':
-        this.$gunExplore(this.rootNode)
+        //this.currentNode.brains.push(node)
+        // this.$gunExplore(this.rootNode)
+        this.$store.commit('app/setCurrentNode', null)
+        this.$store.commit('app/setGunNode', node)
         break;
         default:
 

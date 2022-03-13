@@ -312,7 +312,7 @@ export default {
 
       }
       this.updateHighlight()
-    }
+    },
     // files(){
     //   const { nodes, links } = this.Graph.graphData();
     //   for (const f of this.files){
@@ -363,6 +363,11 @@ export default {
     //     }
     //   }
     // }
+    currentNode(){
+      if (this.currentNode == null){
+            this.selectedNodes.clear()
+      }
+    }
   },
   computed:{
     search:{
@@ -371,6 +376,10 @@ export default {
     },
     navigation:{
       get () { return this.$store.state.app.navigation },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    currentNode:{
+      get () { return this.$store.state.app.currentNode },
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
   }

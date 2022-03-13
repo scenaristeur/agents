@@ -45,6 +45,7 @@ Vue.use(VueFab,  {
 } )
 
 import VueGun from 'vue-gun';
+import('gun/lib/load.js')
 // import SEA from 'gun/sea'; // Required for SEA functions and user authentication
 // Vue.use(SEA)
 Vue.use(VueGun, {

@@ -102,7 +102,7 @@ export default {
     // .dagLevelDistance(100)
     .nodeLabel('name')
     .nodeId('url')
-    .nodeColor(node => app.highlightNodes.has(node) ? node === app.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : 'rgba(0,255,255,0.6)')
+    .nodeColor(node => app.highlightNodes.has(node) ? node === app.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
     .linkWidth(link => app.highlightLinks.has(link) ? 4 : 1)
     .linkDirectionalParticles(link => app.highlightLinks.has(link) ? 4 : 0)
     .linkDirectionalParticleWidth(4)
@@ -278,6 +278,8 @@ export default {
       })
     },
 
+
+
   },
   watch:{
     graphNeedUpdate(){
@@ -365,7 +367,7 @@ export default {
     // }
     currentNode(){
       if (this.currentNode == null){
-            this.selectedNodes.clear()
+        this.selectedNodes.clear()
       }
     }
   },

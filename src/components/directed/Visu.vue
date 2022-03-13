@@ -7,7 +7,8 @@
     <CommandInput />
     <Node v-if="navigation == 'preview' && currentNode != null" />
     <Graph :nodes="nodes" :links="links" :graphNeedUpdate="graphNeedUpdate" @update="graphNeedUpdate = $event;" />
-
+    <b-button @click="clear">clear</b-button>
+    <b-button @click="save">save</b-button>
     {{ pod }}
     <!-- <Comunica /> -->
     <!-- <Hello /> -->
@@ -212,8 +213,8 @@ export default {
             if(r.type == "file"){
               console.log("on entre ici", r)
               await app.$getResource(r)
-              let compacted = await app.$getJsonLd(r.url)
-              console.log(compacted)
+              // let compacted = await app.$getJsonLd(r.url)
+              // console.log(compacted)
             }
             console.log(r)
             app.nodes.push(r)
@@ -393,27 +394,27 @@ export default {
         // if (this.gunCtp < 20){
         console.log(gunCpt  , Object.entries(app.gunNodes).length)
         if (gunCpt < 3 && Object.entries(app.gunNodes).length <50){
-        this.$gun.get(soul).map((gunNode, key) => {
+          this.$gun.get(soul).map((gunNode, key) => {
 
-          if(gunNode != null && gunNode._ != undefined){
-            //console.log(gunCpt, "-node",gunNode)
-            let newSoul = gunNode._['#']
-            //console.log("newSoul",newSoul)
+            if(gunNode != null && gunNode._ != undefined){
+              //console.log(gunCpt, "-node",gunNode)
+              let newSoul = gunNode._['#']
+              //console.log("newSoul",newSoul)
 
-            this.readGunNode(newSoul, gunCpt)
+              this.readGunNode(newSoul, gunCpt)
 
-            // console.log("<-",app.links)
+              // console.log("<-",app.links)
 
-            let link = {source: soul, target: newSoul, label: key }
-            //  console.log(link)
-            app.gunLinks.push(link)
-          }else{
-            //  console.log(gunCpt, "--pas de soul", gunNode)
-            gunNode != null ? this.gunNodes[soul][key] = gunNode : ""
-          }
+              let link = {source: soul, target: newSoul, label: key }
+              //  console.log(link)
+              app.gunLinks.push(link)
+            }else{
+              //  console.log(gunCpt, "--pas de soul", gunNode)
+              gunNode != null ? this.gunNodes[soul][key] = gunNode : ""
+            }
 
-        })
-          }
+          })
+        }
         //console.log(gunCpt,"-->",this.gunNodes, links)
         for (const n of Object.values(this.gunNodes)){
           var index2 = this.nodes.findIndex(x => x.id==n.id);
@@ -428,8 +429,19 @@ export default {
         // this.nodes.push(node)
         // console.log(this.nodes)
         console.log("done read gun")
-          this.graphNeedUpdate = true
+        this.graphNeedUpdate = true
         // }
+      },
+      clear(){
+        while (this.links.length > 0){
+          this.links.shift();
+        }
+        while (this.nodes.length > 0){
+          this.nodes.shift();
+        }
+      },
+      save(){
+        console.log('todo')
       }
 
     },
@@ -460,6 +472,16 @@ export default {
 
       },
       gunNode(){
+        var index = this.nodes.findIndex(x => x.id==this.gunNode.id);
+        index === -1 ? this.nodes.push(this.gunNode) : Object.assign(this.nodes[index], this.gunNode)
+        let n = this.nodes.find(x => x.id==this.gunNode.id);
+        console.log("n",n)
+        this.$gun.get(this.gunNode.id).once((node) => {
+          console.log(node)
+        })
+
+      },
+      gunNode2(){
         console.log(this.gunNode)
         // this.gunNodes = []
         // this.nodes = []
@@ -472,8 +494,8 @@ export default {
           // this.$gun.get(this.currentNode.id).open((doc) => {// listen / on
           this.$gun.get(this.gunNode.id).load((doc) => { // once
             console.log("doc", doc)
-             Object.assign(this.nodes[index], doc)
-          //  app.gunNodeLoop(doc.object, this.gunNode.id)
+            // Object.assign(this.nodes[index], doc)
+            //  app.gunNodeLoop(doc.object, this.gunNode.id)
             console.log("done")
             //this.graphNeedUpdate = true
           });

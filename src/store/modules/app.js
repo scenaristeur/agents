@@ -30,17 +30,20 @@ const state = () => ({
       {name: "Inrupt", url: "https://inrupt.com/"},
     ],
     examples: [{
-      name: "spoggy-5 neurones", value: "https://spoggy-test5.solidcommunity.net/public/neurones"},
+      name: "spoggy-5 neurones", value: "https://spoggy-test5.solidcommunity.net/public/"},
     ]},
 
+    {id: "local", name: "local/indexdb", status: "enabled", description: "description", type: 'world'},
     {id: "gun",
     name: "GunDB", status: "enabled", description: "A decentralized database",
     img: "https://camo.githubusercontent.com/64213f411349db936a0fa36ef41741b170d4c8d34d1cc0d1c887f7d880838707/68747470733a2f2f636c6475702e636f6d2f5445793979476834356c2e737667",
     links: [{name: "Doc", url:"https://gun.eco/"}], type: 'world',
     examples: [
-      {name: "test", value: "test"},
+
       {name: "RaN5Dom_neurones", value: "RaN5Dom_neurones"},
-        ]
+      {name: "test", value: "test"},
+      {name: "my", value: "my"}
+    ]
   },
 
   {id: "html", name: "Html", status: "todo", description: "a basic html world", type: 'world'},
@@ -48,7 +51,7 @@ const state = () => ({
   {id: "safe", name: "Safe", status: "disabled", description: "description", type: 'world'},
   {id: "notion", name: "Notion", status: "disabled", description: "description", type: 'world'},
   {id: "mld", name: "m-ld", status: "todo", description: "description", type: 'world'},
-  {id: "local", name: "local/indexdb", status: "work in progress", description: "description", type: 'world'},
+
   {id: "meta", name: "Metaverse", status: "disabled", description: "description", type: 'world'},
   {id: "filecoin", name: "filecoin", status: "disabled", description: "description", type: 'world'},
   {id: "robot", name: "Robots", status: "todo", description: "robots", type: 'world'},
@@ -99,6 +102,7 @@ const mutations = {
   setWorld(state, w){
     state.header = w.id
     state.world = w
+    this.commit('app/setNavigation', 'preview')
   },
   setGunNode(state, n){
     state.gunNode = n
@@ -125,6 +129,7 @@ const mutations = {
   },
   setCurrentNode(state, n){
     if(n != null && n.type == 'world'){
+      this.commit('app/setNavigation', 'preview')
       this.commit('app/setWorld', n)
     }
     state.currentNode = n

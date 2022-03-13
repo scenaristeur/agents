@@ -1,8 +1,6 @@
 <template>
   <div>
-    <h1>world node : {{currentNode.name}}</h1>
-    <b>id :</b> {{currentNode.id}}<br>
-    <b>type :</b> {{currentNode.type}} | <b>status :</b> {{currentNode.status}}<br>
+    <b>status :</b> {{currentNode.status}}<br>
     <b>description :</b> {{currentNode.description}}<br>
     img, links...
 
@@ -53,13 +51,14 @@ export default {
     }
   },
   created(){
-    this.rootNode = this.$store.state.app.currentNode.examples[0].value
+      this.rootNode = this.$store.state.app.currentNode.examples != undefined ? this.$store.state.app.currentNode.examples[0].value: ""
   },
   methods: {
     rootNodeChanged(){
       let node = {id: this.rootNode, name: this.rootNode, type: 'brain'}
       //this.currentNode.brains == undefined ? this.currentNode.brains = [] : ""
       console.log(this.rootNode)
+      this.$store.commit('app/setNavigation', 'explore')
       switch (this.currentNode.id) {
         case 'solid':
         this.$store.commit('app/mustExplore', this.rootNode)
@@ -67,7 +66,7 @@ export default {
         case 'gun':
         //this.currentNode.brains.push(node)
         // this.$gunExplore(this.rootNode)
-        this.$store.commit('app/setCurrentNode', null)
+
         this.$store.commit('app/setGunNode', node)
         break;
         default:
@@ -77,7 +76,7 @@ export default {
   },
   watch:{
     currentNode(){
-      this.rootNode = this.$store.state.app.currentNode.examples[0].value
+      this.rootNode = this.$store.state.app.currentNode.examples != undefined ? this.$store.state.app.currentNode.examples[0].value: ""
     }
   },
   computed:{

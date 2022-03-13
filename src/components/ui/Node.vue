@@ -4,9 +4,12 @@
     <!-- Current Node : {{ currentNode}}
     <br> -->
     <b-button size="sm" @click="currentNode = null">Close</b-button>
-    navigation : {{ navigation }} - node type : {{currentNode.type}}
+    navigation : {{ navigation }}
 
-    <BrainNode v-if="node.type == 'world'" />
+    <h1>{{currentNode.name}}</h1>
+    <b>id :</b> {{currentNode.id}} | <b>type :</b> {{currentNode.type}}
+
+    <BrainNode v-if="currentNode.type == 'world'" />
     <NodePreview v-else :node="currentNode"/>
     <br>
 

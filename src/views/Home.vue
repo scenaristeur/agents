@@ -7,7 +7,7 @@
     <AppHeader />
     <Visu />
     <FabButton />
-    <b-row>
+    <!-- <b-row>
       <b-col>
 
       </b-col>
@@ -17,7 +17,7 @@
       <b-col>
         <b-button @click="onChange" variant="primary">Explore</b-button>
       </b-col>
-    </b-row>
+    </b-row> -->
 
     <GunTest />
     <!-- <vue-fab mainBtnColor="#3599DB">
@@ -54,28 +54,28 @@ export default {
 
     // HelloWorld
   },
-  data(){
-    return {
-      //url : "https://spoggy-test6.solidcommunity.net/public/",
-      url: "https://spoggy-test5.solidcommunity.net/public/neurones",
-      //url:'https://data.virtual-assembly.org/',
-      //url:'https://data.gl.flod.io/',
-    }
-  },
+  // data(){
+  //   return {
+  //     //url : "https://spoggy-test6.solidcommunity.net/public/",
+  //     url: "https://spoggy-test5.solidcommunity.net/public/neurones",
+  //     //url:'https://data.virtual-assembly.org/',
+  //     //url:'https://data.gl.flod.io/',
+  //   }
+  // },
   created(){
     this.$store.dispatch('nodes/getNodes');
   },
-  methods:{
-    async onChange(){
-      console.log(this.url)
-      this.$store.commit('app/mustExplore', this.url)
-    }
-  },
-  watch:{
-    nodes(){
-      console.log("local nodes", this.nodes)
-    }
-  },
+  // methods:{
+  //   async onChange(){
+  //     console.log(this.url)
+  //     this.$store.commit('app/mustExplore', this.url)
+  //   }
+  // },
+  // watch:{
+  //   nodes(){
+  //     console.log("local nodes", this.nodes)
+  //   }
+  // },
   computed:{
     files:{
       get () { return this.$store.state.app.files },
@@ -85,10 +85,10 @@ export default {
       get () { return this.$store.state.app.folders },
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
-    nodes:{
-      get () { return this.$store.state.nodes.nodes },
-      set (/*value*/) { /*this.updateTodo(value)*/ }
-    }
+    // nodes:{
+    //   get () { return this.$store.state.nodes.nodes },
+    //   set (/*value*/) { /*this.updateTodo(value)*/ }
+    // }
   }
 }
 </script>

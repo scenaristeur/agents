@@ -22,7 +22,7 @@ import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRend
 // import {CSS2DRenderer, CSS2DObject} from 'three-css2drender'
 export default {
   name: "Graph",
-  props:['nodes', 'links'],
+  props:['nodes', 'links', 'graphNeedUpdate'],
   components: {
     // 'ThreeScene': () => import('@/components/three/ThreeScene'),
     'Ui': () => import('@/components/directed/Ui'),
@@ -265,6 +265,14 @@ export default {
 
   },
   watch:{
+    graphNeedUpdate(){
+      if (this.graphNeedUpdate == true){
+        console.log("need update", this.graphNeedUpdate)
+        this.Graph.refresh()
+        //this.graphNeedUpdate = false
+        this.$emit('update', false)
+      }
+    },
     nodes(){
       //console.log(this.nodes)
       this.update()

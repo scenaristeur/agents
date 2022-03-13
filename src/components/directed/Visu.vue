@@ -5,7 +5,7 @@
       <!-- <div v-if="paths.length <3"> {{ paths}}</div> -->
     </div>
     <CommandInput />
-    <Graph :nodes="nodes" :links="links" />
+    <Graph :nodes="nodes" :links="links" :graphNeedUpdate="graphNeedUpdate" @update="graphNeedUpdate = $event;" />
     <Node />
     {{ pod }}
     <!-- <Comunica /> -->
@@ -36,7 +36,8 @@ export default {
       //  nodes: [],
       links: [],
       paths: [],
-      jump: 0
+      jump: 0,
+      graphNeedUpdate : false
 
     }
   },
@@ -198,19 +199,66 @@ export default {
         }
         let app = this
         let resources = await this.$getResources(path)
-        resources.forEach(async function(r){
+        if (resources.compacted != undefined){
+          this.processJsonld(resources)
+        }else{
+          resources.forEach(async function(r){
 
-          if(r.type == "file"){
-            await app.$getResource(r)
+            if(r.type == "file"){
+              console.log("on entre ici", r)
+              await app.$getResource(r)
+              let compacted = await app.$getJsonLd(r.url)
+              console.log(compacted)
+            }
+            console.log(r)
+            app.nodes.push(r)
+            app.links.push({source: path, target: r.url})
+            // if (r.url.endsWith('/')){
+            // if (resources.length < 20){
+            //   console.log("on continue ici, mais c'est pas propre, juste pour attraper le jsonld",r.url)
+            //   app.explore(r.url)
+            // }
+
+            // }
+
+          })
+        }
+      },
+      processJsonld(data){
+        // let compacted = data.compacted
+        let url = `${data.compacted.url}`
+      //  console.log(url)
+        let index = -1
+        for (let i = 0; i < this.nodes.length; i++){
+          let n = this.nodes[i]
+        //  console.log(n)
+        //  console.log(i, n.url, n.url == url)
+          if (n.url == url){
+            index = i
+          //  console.log(" trouv index", index)
+            Object.assign(this.nodes[index], data.compacted)
+            this.graphNeedUpdate = true
+            // return
+            //return it does not work if i return
           }
-          console.log(r)
-          app.nodes.push(r)
-          app.links.push({source: path, target: r.url})
-          // if (r.url.endsWith('/')){
-          //   app.explore(r.url)
-          // }
+        }
 
-        })
+
+        // var index = this.nodes.findIndex((x) => x.url === url);
+        // console.log("index", index)
+        // let node = this.nodes.find(x => x.url === url)
+        // node.name = compacted.name
+        // node.age = compacted.age
+        //
+        // console.log("Compacted", compacted, Array.isArray(compacted.properties))
+        // for (const [key, val] of Object.entries(compacted)){
+        //   console.log(key, "->", typeof val, val)
+        // }
+        // console.log(node)
+        // console.log(this.nodes)
+
+
+
       },
 
       async explore1(path){
@@ -294,10 +342,10 @@ export default {
         this.onInputObjectChange(this.inputObject)
       },
       nodes(){
-        console.log("local nodes", this.nodes)
-        this.nodes.forEach((node) => {
-          console.log(node.id, node.name, node.url)
-        });
+        console.log("visu nodes", this.nodes)
+        // this.nodes.forEach((node) => {
+        //   console.log(node.id, node.name, node.url)
+        // });
 
       }
     },

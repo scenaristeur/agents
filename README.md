@@ -28,7 +28,14 @@ Operating System
 - https://www.linuxfordevices.com/tutorials/linux/extern-os
 - https://nwjs.io/
 
+# gun visualisation
+- https://github.com/stefdv/gun-ui-graph
+- https://github.com/amark/gun/issues/343
+- https://stefdv.github.io/gun-ui-graph/components/gun-ui-graph/
 
+
+- levelgraph json-ld https://github.com/levelgraph/levelgraph-jsonld
+- ? gun level https://github.com/gundb/gun-level
 
 
 
@@ -64,7 +71,8 @@ https://avatars.dicebear.com/api/initials/xx.svg
 - ethereum decentralmized
 - https://github.com/llSourcell/Your_First_Decentralized_Application
 
-
+# new solid tool
+https://podpro.dev
 
 
 

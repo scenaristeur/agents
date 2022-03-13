@@ -45,7 +45,9 @@ import {
 // import { /*WS ,*/ SOLID} from "@inrupt/vocab-solid-common";
 //
 import * as sc from '@inrupt/solid-client-authn-browser'
+// import * as jsonld_request from 'jsonld-request'
 // import * as diffler from 'diffler'
+import * as jsonld from 'jsonld';
 
 const plugin = {
   install(Vue, opts = {}) {
@@ -54,34 +56,77 @@ const plugin = {
 
     Vue.prototype.$getResources = async function(path){
       console.log("path", path)
-      //let resources = []
-      const dataset = await getSolidDataset( path, { fetch: sc.fetch });
-      let resources  = await getContainedResourceUrlAll(dataset,{fetch: sc.fetch} )
-      .map(u => {
+      let resources = []
+      try{
+        const dataset = await getSolidDataset( path, { fetch: sc.fetch });
+        console.log(dataset)
 
-        let r = {url: u, parent: path}
-        let parts = u.split('/')
-        if(u.endsWith('/')){
-          r.name = parts[parts.length - 2]
-          r.type = "folder"
-          r.icon = "📁"
-        }else{
-          r.name = parts[parts.length - 1]
-          r.type = "file"
-          r.icon = "📄"
-        }
+        resources  = await getContainedResourceUrlAll(dataset,{fetch: sc.fetch} )
+        .map(u => {
 
-        return r
-      })
+          let r = {id: u, url: u, parent: path}
+          let parts = u.split('/')
+          if(u.endsWith('/')){
+            r.name = parts[parts.length - 2]
+            r.type = "folder"
+            r.icon = "📁"
+            r.parent = path
+          }else{
+            r.name = parts[parts.length - 1]
+            r.type = "file"
+            r.icon = "📄"
+            r.parent = path
+          }
+
+          return r
+        })
+      }catch(e){
+        console.log(e, e.message)
+        resources = await Vue.prototype.$getJsonLd(path)
+      }
       //  console.log("remotes",remotesUrl)
       return resources
     }
 
+    Vue.prototype.$getJsonLd = async function(path){
+      console.log("path", path)
+      let doc = {}
+      try{
+        doc = await jsonld.documentLoader(path, function(err) {
+          if(err) {
+            console.log(err)
+          }
+        })
+      }catch(e){
+        console.log(e)
+      }
+      doc.jsonld = JSON.parse(doc.document)
+      //  doc = await this.compact(doc)
+      let context = doc.jsonld['@context']
+      context.age = 've:age'
+      context.created = 've:created'
+      context.name = 've:name'
+      context.privacy = 've:privacy'
+      context.properties = 've:properties'
+      context.synchronized = 've:synchronized'
+      context.type = 've:type'
+      context.updated = 've:updated'
+      context.url = 've:url'
+
+
+      console.log(context)
+      const compacted = await jsonld.compact(doc.jsonld, context);
+      doc.compacted = compacted
+      delete doc.document
+      console.log("DOC", doc)
+      return doc
+    }
+
     Vue.prototype.$getPermissions = async function(node){
-         let url = node.url
-         const file = await getFile(url, { fetch: sc.fetch });
-         return file.internal_resourceInfo.permissions
-       }
+      let url = node.url
+      const file = await getFile(url, { fetch: sc.fetch });
+      return file.internal_resourceInfo.permissions
+    }
     Vue.prototype.$getResources1 = async function(path){
       //  console.log("path", path)
       let resources = []
@@ -132,8 +177,8 @@ const plugin = {
         const reader = new FileReader();
         reader.onload = async () => {
           r.reader = JSON.parse(reader.result)
-// Object.assign(r, reader.result)
-                //plugin.$compare(JSON.parse(reader.result));
+          // Object.assign(r, reader.result)
+          //plugin.$compare(JSON.parse(reader.result));
         };
         reader.onerror = (error) => {
           console.log(error);

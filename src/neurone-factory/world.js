@@ -1,11 +1,11 @@
 import { Base } from "./base.js"
 
-export { Neurone }
+export { World }
 
-class Neurone extends Base {
+class World extends Base {
   constructor(options = {}) {
     super(options)
-    options['type'] == undefined ? this['type'] = "neurone": ""
+    options['type'] == undefined ? this['type'] = "world": ""
     // this.options = options
 
     // this._data = Object.assign({}, modele)

@@ -12,97 +12,98 @@
 
       <b-navbar-nav>
         <b-navbar-brand href="/agents">Agents</b-navbar-brand>
-
         <b-nav-item-dropdown :text="world == null ? 'World' : world.id" right>
-          <b-dropdown-item href="#" @click="changeWorld('solid')">solid</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeWorld('gun')">gundb</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeWorld('ipfs')" disabled>ipfs</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeWorld('mld')" disabled>m-ld</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeWorld(null)" >none</b-dropdown-item>
-        </b-nav-item-dropdown>
+          <b-dropdown-item v-for="w in worlds"
+          :key="w.id"
+          @click="changeWorld(w)"
+          :disabled="w.status != 'enabled'"
+          >{{w.name}}
+          <small v-if="w.status != 'enabled'"><i>{{w.status}}</i></small>
+        </b-dropdown-item>
+      </b-nav-item-dropdown>
 
-        <div v-if="world != null">
-          don't go there
-          <SolidLogin v-if="world.id == 'solid'" />
-          <b-nav-dropdown v-else-if="world.id == 'gun'" text="Gun User" >
-            <div v-if="gunUser!=undefined">
-              gunUser : {{ gunUser.alias }}
-            </div>
-            <GunSignin />
-            <GunLogin />
-            <b-dropdown-item-button>Leave</b-dropdown-item-button>
-          </b-nav-dropdown>
-
-
-          <b-nav-item-dropdown right>
-            <template #button-content>
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile {{ world.id }}</b-dropdown-item>
-
-            <b-dropdown-item href="#">Sign In/Out {{ world.id }}</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </div>
+      <div v-if="world != null">
+        <SolidLogin v-if="world.id == 'solid'" />
+        <b-nav-dropdown v-else-if="world.id == 'gun'" text="Gun User" >
+          <div v-if="gunUser!=undefined">
+            gunUser : {{ gunUser.alias }}
+          </div>
+          <GunSignin />
+          <GunLogin />
+          <b-dropdown-item-button>Leave</b-dropdown-item-button>
+        </b-nav-dropdown>
 
 
-        <!-- <b-nav-item-dropdown
-        :text="navigation || 'Navigation'"
-        block
-        menu-class="w-100"> -->
-        <b-dropdown :text="navigation || 'Navigation'">
-          <b-dropdown-item href="#" @click="changeNavigation('create')"><u>C</u>reate</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeNavigation('edit')"><u>E</u>dit</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeNavigation('explore')">e<u>X</u>plore</b-dropdown-item>
-          <b-dropdown-item href="#" @click="changeNavigation('collapse')">c<u>O</u>llapse</b-dropdown-item>
-          <!-- <b-dropdown-item href="#" @click="changeNavigation('explore')">explore</b-dropdown-item> -->
-          <b-dropdown-item href="#" @click="changeNavigation('select')"><u>S</u>elect</b-dropdown-item>
-          <!-- <b-dropdown-item href="#" @click="changeWorld(null)" >none</b-dropdown-item> -->
-          <b-dropdown-divider></b-dropdown-divider>
+        <!-- <b-nav-item-dropdown right>
+          <template #button-content>
+            <em>User</em>
+          </template>
+          <b-dropdown-item href="#">Profile {{ world.id }}</b-dropdown-item>
 
-          <b-dropdown-header>Show nodes / names or both</b-dropdown-header>
-          <b-dropdown-form>
-            <b-form-radio-group v-model="showNodeName">
-
-              <b-form-radio value="node">nodes</b-form-radio>
-              <b-form-radio value="names">names</b-form-radio>
-              <b-form-radio value="both">both</b-form-radio>
-            </b-form-radio-group>
-            <!-- <b-form-checkbox v-model="showNodeName" class="mb-3">Show node name</b-form-checkbox> -->
-            <!-- <b-button variant="primary" diasbled>test</b-button> -->
-          </b-dropdown-form>
-        </b-dropdown>
-
-        <!-- </b-nav-item-dropdown> -->
+          <b-dropdown-item href="#">Sign In/Out {{ world.id }}</b-dropdown-item>
+        </b-nav-item-dropdown> -->
+      </div>
 
 
-        <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
-      </b-navbar-nav>
+      <!-- <b-nav-item-dropdown
+      :text="navigation || 'Navigation'"
+      block
+      menu-class="w-100"> -->
+      <b-dropdown :text="navigation || 'Navigation'">
+        <b-dropdown-item @click="changeNavigation('preview')"><u>P</u>review</b-dropdown-item>
+        <b-dropdown-item @click="changeNavigation('create')"><u>C</u>reate</b-dropdown-item>
+        <b-dropdown-item @click="changeNavigation('edit')"><u>E</u>dit</b-dropdown-item>
+        <b-dropdown-item @click="changeNavigation('explore')">e<u>X</u>plore</b-dropdown-item>
+        <b-dropdown-item @click="changeNavigation('collapse')">c<u>O</u>llapse</b-dropdown-item>
+        <!-- <b-dropdown-item href="#" @click="changeNavigation('explore')">explore</b-dropdown-item> -->
+        <b-dropdown-item @click="changeNavigation('select')"><u>S</u>elect</b-dropdown-item>
+        <!-- <b-dropdown-item href="#" @click="changeWorld(null)" >none</b-dropdown-item> -->
+        <b-dropdown-divider></b-dropdown-divider>
 
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
+        <b-dropdown-header>Show nodes / names or both</b-dropdown-header>
+        <b-dropdown-form>
+          <b-form-radio-group v-model="showNodeName">
+
+            <b-form-radio value="node">nodes</b-form-radio>
+            <b-form-radio value="names">names</b-form-radio>
+            <b-form-radio value="both">both</b-form-radio>
+          </b-form-radio-group>
+          <!-- <b-form-checkbox v-model="showNodeName" class="mb-3">Show node name</b-form-checkbox> -->
+          <!-- <b-button variant="primary" diasbled>test</b-button> -->
+        </b-dropdown-form>
+      </b-dropdown>
+
+      <!-- </b-nav-item-dropdown> -->
 
 
-        <b-nav-item-dropdown text="Lang" right>
-          <!-- <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">ES</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item> -->
-          <b-dropdown-item @click="localeChange('en')">EN</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('fr')">FR</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('ja')">JA</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('de')">DE</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('es')">ES</b-dropdown-item>
-          <b-dropdown-item @click="localeChange('ru')">RU</b-dropdown-item>
-          <b-dropdown-item to="/translation">Translate to your language</b-dropdown-item>
-        </b-nav-item-dropdown>
+      <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
+    </b-navbar-nav>
+
+    <!-- Right aligned nav items -->
+    <b-navbar-nav class="ml-auto">
+
+
+      <b-nav-item-dropdown text="Lang" right>
+        <!-- <b-dropdown-item href="#">EN</b-dropdown-item>
+        <b-dropdown-item href="#">ES</b-dropdown-item>
+        <b-dropdown-item href="#">RU</b-dropdown-item>
+        <b-dropdown-item href="#">FA</b-dropdown-item> -->
+        <b-dropdown-item @click="localeChange('en')">EN</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('fr')">FR</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('ja')">JA</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('de')">DE</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('es')">ES</b-dropdown-item>
+        <b-dropdown-item @click="localeChange('ru')">RU</b-dropdown-item>
+        <b-dropdown-item to="/translation">Translate to your language</b-dropdown-item>
+      </b-nav-item-dropdown>
 
 
 
-        <b-nav-item href="https://github.com/scenaristeur/agents/blob/main/README.md" target="_blank">Help</b-nav-item>
+      <b-nav-item href="https://github.com/scenaristeur/agents/blob/main/README.md" target="_blank">Help</b-nav-item>
 
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+    </b-navbar-nav>
+  </b-collapse>
+</b-navbar>
 </template>
 
 <script>
@@ -148,6 +149,10 @@ export default {
     },
     gunUser:{
       get () { return this.$store.state.gun.gunUser },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    worlds:{
+      get () { return this.$store.state.app.worlds },
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
   }

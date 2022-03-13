@@ -1,21 +1,10 @@
 <template>
-  <div>
+  <b-modal id="modal-node" title="Node" size="lg">
     <!-- <p class="my-4">Hello from modal!</p>-->
     Current Node : {{ currentNode}}
-<br>
-    <b-button size="sm" @click="currentNode = null">Close</b-button>
-    navigation : {{ navigation }} - node type : {{currentNode.type}}
 
 
-<NodePreview :node="currentNode"/>
-
-
-
-
-
-
-
-    <b-container>
+    <b-container v-if="node.type == 'neurone'">
 
       <b-row>
         <b-col sm="3">
@@ -142,13 +131,13 @@
 </b-modal>
 
 </b-container>
-<b-container v-if="currentNode.type == 'html'">
+<b-container v-else>
 
   <!-- <Quasar /> -->
   <CKWysiwyg />
 </b-container>
 
-</div>
+</b-modal>
 </template>
 
 <script>
@@ -162,7 +151,6 @@ export default {
     'Permissions': () => import('@/components/ui/node/Permissions'),
     // 'Quasar': () => import('@/views/Quasar'),
     'CKWysiwyg': () => import('@/components/ui/node/CKWysiwyg'),
-    'NodePreview': () => import('@/components/ui/node/NodePreview'),
     // 'editor': Editor
   },
   data() {
@@ -182,15 +170,15 @@ export default {
   },
   async created() {
     this.node = this.$store.state.app.currentNode != null ? this.$store.state.app.currentNode :  new Neurone(
-      {
-        //  blip: "blop",
-        //  color: this.randomColor(),
-        name: "", //"name for graph_"+this.nodes.length,
-        age: 0,
-        type: "neurone"
-      }
-    )
-    console.log("neurone ", this.node)
+        {
+          //  blip: "blop",
+          //  color: this.randomColor(),
+          name: "", //"name for graph_"+this.nodes.length,
+          age: 0,
+          type: "neurone"
+        }
+      )
+      console.log("neurone ", this.node)
 
     await this.getPermissions()
     // if(this.$route.params.node) {
@@ -260,10 +248,6 @@ export default {
     currentNode:{
       get () { return this.$store.state.app.currentNode },
       set (value) { this.$store.commit('app/setCurrentNode',value) }
-    },
-    navigation:{
-      get () { return this.$store.state.app.navigation },
-      set (value) { this.$store.commit('app/setNavigation',value) }
     },
     autorized() {
       if(this.permissions == null){

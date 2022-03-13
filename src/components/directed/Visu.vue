@@ -5,8 +5,9 @@
       <!-- <div v-if="paths.length <3"> {{ paths}}</div> -->
     </div>
     <CommandInput />
+    <Node v-if="navigation == 'preview' && currentNode != null" />
     <Graph :nodes="nodes" :links="links" :graphNeedUpdate="graphNeedUpdate" @update="graphNeedUpdate = $event;" />
-    <Node />
+
     {{ pod }}
     <!-- <Comunica /> -->
     <!-- <Hello /> -->
@@ -228,15 +229,15 @@ export default {
       processJsonld(data){
         // let compacted = data.compacted
         let url = `${data.compacted.url}`
-      //  console.log(url)
+        //  console.log(url)
         let index = -1
         for (let i = 0; i < this.nodes.length; i++){
           let n = this.nodes[i]
-        //  console.log(n)
-        //  console.log(i, n.url, n.url == url)
+          //  console.log(n)
+          //  console.log(i, n.url, n.url == url)
           if (n.url == url){
             index = i
-          //  console.log(" trouv index", index)
+            //  console.log(" trouv index", index)
             Object.assign(this.nodes[index], data.compacted)
             this.graphNeedUpdate = true
             // return
@@ -244,7 +245,7 @@ export default {
           }
         }
 
-// FINDINDEX NOT WORK, why ?
+        // FINDINDEX NOT WORK, why ?
         // var index = this.nodes.findIndex((x) => x.url === url);
         // console.log("index", index)
         // let node = this.nodes.find(x => x.url === url)
@@ -312,9 +313,21 @@ export default {
       },
       showWorlds(){
         console.log(this.worlds)
+
         this.savedWorld = {nodes: this.nodes, links: this.links}
-        this.nodes = this.worlds
-        this.edges = []
+        this.nodes = []
+        this.links = []
+        Object.assign(this.nodes, this.worlds)
+        this.nodes.push({id:"worlds", name: "Worlds", color: "#ffff00", type: "univers"})
+        this.worlds.forEach((w) => {
+          let exist = this.nodes.find(x => x.id === w.status)
+          // console.log("exist ? ", exist)
+          let color = w.status == "enabled" ? "#00ff00" : "#ff0000"
+          exist ==  undefined ? this.nodes.push({id:w.status, name: w.status, color: color, type: "status"}) : ""
+          this.links.push({source: w.id, target: w.status, label: "status"})
+          this.links.push({source: "worlds", target: w.status, })
+        });
+
 
       }
     },
@@ -342,7 +355,7 @@ export default {
           let exist = this.nodes.find(x => x.url = this.mustExplore)
           let url = this.mustExplore
           console.log("exist ? ", exist)
-          exist ==  undefined ? this.nodes.push({url:url, name: url, color: "#ff00ff", type: "storage"}) : ""
+          exist ==  undefined ? this.nodes.push({id: url, url:url, name: url, color: "#ff00ff", type: "storage"}) : ""
           this.explore(this.mustExplore)
         }
       },
@@ -384,6 +397,14 @@ export default {
       },
       worlds:{
         get () { return this.$store.state.app.worlds },
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      },
+      navigation:{
+        get () { return this.$store.state.app.navigation },
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      },
+      currentNode:{
+        get () { return this.$store.state.app.currentNode },
         set (/*value*/) { /*this.updateTodo(value)*/ }
       }
     }

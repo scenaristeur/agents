@@ -159,108 +159,109 @@ export default {
       if (this.nodeFolder != null){
         this.gui.removeFolder(this.nodeFolder)
       }
+      if (this.currentNode != null){
+        var lignes = {
+          // message: 'dat.gui',
+          // speed: 0.8,
+          // displayOutline: false,
+          //color: "#ff0000", // color (change "#" to "0x")
+          openProperties: this.openProperties,
+          openLinks: this.openLinks,
+          // resetCamera: this.resetCamera
+        };
 
-      var lignes = {
-        // message: 'dat.gui',
-        // speed: 0.8,
-        // displayOutline: false,
-        //color: "#ff0000", // color (change "#" to "0x")
-        openProperties: this.openProperties,
-        openLinks: this.openLinks,
-        // resetCamera: this.resetCamera
-      };
-
-      this.nodeFolder = this.gui.addFolder('Node')
-      // console.log(this.nodeFolder)
-      console.log(this.currentNode)
-      this.currentNode.age == undefined ? this.currentNode.age = 0 : ""
-      this.currentNode.privacy == undefined ? this.currentNode.privacy = "" : ""
-      //this.currentNode.age == undefined ?
-      // console.log(this.nodeFolder.__controllers)
-      // this.nodeFolder.__controllers.forEach((item) => {
-      //   console.log('remove', item)
-      //   this.nodeFolder.remove(item)
-      // });
-      //
-      // console.log(this.nodeFolder.__controllers)
-      // this.nodeFolder.domElement = ""
-      //  Object.assign(this.nodeFolder.__controllers, [])
-      //  this.nodeFolder.updateDisplay()
-      // this.nodeFolder.remove('name')
-      // this.nodeFolder.remove('color')
-      // let nameController = new Controller()
-      // this.nodeFolder.add(this.currentNode, 'name')
-      this.nodeFolder.add(this.currentNode, 'name')
-      this.nodeFolder.add(this.currentNode, 'age')
-      // this.nodeFolder.add(this.currentNode, 'type')
-      // this.nodeFolder.add(this.currentNode, 'url')
-      this.nodeFolder.add(this.currentNode, 'privacy')
-      this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'created') : ""
-      this.nodeFolder.add( lignes, 'openProperties' ).name("Properties");
-      this.nodeFolder.add( lignes, 'openLinks' ).name("Links");
-      // const propsFolder = this.nodeFolder.addFolder('Properties')
-      // const linksFolder = this.nodeFolder.addFolder('Links')
-      //
-      //
-      // var lignes = {
-      //   newProperty: this.newProperty,
-      //   newLink: this.newLink,
-      //   message: 'props menu',
-      //   messageLink: 'Link menu',
-      //   speed: 0.8,
-      // }
-      //
-      // propsFolder.add( lignes, 'newProperty' ).name("New property");
-      // linksFolder.add( lignes, 'newLink' ).name("New link");
-      //
-      //
-      // propsFolder.add(lignes, 'message')
-      // linksFolder.add(lignes, 'messageLink')
-      // const testsub = propsFolder.addFolder("sub")
-      // testsub.add(lignes, "speed", -5, 5)
-      //
-      // this.currentNode["properties"].forEach((item) => {
-      //   console.log(item)
-      //   // templigne = {
-      //   //
-      //   // }
-      //
-      //   var lignes_value = {
-      //     addValue: this.addValue,
-      //   }
-      //
-      //   let folder = propsFolder.addFolder(item.name)
-      //   folder.add( lignes_value, 'addValue' ).name("New value");
-      //
-      //   console.log(folder)
-      //   item.values.forEach((v) => {
-      //     console.log(v)
-      //     //folder.add(item, 'name')//.name(item.name)
-      //
-      //   });
-      //
-      //
-      //
-      // });
-
-
+        this.nodeFolder = this.gui.addFolder('Node')
+        // console.log(this.nodeFolder)
+        console.log(this.currentNode)
+        this.currentNode.age == undefined ? this.currentNode.age = 0 : ""
+        this.currentNode.privacy == undefined ? this.currentNode.privacy = "" : ""
+        //this.currentNode.age == undefined ?
+        // console.log(this.nodeFolder.__controllers)
+        // this.nodeFolder.__controllers.forEach((item) => {
+        //   console.log('remove', item)
+        //   this.nodeFolder.remove(item)
+        // });
+        //
+        // console.log(this.nodeFolder.__controllers)
+        // this.nodeFolder.domElement = ""
+        //  Object.assign(this.nodeFolder.__controllers, [])
+        //  this.nodeFolder.updateDisplay()
+        // this.nodeFolder.remove('name')
+        // this.nodeFolder.remove('color')
+        // let nameController = new Controller()
+        // this.nodeFolder.add(this.currentNode, 'name')
+        this.nodeFolder.add(this.currentNode, 'name')
+        this.nodeFolder.add(this.currentNode, 'age')
+        // this.nodeFolder.add(this.currentNode, 'type')
+        // this.nodeFolder.add(this.currentNode, 'url')
+        this.nodeFolder.add(this.currentNode, 'privacy')
+        this.currentNode.created != undefined ? this.nodeFolder.add(this.currentNode, 'created') : ""
+        this.nodeFolder.add( lignes, 'openProperties' ).name("Properties");
+        this.nodeFolder.add( lignes, 'openLinks' ).name("Links");
+        // const propsFolder = this.nodeFolder.addFolder('Properties')
+        // const linksFolder = this.nodeFolder.addFolder('Links')
+        //
+        //
+        // var lignes = {
+        //   newProperty: this.newProperty,
+        //   newLink: this.newLink,
+        //   message: 'props menu',
+        //   messageLink: 'Link menu',
+        //   speed: 0.8,
+        // }
+        //
+        // propsFolder.add( lignes, 'newProperty' ).name("New property");
+        // linksFolder.add( lignes, 'newLink' ).name("New link");
+        //
+        //
+        // propsFolder.add(lignes, 'message')
+        // linksFolder.add(lignes, 'messageLink')
+        // const testsub = propsFolder.addFolder("sub")
+        // testsub.add(lignes, "speed", -5, 5)
+        //
+        // this.currentNode["properties"].forEach((item) => {
+        //   console.log(item)
+        //   // templigne = {
+        //   //
+        //   // }
+        //
+        //   var lignes_value = {
+        //     addValue: this.addValue,
+        //   }
+        //
+        //   let folder = propsFolder.addFolder(item.name)
+        //   folder.add( lignes_value, 'addValue' ).name("New value");
+        //
+        //   console.log(folder)
+        //   item.values.forEach((v) => {
+        //     console.log(v)
+        //     //folder.add(item, 'name')//.name(item.name)
+        //
+        //   });
+        //
+        //
+        //
+        // });
 
 
-      // this.nodeFolder.add(this.currentNode, 'url')
-      //  this.nodeFolder.add(this.currentNode, 'created')
-      //  this.nodeFolder.add(this.currentNode, 'color')
-      let app = this
-      if(this.currentNode.color != undefined){
-        var nodeColor = this.nodeFolder.addColor( this.currentNode, 'color' ).name('Color').listen();
-        nodeColor.onChange(function(value) // onFinishChange
-        {
-          console.log("must update color value", value)
-          app.currentNode.color = value.replace("#", "0x") //);
-        });
+
+
+        // this.nodeFolder.add(this.currentNode, 'url')
+        //  this.nodeFolder.add(this.currentNode, 'created')
+        //  this.nodeFolder.add(this.currentNode, 'color')
+        let app = this
+        if(this.currentNode.color != undefined){
+          var nodeColor = this.nodeFolder.addColor( this.currentNode, 'color' ).name('Color').listen();
+          nodeColor.onChange(function(value) // onFinishChange
+          {
+            console.log("must update color value", value)
+            app.currentNode.color = value.replace("#", "0x") //);
+          });
+        }
+
+        this.nodeFolder.add(this.currentNode, 'privacy')
+        this.nodeFolder.open()
       }
-
-      this.nodeFolder.add(this.currentNode, 'privacy')
-      this.nodeFolder.open()
     },
     addValue(){
       console.log("new value")

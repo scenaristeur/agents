@@ -115,7 +115,7 @@ export default {
       app.highlightLinks.clear();
       if (node) {
         //   if (node.neighbors != undefined){
-        console.log(node)
+        //  console.log(node)
         app.highlightNodes.add(node);
         //   node.neighbors.forEach(neighbor => app.highlightNodes.add(neighbor));
         // node.links.forEach(link => app.highlightLinks.add(link));
@@ -194,9 +194,23 @@ export default {
       this.selectedNodes.clear()
       this.selectedNodes.has(node) ? this.selectedNodes.delete(node) : this.selectedNodes.add(node);
       console.log(this.selectedNodes)
-      if(node.url != undefined && node.url.startsWith('http')){
-        app.$store.commit ('app/mustExplore', node.url)
+      app.$store.commit ('app/setCurrentNode', node)
+
+      switch (this.navigation) {
+        case "preview":
+        // app.$bvModal.show("modal-node")
+        console.log("show preview node")
+        break;
+        case "explore":
+        if(node.url != undefined && node.url.startsWith('http')){
+          app.$store.commit ('app/mustExplore', node.url)
+        }
+        break;
+        default:
+
       }
+
+
 
       const distance = 160;
       const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
@@ -206,16 +220,16 @@ export default {
         node, // lookAt ({ x, y, z })
         3000  // ms transition duration
       );
-      app.$store.commit ('app/setCurrentNode', node)
+
     })
     .onBackgroundClick(event => {
       console.log("onBackgroundClick", event)
-    //  app.$store.commit('app/setCurrentNode', null)
+      //  app.$store.commit('app/setCurrentNode', null)
 
     })
     .onBackgroundRightClick(event => {
       console.log("onBackgroundRightClick", event)
-       // app.$bvModal.show("modal-node")
+      // app.$bvModal.show("modal-node")
     })
 
     console.log(this.Graph)
@@ -353,6 +367,10 @@ export default {
   computed:{
     search:{
       get () { return this.$store.state.app.search },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+    navigation:{
+      get () { return this.$store.state.app.navigation },
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
   }

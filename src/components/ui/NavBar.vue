@@ -11,7 +11,7 @@
     <b-collapse id="nav-collapse" is-nav>
 
       <b-navbar-nav>
-        <b-navbar-brand href="/agents">Agents</b-navbar-brand>
+        <b-navbar-brand href="/">Agents</b-navbar-brand>
         <b-nav-item-dropdown :text="world == null ? 'World' : world.id" right>
           <b-dropdown-item v-for="w in worlds"
           :key="w.id"
@@ -35,74 +35,77 @@
 
 
         <!-- <b-nav-item-dropdown right>
-          <template #button-content>
-            <em>User</em>
-          </template>
-          <b-dropdown-item href="#">Profile {{ world.id }}</b-dropdown-item>
+        <template #button-content>
+        <em>User</em>
+      </template>
+      <b-dropdown-item href="#">Profile {{ world.id }}</b-dropdown-item>
 
-          <b-dropdown-item href="#">Sign In/Out {{ world.id }}</b-dropdown-item>
-        </b-nav-item-dropdown> -->
-      </div>
-
-
-      <!-- <b-nav-item-dropdown
-      :text="navigation || 'Navigation'"
-      block
-      menu-class="w-100"> -->
-      <b-dropdown :text="navigation || 'Navigation'">
-        <b-dropdown-item @click="changeNavigation('preview')"><u>P</u>review</b-dropdown-item>
-        <b-dropdown-item @click="changeNavigation('create')"><u>C</u>reate</b-dropdown-item>
-        <b-dropdown-item @click="changeNavigation('edit')"><u>E</u>dit</b-dropdown-item>
-        <b-dropdown-item @click="changeNavigation('explore')">e<u>X</u>plore</b-dropdown-item>
-        <b-dropdown-item @click="changeNavigation('collapse')">c<u>O</u>llapse</b-dropdown-item>
-        <!-- <b-dropdown-item href="#" @click="changeNavigation('explore')">explore</b-dropdown-item> -->
-        <b-dropdown-item @click="changeNavigation('select')"><u>S</u>elect</b-dropdown-item>
-        <!-- <b-dropdown-item href="#" @click="changeWorld(null)" >none</b-dropdown-item> -->
-        <b-dropdown-divider></b-dropdown-divider>
-
-        <b-dropdown-header>Show nodes / names or both</b-dropdown-header>
-        <b-dropdown-form>
-          <b-form-radio-group v-model="showNodeName">
-
-            <b-form-radio value="node">nodes</b-form-radio>
-            <b-form-radio value="names">names</b-form-radio>
-            <b-form-radio value="both">both</b-form-radio>
-          </b-form-radio-group>
-          <!-- <b-form-checkbox v-model="showNodeName" class="mb-3">Show node name</b-form-checkbox> -->
-          <!-- <b-button variant="primary" diasbled>test</b-button> -->
-        </b-dropdown-form>
-      </b-dropdown>
-
-      <!-- </b-nav-item-dropdown> -->
+      <b-dropdown-item href="#">Sign In/Out {{ world.id }}</b-dropdown-item>
+    </b-nav-item-dropdown> -->
+  </div>
 
 
-      <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
-    </b-navbar-nav>
+  <!-- <b-nav-item-dropdown
+  :text="navigation || 'Navigation'"
+  block
+  menu-class="w-100"> -->
+  <b-dropdown :text="navigation || 'Navigation'">
+    <b-dropdown-item @click="changeNavigation('preview')"><u>P</u>review</b-dropdown-item>
+    <b-dropdown-item @click="changeNavigation('create')"><u>C</u>reate</b-dropdown-item>
+    <b-dropdown-item @click="changeNavigation('edit')"><u>E</u>dit</b-dropdown-item>
+    <b-dropdown-item @click="changeNavigation('explore')">e<u>X</u>plore</b-dropdown-item>
+    <b-dropdown-item @click="changeNavigation('collapse')">c<u>O</u>llapse</b-dropdown-item>
+    <!-- <b-dropdown-item href="#" @click="changeNavigation('explore')">explore</b-dropdown-item> -->
+    <b-dropdown-item @click="changeNavigation('select')"><u>S</u>elect</b-dropdown-item>
+    <!-- <b-dropdown-item href="#" @click="changeWorld(null)" >none</b-dropdown-item> -->
+    <b-dropdown-divider></b-dropdown-divider>
 
-    <!-- Right aligned nav items -->
-    <b-navbar-nav class="ml-auto">
+    <b-dropdown-header>Show nodes / names or both</b-dropdown-header>
+    <b-dropdown-form>
+      <b-form-radio-group v-model="showNodeName">
+
+        <b-form-radio value="node">nodes</b-form-radio>
+        <b-form-radio value="names">names</b-form-radio>
+        <b-form-radio value="both">both</b-form-radio>
+      </b-form-radio-group>
+      <!-- <b-form-checkbox v-model="showNodeName" class="mb-3">Show node name</b-form-checkbox> -->
+      <!-- <b-button variant="primary" diasbled>test</b-button> -->
+    </b-dropdown-form>
+  </b-dropdown>
+
+  <!-- </b-nav-item-dropdown> -->
 
 
-      <b-nav-item-dropdown text="Lang" right>
-        <!-- <b-dropdown-item href="#">EN</b-dropdown-item>
-        <b-dropdown-item href="#">ES</b-dropdown-item>
-        <b-dropdown-item href="#">RU</b-dropdown-item>
-        <b-dropdown-item href="#">FA</b-dropdown-item> -->
-        <b-dropdown-item @click="localeChange('en')">EN</b-dropdown-item>
-        <b-dropdown-item @click="localeChange('fr')">FR</b-dropdown-item>
-        <b-dropdown-item @click="localeChange('ja')">JA</b-dropdown-item>
-        <b-dropdown-item @click="localeChange('de')">DE</b-dropdown-item>
-        <b-dropdown-item @click="localeChange('es')">ES</b-dropdown-item>
-        <b-dropdown-item @click="localeChange('ru')">RU</b-dropdown-item>
-        <b-dropdown-item to="/translation">Translate to your language</b-dropdown-item>
-      </b-nav-item-dropdown>
+  <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
+</b-navbar-nav>
+
+<!-- Right aligned nav items -->
+<b-navbar-nav class="ml-auto">
 
 
+  <b-nav-item-dropdown text="Lang" right>
+    <!-- <b-dropdown-item href="#">EN</b-dropdown-item>
+    <b-dropdown-item href="#">ES</b-dropdown-item>
+    <b-dropdown-item href="#">RU</b-dropdown-item>
+    <b-dropdown-item href="#">FA</b-dropdown-item> -->
+    <b-dropdown-item @click="localeChange('en')">EN</b-dropdown-item>
+    <b-dropdown-item @click="localeChange('fr')">FR</b-dropdown-item>
+    <b-dropdown-item @click="localeChange('ja')">JA</b-dropdown-item>
+    <b-dropdown-item @click="localeChange('de')">DE</b-dropdown-item>
+    <b-dropdown-item @click="localeChange('es')">ES</b-dropdown-item>
+    <b-dropdown-item @click="localeChange('ru')">RU</b-dropdown-item>
+    <b-dropdown-item to="/translation">Translate to your language</b-dropdown-item>
+  </b-nav-item-dropdown>
 
-      <b-nav-item href="https://github.com/scenaristeur/agents/blob/main/README.md" target="_blank">Help</b-nav-item>
 
-    </b-navbar-nav>
-  </b-collapse>
+  <b-nav-item-dropdown text="Help" right>
+    <b-dropdown-item href="https://github.com/scenaristeur/agents/blob/main/README.md" target="_blank">Help</b-dropdown-item>
+    <b-dropdown-item @click="openTutorial">Tutorial</b-dropdown-item>
+  </b-nav-item-dropdown>
+
+
+</b-navbar-nav>
+</b-collapse>
 </b-navbar>
 </template>
 
@@ -131,6 +134,9 @@ export default {
     localeChange(loc){
       this.$i18n.locale = loc
     },
+    openTutorial(){
+      this.$store.commit('app/setHeader', 'tutorial')
+    }
 
   },
   watch:{

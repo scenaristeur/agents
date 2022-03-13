@@ -112,8 +112,8 @@ const mutations = {
     state.mustExplore = u
   },
   setCurrentNode(state, n){
-    if(n.type == 'world'){
-      state.world = n
+    if(n != null && n.type == 'world'){
+      this.commit('app/setWorld', n)
     }
     state.currentNode = n
   },

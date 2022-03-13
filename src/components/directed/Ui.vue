@@ -288,13 +288,15 @@ export default {
         //color: "#ff0000", // color (change "#" to "0x")
         openBrains: this.openBrains,
         newNeurone: this.newNeurone,
-        resetCamera: this.resetCamera
+        resetCamera: this.resetCamera,
+        toggleWorlds: this.toggleWorlds
       };
 
       const toolFolder = this.gui.addFolder('Tools')
       toolFolder.add( lignes, 'openBrains' ).name("Brains");
       toolFolder.add( lignes, 'newNeurone' ).name("New neurone");
       toolFolder.add( lignes, 'resetCamera' ).name("Reset camera");
+      toolFolder.add( lignes, 'toggleWorlds' ).name("Toogle worlds");
       toolFolder.open()
       this.gui.open()
     },
@@ -418,6 +420,9 @@ export default {
         { x: 0, y: 0, z: 40 },
         3000  // ms transition duration
       );
+    },
+    toggleWorlds(){
+      alert("not implemented yet, help in the help menu")
     },
     randomColor() {
       let color = '#'

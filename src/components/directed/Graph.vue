@@ -211,10 +211,11 @@ export default {
     .onBackgroundClick(event => {
       console.log("onBackgroundClick", event)
     //  app.$store.commit('app/setCurrentNode', null)
-    //  app.$bvModal.show("modal-node")
+
     })
     .onBackgroundRightClick(event => {
-      alert("onBackgroundRightClick", event)
+      console.log("onBackgroundRightClick", event)
+       // app.$bvModal.show("modal-node")
     })
 
     console.log(this.Graph)

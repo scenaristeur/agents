@@ -4,6 +4,7 @@
 
     <!-- LOOK at js console to see the agents in action<br> -->
     <NavBar />
+    <AppHeader />
     <Visu />
     <FabButton />
     <b-row>
@@ -48,7 +49,8 @@ export default {
     'Visu': () => import('@/components/directed/Visu'),
     'GunTest': () => import('@/components/GunTest'),
     'FabButton': ()=>import('@/components/ui/FabButton'),
-    'NavBar': ()=>import('@/components/ui/NavBar')
+    'NavBar': ()=>import('@/components/ui/NavBar'),
+        'AppHeader': ()=>import('@/components/ui/AppHeader')
 
     // HelloWorld
   },

@@ -1,4 +1,4 @@
-world<template>
+<template>
   <b-navbar toggleable="lg" type="dark" variant="dark">
 
     <b-nav-form>
@@ -13,7 +13,7 @@ world<template>
       <b-navbar-nav>
         <b-navbar-brand href="/agents">Agents</b-navbar-brand>
 
-        <b-nav-item-dropdown :text="world || 'World'" right>
+        <b-nav-item-dropdown :text="world.id || 'World'" right>
           <b-dropdown-item href="#" @click="changeWorld('solid')">solid</b-dropdown-item>
           <b-dropdown-item href="#" @click="changeWorld('gun')">gundb</b-dropdown-item>
           <b-dropdown-item href="#" @click="changeWorld('ipfs')" disabled>ipfs</b-dropdown-item>
@@ -21,23 +21,25 @@ world<template>
           <b-dropdown-item href="#" @click="changeWorld(null)" >none</b-dropdown-item>
         </b-nav-item-dropdown>
 
-        <SolidLogin v-if="world == 'solid'" />
-        <b-nav-dropdown v-else-if="world == 'gun'" text="Gun User" >
-          <div v-if="gunUser!=undefined">
-            gunUser : {{ gunUser.alias }}
-          </div>
-          <GunSignin />
-          <GunLogin />
-          <b-dropdown-item-button>Leave</b-dropdown-item-button>
-        </b-nav-dropdown>
+        <div v-if="world != null">
+          <SolidLogin v-if="world.id == 'solid'" />
+          <b-nav-dropdown v-else-if="world.id == 'gun'" text="Gun User" >
+            <div v-if="gunUser!=undefined">
+              gunUser : {{ gunUser.alias }}
+            </div>
+            <GunSignin />
+            <GunLogin />
+            <b-dropdown-item-button>Leave</b-dropdown-item-button>
+          </b-nav-dropdown>
+        </div>
 
         <b-nav-item-dropdown  v-else right>
           <template #button-content>
             <em>User</em>
           </template>
-          <b-dropdown-item href="#">Profile {{ world }}</b-dropdown-item>
+          <b-dropdown-item href="#">Profile {{ world.id }}</b-dropdown-item>
 
-          <b-dropdown-item href="#">Sign In/Out {{ world }}</b-dropdown-item>
+          <b-dropdown-item href="#">Sign In/Out {{ world.id }}</b-dropdown-item>
         </b-nav-item-dropdown>
 
 
@@ -79,12 +81,17 @@ world<template>
 
 
         <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#" disabled>This module is not implemented yet</b-dropdown-item>
-          <b-dropdown-item href="#" disabled>EN</b-dropdown-item>
-          <b-dropdown-item href="#" disabled>FR</b-dropdown-item>
-          <b-dropdown-item href="#" disabled>ES</b-dropdown-item>
-          <b-dropdown-item href="#" disabled>RU</b-dropdown-item>
-          <b-dropdown-item href="#" disabled>FA</b-dropdown-item>
+          <!-- <b-dropdown-item href="#">EN</b-dropdown-item>
+          <b-dropdown-item href="#">ES</b-dropdown-item>
+          <b-dropdown-item href="#">RU</b-dropdown-item>
+          <b-dropdown-item href="#">FA</b-dropdown-item> -->
+          <b-dropdown-item @click="localeChange('en')">EN</b-dropdown-item>
+          <b-dropdown-item @click="localeChange('fr')">FR</b-dropdown-item>
+          <b-dropdown-item @click="localeChange('ja')">JA</b-dropdown-item>
+          <b-dropdown-item @click="localeChange('de')">DE</b-dropdown-item>
+          <b-dropdown-item @click="localeChange('es')">ES</b-dropdown-item>
+          <b-dropdown-item @click="localeChange('ru')">RU</b-dropdown-item>
+          <b-dropdown-item to="/translation">Translate to your language</b-dropdown-item>
         </b-nav-item-dropdown>
 
 
@@ -117,6 +124,9 @@ export default {
     changeNavigation(n){
       console.log(n)
       this.$store.commit('app/setNavigation', n)
+    },
+    localeChange(loc){
+      this.$i18n.locale = loc
     },
 
   },

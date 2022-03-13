@@ -243,7 +243,7 @@ export default {
           }
         }
 
-
+// FINDINDEX NOT WORK, why ? 
         // var index = this.nodes.findIndex((x) => x.url === url);
         // console.log("index", index)
         // let node = this.nodes.find(x => x.url === url)
@@ -341,13 +341,18 @@ export default {
       inputObject(){
         this.onInputObjectChange(this.inputObject)
       },
-      nodes(){
-        console.log("visu nodes", this.nodes)
-        // this.nodes.forEach((node) => {
-        //   console.log(node.id, node.name, node.url)
-        // });
-
-      }
+      // nodes(){
+      //   console.log("visu nodes", this.nodes)
+      //   // this.nodes.forEach((node) => {
+      //   //   console.log(node.id, node.name, node.url)
+      //   // });
+      // },
+      // edges(){
+      //   console.log("visu edges", this.edges)
+      //   // this.nodes.forEach((node) => {
+      //   //   console.log(node.id, node.name, node.url)
+      //   // });
+      // }
     },
     computed:{
       pod:{

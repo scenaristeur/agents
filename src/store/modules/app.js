@@ -55,6 +55,7 @@ const state = () => ({
   {id: "semapps", name: "Semapps", status: "todo", description: ""},
   {id: "fediverse", name: "Fediverse", status: "todo", description: ""},
   {id: "blockchain", name: "Blockchain", status: "todo", description: ""},
+  {id: "communica", name: "Communica", status: "todo", description: "Explore Wikipedia and other federated queries with Communica"},
   {id: "crdt", name: "Crdt", status: "todo", description: ""},
   {id: "gun",
   name: "GunDB", status: "enabled", description: "A decentralized database",

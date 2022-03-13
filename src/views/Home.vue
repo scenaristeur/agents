@@ -50,7 +50,7 @@ export default {
     'GunTest': () => import('@/components/GunTest'),
     'FabButton': ()=>import('@/components/ui/FabButton'),
     'NavBar': ()=>import('@/components/ui/NavBar'),
-        'AppHeader': ()=>import('@/components/ui/AppHeader')
+    'AppHeader': ()=>import('@/components/ui/AppHeader')
 
     // HelloWorld
   },

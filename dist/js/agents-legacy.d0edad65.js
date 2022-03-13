@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkagents"]=self["webpackChunkagents"]||[]).push([[353],{9315:function(e,n,t){t.r(n),t.d(n,{default:function(){return c}});var l=function(){var e=this,n=e.$createElement;e._self._c;return e._m(0)},s=[function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",[t("h2",[e._v("Agents v2")]),t("p",[e._v("Agents is a new kind of collaborative tool. Using a distributed intelligence ")])])}],i={name:"Agents"},r=i,u=t(1001),a=(0,u.Z)(r,l,s,!1,null,null,null),c=a.exports}}]);
+//# sourceMappingURL=agents-legacy.d0edad65.js.map

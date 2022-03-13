@@ -13,7 +13,7 @@
       <b-navbar-nav>
         <b-navbar-brand href="/agents">Agents</b-navbar-brand>
 
-        <b-nav-item-dropdown :text="world.id || 'World'" right>
+        <b-nav-item-dropdown :text="world == null ? 'World' : world.id" right>
           <b-dropdown-item href="#" @click="changeWorld('solid')">solid</b-dropdown-item>
           <b-dropdown-item href="#" @click="changeWorld('gun')">gundb</b-dropdown-item>
           <b-dropdown-item href="#" @click="changeWorld('ipfs')" disabled>ipfs</b-dropdown-item>
@@ -22,6 +22,7 @@
         </b-nav-item-dropdown>
 
         <div v-if="world != null">
+          don't go there
           <SolidLogin v-if="world.id == 'solid'" />
           <b-nav-dropdown v-else-if="world.id == 'gun'" text="Gun User" >
             <div v-if="gunUser!=undefined">
@@ -31,16 +32,17 @@
             <GunLogin />
             <b-dropdown-item-button>Leave</b-dropdown-item-button>
           </b-nav-dropdown>
+
+
+          <b-nav-item-dropdown right>
+            <template #button-content>
+              <em>User</em>
+            </template>
+            <b-dropdown-item href="#">Profile {{ world.id }}</b-dropdown-item>
+
+            <b-dropdown-item href="#">Sign In/Out {{ world.id }}</b-dropdown-item>
+          </b-nav-item-dropdown>
         </div>
-
-        <b-nav-item-dropdown  v-else right>
-          <template #button-content>
-            <em>User</em>
-          </template>
-          <b-dropdown-item href="#">Profile {{ world.id }}</b-dropdown-item>
-
-          <b-dropdown-item href="#">Sign In/Out {{ world.id }}</b-dropdown-item>
-        </b-nav-item-dropdown>
 
 
         <!-- <b-nav-item-dropdown

@@ -41,8 +41,9 @@ export default {
 
     }
   },
-  created(){
+  mounted(){
     console.log("MUST TAKE A LOOK AT COMMUNICA !")
+    this.showWorlds()
   },
   methods: {
     async explore2(path){
@@ -243,7 +244,7 @@ export default {
           }
         }
 
-// FINDINDEX NOT WORK, why ? 
+// FINDINDEX NOT WORK, why ?
         // var index = this.nodes.findIndex((x) => x.url === url);
         // console.log("index", index)
         // let node = this.nodes.find(x => x.url === url)
@@ -308,6 +309,13 @@ export default {
 
         })
         this.paths = this.paths.filter(e => e !== path);
+      },
+      showWorlds(){
+        console.log(this.worlds)
+        this.savedWorld = {nodes: this.nodes, links: this.links}
+        this.nodes = this.worlds
+        this.edges = []
+
       }
     },
     watch:{
@@ -341,6 +349,9 @@ export default {
       inputObject(){
         this.onInputObjectChange(this.inputObject)
       },
+      worlds(){
+        this.showWorlds()
+      }
       // nodes(){
       //   console.log("visu nodes", this.nodes)
       //   // this.nodes.forEach((node) => {
@@ -369,6 +380,10 @@ export default {
       },
       nodes:{
         get () { return this.$store.state.nodes.nodes },
+        set (/*value*/) { /*this.updateTodo(value)*/ }
+      },
+      worlds:{
+        get () { return this.$store.state.app.worlds },
         set (/*value*/) { /*this.updateTodo(value)*/ }
       }
     }

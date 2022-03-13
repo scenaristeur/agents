@@ -101,6 +101,7 @@
   <b-nav-item-dropdown text="Help" right>
     <b-dropdown-item href="https://github.com/scenaristeur/agents/blob/main/README.md" target="_blank">Help</b-dropdown-item>
     <b-dropdown-item @click="openTutorial">Tutorial</b-dropdown-item>
+    <b-dropdown-item @click="degug">Debug</b-dropdown-item>
   </b-nav-item-dropdown>
 
 
@@ -125,7 +126,8 @@ export default {
   methods:{
     changeWorld(w){
       console.log(w)
-      this.$store.commit('app/setWorld', w)
+      this.$store.commit('app/setCurrentNode', w)
+      // this.$store.commit('app/setWorld', w)
     },
     changeNavigation(n){
       console.log(n)
@@ -136,6 +138,9 @@ export default {
     },
     openTutorial(){
       this.$store.commit('app/setHeader', 'tutorial')
+    },
+    debug(){
+      alert('not implemented yet')
     }
 
   },

@@ -13,26 +13,34 @@ const state = () => ({
   search: "",
   header: "tutorial",
   worlds: [
-  // {id: "graph",
-  // name: "Graph", status: "enabled", description: "description",
-  // img: "http://gist.github.com/vasturiano/02affe306ce445e423f992faeea13521/raw/preview.png",
-  // links: [{name: "3D force-directed graph", url : "https://vasturiano.github.io/3d-force-graph/"}]},
+    // {id: "graph",
+    // name: "Graph", status: "enabled", description: "description",
+    // img: "http://gist.github.com/vasturiano/02affe306ce445e423f992faeea13521/raw/preview.png",
+    // links: [{name: "3D force-directed graph", url : "https://vasturiano.github.io/3d-force-graph/"}]},
 
 
-  {id: "solid",
-  name: "Solid", status: "enabled", description: "Your data, your choice. Advancing Web standards to empower people.",
-  img: "https://solidproject.org/assets/img/solid-emblem.svg",
-  type: 'world',
-  links: [
-    {name: "Solid Project", url: "https://solidproject.org/"},
-    {name: "Forum", url: "https://forum.solidproject.org/"},
-    {name: "Inrupt", url: "https://inrupt.com/"},
-  ]},
+    {id: "solid",
+    name: "Solid", status: "enabled", description: "Your data, your choice. Advancing Web standards to empower people.",
+    img: "https://solidproject.org/assets/img/solid-emblem.svg",
+    type: 'world',
+    links: [
+      {name: "Solid Project", url: "https://solidproject.org/"},
+      {name: "Forum", url: "https://forum.solidproject.org/"},
+      {name: "Inrupt", url: "https://inrupt.com/"},
+    ],
+    examples: [{
+      name: "spoggy-5 neurones", value: "https://spoggy-test5.solidcommunity.net/public/neurones"},
+    ]},
 
-  {id: "gun",
-  name: "GunDB", status: "enabled", description: "A decentralized database",
-  img: "https://camo.githubusercontent.com/64213f411349db936a0fa36ef41741b170d4c8d34d1cc0d1c887f7d880838707/68747470733a2f2f636c6475702e636f6d2f5445793979476834356c2e737667",
-  links: [{name: "Doc", url:"https://gun.eco/"}], type: 'world'},
+    {id: "gun",
+    name: "GunDB", status: "enabled", description: "A decentralized database",
+    img: "https://camo.githubusercontent.com/64213f411349db936a0fa36ef41741b170d4c8d34d1cc0d1c887f7d880838707/68747470733a2f2f636c6475702e636f6d2f5445793979476834356c2e737667",
+    links: [{name: "Doc", url:"https://gun.eco/"}], type: 'world',
+    examples: [
+      {name: "test", value: "test"},
+      {name: "RaN5Dom_neurones", value: "RaN5Dom_neurones"},
+        ]
+  },
 
   {id: "html", name: "Html", status: "todo", description: "a basic html world", type: 'world'},
   {id: "ipfs", name: "Ipfs", status: "work in progress", description: "description", type: 'world'},
@@ -66,10 +74,10 @@ const state = () => ({
   // ]},
 ]
 
-  // bureau: null,
-  // resource: null,
-  // content: null
-  //pod: null,
+// bureau: null,
+// resource: null,
+// content: null
+//pod: null,
 })
 
 const actions = {

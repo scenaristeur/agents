@@ -51,7 +51,8 @@ export default {
   },
   methods:{
     changeWorld(w){
-      this.$store.commit('app/setWorld', w)
+      this.$store.commit('app/setCurrentNode', w)
+      // this.$store.commit('app/setWorld', w)
     }
   }
 }

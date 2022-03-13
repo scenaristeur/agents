@@ -1,20 +1,16 @@
 <template>
-  <div>
+  <div class="container">
     <!-- <p class="my-4">Hello from modal!</p>-->
-    Current Node : {{ currentNode}}
-<br>
+    <!-- Current Node : {{ currentNode}}
+    <br> -->
     <b-button size="sm" @click="currentNode = null">Close</b-button>
     navigation : {{ navigation }} - node type : {{currentNode.type}}
 
+    <BrainNode v-if="node.type == 'world'" />
+    <NodePreview v-else :node="currentNode"/>
+    <br>
 
-<NodePreview :node="currentNode"/>
-
-
-
-
-
-
-
+    todo put the following in a decent neurone module :
     <b-container>
 
       <b-row>
@@ -163,6 +159,7 @@ export default {
     // 'Quasar': () => import('@/views/Quasar'),
     'CKWysiwyg': () => import('@/components/ui/node/CKWysiwyg'),
     'NodePreview': () => import('@/components/ui/node/NodePreview'),
+    'BrainNode': () => import('@/components/ui/node/BrainNode'),
     // 'editor': Editor
   },
   data() {

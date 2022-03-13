@@ -5,6 +5,29 @@ const plugin = {
     let store = opts.store
     console.log(store)
 
+
+    Vue.prototype.$gunExplore = async function(rootNode){
+      // inspiration https://github.com/Stefdv/gun-ui-graph/blob/master/gun-ui-graph.html
+      console.log(rootNode)
+      console.log('build gun._.graph')
+                // var self = this
+                // function each(node) {
+                //   console.log(node)
+                //   //self._processGunNode(node)
+                // }
+                // function ended(collection) {
+                //   console.log('Done mapping over:', collection);
+                //   //self._initCy()
+                //
+                //
+                //   self._mapNodes()
+                // }
+               let node = this.$gun.get(rootNode)//.valMapEnd(each,ended)
+               console.log("Gun Node", node)
+
+    }
+
+
     Vue.prototype.$createBrain = async function(brain){
 
       console.log("creation",brain)
